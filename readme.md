@@ -10,8 +10,10 @@
     <li><a href="study02">2. 프로젝트 생성 및 환경 설정</a></li>
     <ul class="sub">
       <li>2-1. 프로젝트 생성</li>
-      <li>2-2. 프로젝트 환경설정</li>
-      <li>2-3. 프로젝트 실행</li>
+      <li>2-2. 프로젝트 구성</li>
+      <li>2-3. 프로젝트 환경설정</li>
+      <li>2-4. 프로젝트 실행</li>
+      <li>2-5. 프로그래밍 디자인 패턴</li>
     </ul>
     <li><a href="study03">3. Vuejs의 요소</a></li>
     <ul class="sub">
@@ -20,17 +22,16 @@
       <li>3-3. Vuejs의 템플릿과 디렉티브</li>
       <li>3-4. Vuejs의 컴포넌트</li>
     </ul>
-    <li><a href="study04">4. Vuex</a></li>
+    <li><a href="study04">4. Vuex와 Vue 3의 프로그래밍 패턴</a></li>
     <ul class="sub">
-      <li>4-1. MVC 패턴</li>
-      <li>4-2. Flux 패턴</li>
-      <li>4-3. State(상태)</li>
-      <li>4-4. Getters(게터)</li>
-      <li>4-5. Mutation(변이)</li>
-      <li>4-6. Actions(액션)</li>
-      <li>4-7. Module Management(모듈 관리)</li>
+      <li>4-1. Flux 패턴</li>
+      <li>4-2. State(상태)</li>
+      <li>4-3. Getters(게터)</li>
+      <li>4-4. Mutation(변이)</li>
+      <li>4-5. Actions(액션)</li>
+      <li>4-6. Module Management(모듈 관리)</li>
     </ul>
-    <li><a href="study05">5. Vue Router</a></li>
+    <li><a href="study05">5. Vue Router와 Axios</a></li>
     <ul class="sub">
       <li>5-1. Vue Router의 필요성과 라우팅 종류</li>
       <li>5-2. Vue Router의 기본 사용</li>
@@ -43,6 +44,7 @@
       <li>5-9. Route Mode(라우트 모드)</li>
       <li>5-10. Navigation Gard(네비게이션 가드)</li>
       <li>5-11. Route 를 활용한 메뉴 구성</li>
+      <li>5-12. Axios</li>
     </ul>
     <li><a href="study06">6. Vuejs에 CSS Framework 적용</a></li>
     <ul class="sub">
@@ -2278,7 +2280,7 @@ this.$nextTick(() => {
 - 엘리먼트를 한 번만 렌더링합니다.
 
 ```html
-<div v-once>{{
+<div v-once>{{ trsData }}</div>
 ```
 
 <br><br>
@@ -2530,14 +2532,14 @@ div {
 
 #### 0-9-1-4. Pre-Processors
 
-- 전처리기(Pre-processor)를 사용하여 <style> 블록을 처리하는 방법을 설명합니다.
+- 전처리기(Pre-processor)를 사용하여 `<style>` 블록을 처리하는 방법을 설명합니다.
 - `<style lang="scss">`와 같이 SCSS 문법을 사용하여 스타일을 작성하거나, `<style scoped>`로 컴포넌트 스코프 내에서 스타일을 적용할 수 있습니다.
 
 <br>
 
 #### 0-9-1-5. src Imports
 
-- 외부 파일에서 <template>, <script>, <style>을 가져오는 방법을 설명합니다.
+- 외부 파일에서 `<template>`, `<script>`, `<style>`을 가져오는 방법을 설명합니다.
 - `<template src="./MyTemplate.html">`과 같이 외부 HTML 파일에서 템플릿을 가져오거나, `<script setup src="./MyLogic.js">`와 같이 외부 JavaScript 파일에서 로직을 가져올 수 있습니다.
 
 <br>
@@ -2692,7 +2694,7 @@ div {
 
 <br>
 
-#### 0-9-2-11. Usage alongside normal <script>
+#### 0-9-2-11. Usage alongside normal `<script>`
 
 - `<script setup>`을 일반 `<script>`와 함께 사용하는 방법을 설명합니다.
 
@@ -3895,16 +3897,528 @@ D:\gitRepository\kkt09072\vuejs> npm install -g @vue/cli
 
 <br><br>
 
-## 1-3-1. Vuejs 환경설정
+### 1-3-1. Vuejs 환경설정
 
 ```shell
 D:\gitRepository\kkt09072\vuejs>vue --version
 @vue/cli 5.0.8
 ```
 
+<br><br>
+
+### 1-3-2. Vue 프로젝트 생성
+
+**Terminal 에서 study01 Vue 3로 프로젝트를 생성합니다.**
+
+```shell
+D:\gitRepository\vuejs>vue create study01
+
+Vue CLI v5.0.8
+? Please pick a preset: (Use arrow keys)
+> Default ([Vue 3] babel, eslint)   # 기본 Vue 3 를 선택 후 Enter
+  Default ([Vue 2] babel, eslint)
+  Manually select features
+
+✨  Creating project in D:\gitRepository\vuejs\study01.
+🗃  Initializing git repository...
+⚙️  Installing CLI plugins. This might take a while...
+
+added 872 packages, and audited 873 packages in 7s
+
+100 packages are looking for funding
+  run `npm fund` for details
+
+4 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+🚀  Invoking generators...
+📦  Installing additional dependencies...
+
+added 89 packages, and audited 962 packages in 2s
+
+112 packages are looking for funding
+  run `npm fund` for details
+
+4 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+⚓  Running completion hooks...
+
+📄  Generating README.md...
+
+🎉  Successfully created project study01.
+👉  Get started with the following commands:
+
+ $ cd study01
+ $ npm run serve
+```
+
 <br>
 
-### 1-3-2. Vuejs 확장 도구
+### 1-3-2. Vuejs 명령어 정리
+
+| 명령어              | 설명                                                                                              | 옵션 및 문법                                                                                                                                             | 예시                                                                                           |
+|---------------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| `vue create`        | 새로운 Vue.js 프로젝트를 생성합니다.                                                             | `vue create <project-name>` <br> - `--preset <preset>`: 미리 설정된 템플릿 사용 <br> - `--default`: 기본 설정 사용 <br> - `--inlinePreset <json>`: 인라인 프리셋 사용 | `vue create my-project` <br> `vue create my-project --preset default`                          |
+| `vue add`           | 기존 프로젝트에 플러그인을 추가합니다.                                                           | `vue add <plugin>`                                                                                                                                        | `vue add @vue/cli-plugin-eslint`                                                               |
+| `vue invoke`        | 기존 프로젝트에 플러그인을 호출하여 설정을 재구성합니다.                                         | `vue invoke <plugin>`                                                                                                                                     | `vue invoke @vue/cli-plugin-eslint`                                                            |
+| `vue inspect`       | 프로젝트의 Webpack 설정을 출력합니다.                                                            | `vue inspect` <br> - `--mode <mode>`: 모드 지정                                                                                                           | `vue inspect` <br> `vue inspect --mode production`                                             |
+| `vue serve`         | 프로덕션 빌드 없이 애플리케이션을 개발 서버에서 실행합니다.                                       | `vue serve <entry>` <br> - `--open`: 브라우저 자동 열기 <br> - `--mode <mode>`: 모드 지정 <br> - `--port <port>`: 포트 지정                               | `vue serve` <br> `vue serve src/main.js --open`                                                |
+| `vue build`         | 프로덕션용 애플리케이션을 빌드합니다.                                                            | `vue build <entry>` <br> - `--mode <mode>`: 모드 지정                                                                                                     | `vue build` <br> `vue build src/main.js`                                                       |
+| `vue ui`            | Vue CLI의 그래픽 사용자 인터페이스를 실행합니다.                                                  | `vue ui`                                                                                                                                                  | `vue ui`                                                                                       |
+| `vue config`        | Vue CLI 설정을 관리합니다.                                                                       | `vue config [key] [value]`                                                                                                                                | `vue config --get` <br> `vue config --set useTaobaoRegistry true`                              |
+| `vue upgrade`       | Vue CLI 및 관련 패키지를 업그레이드합니다.                                                       | `vue upgrade [plugin-name]`                                                                                                                               | `vue upgrade` <br> `vue upgrade @vue/cli-service`                                              |
+| `vue info`          | Vue 프로젝트 및 시스템 환경 정보를 출력합니다.                                                   | `vue info`                                                                                                                                                 | `vue info`                                                                                     |
+
+<br>
+
+#### 1-3-2-1. vue create 명령과 옵션
+
+| 옵션                 | 설명                                                                                              | 예시                                 |
+|----------------------|--------------------------------------------------------------------------------------------------|--------------------------------------|
+| `--preset <preset>`  | 미리 설정된 프리셋을 사용하여 프로젝트를 생성합니다.                                              | `vue create my-project --preset default` |
+| `--default`          | 기본 설정으로 프로젝트를 생성합니다.                                                              | `vue create my-project --default`    |
+| `--inlinePreset <json>` | JSON 문자열로 인라인 프리셋을 지정합니다.                                                      | `vue create my-project --inlinePreset '{"useConfigFiles": true, "plugins": {"@vue/cli-plugin-babel": {}, "@vue/cli-plugin-eslint": {}}}' |
+| `--packageManager <pm>` | 사용할 패키지 매니저를 지정합니다. npm, yarn, pnpm 등을 지원합니다.                            | `vue create my-project --packageManager yarn` |
+| `--registry <url>`   | 패키지 매니저의 레지스트리 URL을 지정합니다.                                                       | `vue create my-project --registry https://registry.npmjs.org/` |
+| `--no-git`           | Git 초기화를 하지 않습니다.                                                                       | `vue create my-project --no-git`     |
+| `--merge`            | 이미 존재하는 폴더에 설정을 병합합니다.                                                            | `vue create my-project --merge`      |
+| `--bare`             | 추가 파일 없이 최소한의 파일로 프로젝트를 생성합니다.                                              | `vue create my-project --bare`       |
+
+<br>
+
+#### 1-3-2-2. vue add 명령과 옵션
+
+| 플러그인                | 설명                                                                                              | 예시                                 |
+|-------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------|
+| `@vue/cli-plugin-babel` | Babel 설정을 추가합니다.                                                                          | `vue add @vue/cli-plugin-babel`      |
+| `@vue/cli-plugin-typescript` | TypeScript 설정을 추가합니다.                                                                  | `vue add @vue/cli-plugin-typescript` |
+| `@vue/cli-plugin-eslint` | ESLint 설정을 추가합니다.                                                                        | `vue add @vue/cli-plugin-eslint`     |
+| `@vue/cli-plugin-router` | Vue Router 설정을 추가합니다.                                                                     | `vue add @vue/cli-plugin-router`     |
+| `@vue/cli-plugin-vuex`   | Vuex 설정을 추가합니다.                                                                         | `vue add @vue/cli-plugin-vuex`       |
+
+
+<br>
+
+#### 1-3-2-3. vue serve 명령과 옵션
+
+| 옵션                 | 설명                                                                                              | 예시                                 |
+|----------------------|--------------------------------------------------------------------------------------------------|--------------------------------------|
+| `--open`             | 개발 서버를 시작할 때 브라우저를 자동으로 엽니다.                                                  | `vue serve --open`                   |
+| `--mode <mode>`      | 특정 모드로 개발 서버를 시작합니다.                                                                 | `vue serve --mode production`        |
+| `--port <port>`      | 개발 서버의 포트를 지정합니다.                                                                     | `vue serve --port 3000`              |
+
+<br>
+
+#### 1-3-2-4. vue build 명령과 옵션
+
+| 옵션                 | 설명                                                                                              | 예시                                 |
+|----------------------|--------------------------------------------------------------------------------------------------|--------------------------------------|
+| `--mode <mode>`      | 특정 모드로 빌드합니다.                                                                            | `vue build --mode production`        |
+
+<br>
+
+#### 1-3-2-5. vue config 명령과 옵션
+
+| 옵션                 | 설명                                                                                              | 예시                                 |
+|----------------------|--------------------------------------------------------------------------------------------------|--------------------------------------|
+| `--get [key]`        | 특정 설정 값을 가져옵니다.                                                                         | `vue config --get useTaobaoRegistry` |
+| `--set [key] [value]` | 특정 설정 값을 설정합니다.                                                                       | `vue config --set useTaobaoRegistry true` |
+
+
+<br>
+
+#### 1-3-2-6. vue upgrade 명령과 옵션
+
+| 옵션                 | 설명                                                                                              | 예시                                 |
+|----------------------|--------------------------------------------------------------------------------------------------|--------------------------------------|
+| `[plugin-name]`      | 특정 플러그인을 업그레이드합니다.                                                                 | `vue upgrade @vue/cli-service`       |
+
+
+<br>
+
+#### 1-3-2-7. vue invoke 명령과 옵션
+
+| 명령어                | 설명                                                                                              | 예시                                 |
+|-----------------------|--------------------------------------------------------------------------------------------------|--------------------------------------|
+| `vue invoke <plugin>` | 기존 프로젝트에 플러그인을 호출하여 설정을 재구성합니다.                                           | `vue invoke @vue/cli-plugin-eslint` |
+
+<br>
+
+#### 1-3-2-8. vue inspect 명령과 옵션
+
+| 명령어                | 설명                                                                                              | 예시                                 |
+|-----------------------|--------------------------------------------------------------------------------------------------|--------------------------------------|
+| `vue inspect`         | 프로젝트의 Webpack 설정을 출력합니다.                                                             | `vue inspect`                       |
+| `vue inspect --mode <mode>` | 특정 모드로 Webpack 설정을 출력합니다.                                                      | `vue inspect --mode production`     |
+
+
+<br>
+
+#### 1-3-2-9. 기타 명령
+
+vue ui : 명령어를 실행하면 브라우저가 열리고 Vue CLI의 그래픽 사용자 인터페이스가 표시됩니다. 여기에서 프로젝트 생성, 플러그인 추가, 설정 변경 등을 쉽게 할 수 있습니다.
+vue info : 명령어를 실행하면 프로젝트 및 시스템 환경에 대한 정보가 출력됩니다. 이 정보는 디버깅 및 지원 요청 시 유용합니다.
+
+<br><br>
+
+### 1-3-3. Vuejs의 지원 라이브러리
+
+#### 1-3-3-1. Vue Router
+
+- Vue.js 애플리케이션에서 라우팅을 관리하는 공식 라이브러리입니다.
+
+**설치**
+
+```bash
+npm install vue-router
+```
+
+<br>
+
+**활용법**
+
+```typescript
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from './components/Home.vue';
+import About from './components/About.vue';
+
+const routes = [
+  { path: '/', component: Home },
+  { path: '/about', component: About },
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+export default router;
+```
+
+<br>
+
+#### 1-3-3-2. Vuex
+
+- Vue.js 애플리케이션에서 상태 관리를 담당하는 공식 라이브러리입니다.
+
+**설치**
+
+```bash
+npm install vuex
+```
+
+<br>
+
+**활용법**
+
+```typescript
+import { createStore } from 'vuex';
+
+export default createStore({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment(state) {
+      state.count++;
+    }
+  },
+  actions: {
+    incrementAsync({ commit }) {
+      setTimeout(() => {
+        commit('increment');
+      }, 1000);
+    }
+  },
+  getters: {
+    doubleCount(state) {
+      return state.count * 2;
+    }
+  }
+});
+```
+
+<br>
+
+#### 1-3-3-3. Vue Loader
+
+- Webpack을 사용하여 Vue 컴포넌트를 로드하고 처리하는 로더입니다.
+
+**설치**
+
+```bash
+npm install vue-loader vue-template-compiler --save-dev
+```
+
+<br>
+
+**활용법**
+
+```typescript
+// webpack.config.js
+const { VueLoaderPlugin } = require('vue-loader');
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+    ]
+  },
+  plugins: [
+    new VueLoaderPlugin()
+  ]
+};
+```
+
+<br>
+
+#### 1-3-3-4. Vueify
+
+- Browserify와 함께 Vue 컴포넌트를 처리하는 트랜스포머입니다. 현재는 Vue Loader가 더 널리 사용됩니다.
+
+**설치**
+
+```bash
+npm install vueify --save-dev
+```
+
+<br>
+
+**활용법**
+
+```javascript
+// browserify config
+browserify({
+  entries: ['src/main.js'],
+  transform: [vueify]
+});
+```
+
+<br>
+
+#### 1-3-3-5. Vue CLI
+
+- Vue.js 프로젝트를 생성하고 관리하는 데 사용되는 CLI 도구입니다.
+
+**설치**
+
+```bash
+npm install -g @vue/cli
+```
+
+<br>
+
+**활용법**
+
+```bash
+vue create my-project
+cd my-project
+npm run serve
+```
+
+<br>
+
+#### 1-3-3-6. Vue JSTree
+
+- Vue.js 애플리케이션에서 트리 구조를 표현하는 라이브러리입니다.
+
+**설치**
+
+```bash
+npm install vue-jstree
+```
+
+<br>
+
+**활용법**
+
+```typescript
+import VueJstree from 'vue-jstree';
+
+export default {
+  components: {
+    'vue-jstree': VueJstree
+  }
+};
+```
+
+<br>
+
+#### 1-3-3-7. Vue Sys
+
+- 시스템 레벨의 기능을 Vue.js에서 쉽게 사용할 수 있도록 하는 라이브러리입니다. (비교적 적게 사용됨)
+
+**설치**
+
+```bash
+npm install vue-sys
+```
+
+<br>
+
+**활용법**
+
+```typescript
+import VueSys from 'vue-sys';
+Vue.use(VueSys);
+```
+
+<br>
+
+#### 1-3-3-8. Axios
+
+- HTTP 요청을 처리하는 라이브러리로, Vue.js 애플리케이션에서도 널리 사용됩니다.
+
+**설치**
+
+```bash
+npm install axios
+```
+
+<br>
+
+**활용법**
+
+```typescript
+import axios from 'axios';
+
+axios.get('https://api.example.com')
+  .then(response => {
+    console.log(response.data);
+  });
+```
+
+<br>
+
+#### 1-3-3-9. Vuetify
+
+- Vue.js를 위한 인기 있는 Material Design 컴포넌트 프레임워크입니다.
+
+**설치**
+
+```bash
+npm install vuetify
+```
+
+<br>
+
+**활용법**
+
+```typescript
+import { createApp } from 'vue';
+import App from './App.vue';
+import Vuetify from 'vuetify';
+
+const app = createApp(App);
+app.use(Vuetify);
+app.mount('#app');
+```
+
+<br>
+
+#### 1-3-3-10. Vue Apollo
+
+- Vue.js 애플리케이션에서 GraphQL을 사용하기 위한 라이브러리입니다.
+
+**설치**
+
+```bash
+npm install @vue/apollo-composable apollo-client graphql
+```
+
+<br>
+
+**활용법**
+
+```typescript
+import { createApp } from 'vue';
+import { provideApolloClient } from '@vue/apollo-composable';
+import ApolloClient from 'apollo-boost';
+import App from './App.vue';
+
+const apolloClient = new ApolloClient({
+  uri: 'https://api.example.com/graphql'
+});
+
+const app = createApp(App);
+provideApolloClient(apolloClient);
+app.mount('#app');
+```
+
+<br>
+
+#### 1-3-3-11. Vuelidate
+
+- Vue.js 애플리케이션에서 폼 유효성 검사를 쉽게 할 수 있도록 돕는 라이브러리입니다.
+
+**설치**
+
+```bash
+npm install @vuelidate/core @vuelidate/validators
+```
+
+<br>
+
+**활용법**
+
+```typescript
+import { createApp } from 'vue';
+import { useVuelidate } from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
+
+const app = createApp({
+  setup() {
+    const rules = {
+      name: { required }
+    };
+    const v$ = useVuelidate(rules);
+    return { v$ };
+  }
+});
+app.mount('#app');
+```
+
+<br>
+
+#### 1-3-3-12. Vuex Persisted State
+
+- Vuex 상태를 로컬 스토리지에 저장하여 페이지 새로고침 시에도 상태가 유지되도록 하는 라이브러리입니다.
+
+**설치**
+
+```bash
+npm install vuex-persistedstate
+```
+
+<br>
+
+**활용법**
+
+```typescript
+import createPersistedState from 'vuex-persistedstate';
+
+const store = createStore({
+  plugins: [createPersistedState()],
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment(state) {
+      state.count++;
+    }
+  }
+});
+```
 
 <br><br>
 
@@ -3974,27 +4488,13 @@ https://mariadb.org/download/?t=mariadb&p=mariadb&r=10.11.8&os=windows&cpu=x86_6
 
 ## 2-1. 프로젝트 생성
 
-**Terminal 에서 study01 Vue 3로 프로젝트를 생성합니다.**
-
-```shell
-D:\gitRepository\kkt09072\vuejs>vue create study01
-
-Vue CLI v5.0.8
-? Please pick a preset: (Use arrow keys)
-> Default ([Vue 3] babel, eslint)
-  Default ([Vue 2] babel, eslint)
-  Manually select features
-
-✨  Creating project in D:\gitRepository\kkt09072\vuejs\study01.
-🗃  Initializing git repository...
-⚙️  Installing CLI plugins. This might take a while...
-```
-
 <br>
 
 **Terminal 에서 study02 세부사항을 개발자가 선택하여 프로젝트를 생성합니다.**
 
 ```shell
+D:\gitRepository\vuejs>vue create study02
+
 Vue CLI v5.0.8  # 사전 설정을 선택하세요.
 ? Please pick a preset:
   Default ([Vue 3] babel, eslint)
@@ -4060,7 +4560,6 @@ proceed)    # 추가 Lint 기능 선택: (선택하려면 <space>를 누르고, 
 
 
 # 프로젝트 구성 결과
-
 ? Please pick a preset: Manually select features
 ? Check the features needed for your project: Babel, TS, PWA, Router, Vuex, CSS Pre-processors, Linter, Unit
 ? Choose a version of Vue.js that you want to start the project with 3.x
@@ -4075,12 +4574,9 @@ proceed)    # 추가 Lint 기능 선택: (선택하려면 <space>를 누르고, 
 ? Save this as a preset for future projects? Yes
 ? Save preset as: project02
 
-
-
 # 설치된 내용 출력
-
 Vue CLI v5.0.8
-✨  Creating project in D:\gitRepository\kkt09072\vuejs\study02.
+✨  Creating project in D:\gitRepository\vuejs\study02.
 🗃  Initializing git repository...
 ⚙️  Installing CLI plugins. This might take a while...
 
@@ -4097,7 +4593,6 @@ To address all issues (including breaking changes), run:
 Run `npm audit` for details.
 🚀  Invoking generators...
 📦  Installing additional dependencies...
-
 
 added 156 packages, and audited 1584 packages in 28s
 
@@ -4121,16 +4616,374 @@ Run `npm audit` for details.
  $ npm run serve
 ```
 
+### 2-1-1. Babel
+
+- 최신 JavaScript 코드를 구형 브라우저나 환경에서도 동작하도록 변환해주는 트랜스파일러입니다.
+
+**설치**
+
+```bash
+npm install @babel/core @babel/cli @babel/preset-env
+```
 
 <br>
 
-### 2-1-1. 프로젝트의 구성
+**활용법**
+
+```json
+// .babelrc
+{
+  "presets": ["@babel/preset-env"]
+}
+```
+
+<br>
+
+**babel의 출력 디렉토리 생성**
+
+```bash
+npx babel src --out-dir dist
+```
+
+<br>
+
+**종류**
+
+1. @babel/core: Babel의 핵심 패키지.
+2. @babel/preset-env: 최신 JavaScript를 특정 환경에 맞게 변환하는 프리셋.
+3. @babel/preset-react: React JSX를 변환하는 프리셋.
+4. @babel/plugin-transform-runtime: 중복되는 헬퍼 코드를 재사용할 수 있게 하는 플러그인.
+
+<br><br>
+
+### 2-1-2. Webpack
+
+- JavaScript 모듈 번들러로, 여러 파일을 하나의 파일로 묶어줍니다.
+
+**설치**
+
+```bash
+npm install webpack webpack-cli --save-dev
+```
+
+<br>
+
+**활용법**
+
+```javascript
+// webpack.config.js
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      }
+    ]
+  }
+};
+```
+
+<br>
+
+**webpack의 환경설정 파일 생성**
+
+```bash
+npx webpack --config webpack.config.js
+```
+
+<br>
+
+**종류**
+
+1. Loaders: 파일을 모듈로 변환. 예: babel-loader, css-loader, file-loader.
+2. Plugins: 번들된 결과물을 처리. 예: HtmlWebpackPlugin, MiniCssExtractPlugin.
+
+<br><br>
+
+### 2-1-3. CSS Pre-processors
+
+- CSS를 더 강력하고 유지보수하기 쉽게 작성할 수 있게 도와주는 도구입니다.
+
+<br>
+
+#### 2-1-3-1. Sass (SCSS):
+
+**설치**
+
+```bash
+npm install sass sass-loader --save-dev
+```
+
+<br>
+
+**활용법**
+
+```css
+// styles.scss
+$primary-color: #333;
+
+body {
+  color: $primary-color;
+}
+```
+
+<br>
+
+#### 2-1-3-2. Less
+
+**설치**
+
+```bash
+npm install less less-loader --save-dev
+```
+
+<br>
+
+**활용법**
+
+```css
+// styles.less
+@primary-color: #333;
+
+body {
+  color: @primary-color;
+}
+```
+
+<br>
+
+#### 2-1-3-3. Stylus
+
+**설치**
+
+```bash
+npm install stylus stylus-loader --save-dev
+```
+
+<br>
+
+**활용법**
+
+```css
+// styles.styl
+primary-color = #333
+
+body
+  color: primary-color
+```
+
+<br><br>
+
+### 2-1-4. Linter/Formatter
+
+- 코드의 스타일과 품질을 일관되게 유지하고 오류를 사전에 방지합니다.
+
+<br>
+
+#### 2-1-4-1. ESLint
+
+**설치**
+
+```bash
+npm install eslint --save-dev
+```
+
+<br>
+
+**활용법**
+
+```json
+// .eslintrc.json
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "rules": {
+  }
+}
+```
+
+<br>
+
+#### 2-1-4-2. Prettier
+
+**설치**
+
+```bash
+npm install prettier --save-dev
+```
+
+<br>
+
+**활용법**
+
+```json
+// .prettierrc
+{
+  "singleQuote": true,
+  "semi": false
+}
+```
+
+<br>
+
+#### 2-1-4-3. Stylelint:
+
+**설치**
+
+```bash
+npm install stylelint stylelint-config-standard --save-dev
+```
+
+<br>
+
+**활용법**
+
+```json
+// .stylelintrc.json
+{
+  "extends": "stylelint-config-standard"
+}
+```
+
+<br><br>
+
+### 2-1-5. Unit Testing
+
+- 개별 모듈이나 컴포넌트가 예상대로 동작하는지 검증합니다.
+
+#### 2-1-5-1. Jest
+
+**설치**
+
+```bash
+npm install jest --save-dev
+```
+
+<br>
+
+**활용법**
+
+```javascript
+// sum.js
+function sum(a, b) {
+  return a + b;
+}
+module.exports = sum;
+
+// sum.test.js
+const sum = require('./sum');
+
+test('adds 1 + 2 to equal 3', () => {
+  expect(sum(1, 2)).toBe(3);
+});
+```
+
+<br>
+
+#### 2-1-5-2. Mocha
+
+**설치**
+
+```bash
+npm install mocha --save-dev
+```
+
+**활용법**
+
+```javascript
+// test.js
+const assert = require('assert');
+describe('Array', () => {
+  describe('#indexOf()', () => {
+    it('should return -1 when the value is not present', () => {
+      assert.equal([1, 2, 3].indexOf(4), -1);
+    });
+  });
+});
+```
+
+<br><br>
+
+### 2-1-6. E2E Testing
+
+- 애플리케이션의 전체적인 흐름을 테스트하여 사용자의 행동을 시뮬레이션합니다.
+
+#### 2-1-6-1. Cypress
+
+**설치**
+
+```bash
+npm install cypress --save-dev
+```
+
+**활용법**
+
+```javascript
+// cypress/integration/sample_spec.js
+describe('My First Test', () => {
+  it('Does not do much!', () => {
+    expect(true).to.equal(true);
+  });
+});
+```
+
+<br>
+
+#### 2-1-6-2. Selenium
+
+**설치**
+
+```bash
+npm install selenium-webdriver --save-dev
+```
+
+<br>
+
+**활용법**
+
+```javascript
+const { Builder, By, until } = require('selenium-webdriver');
+
+(async function example() {
+  let driver = await new Builder().forBrowser('firefox').build();
+  try {
+    await driver.get('http://www.google.com/ncr');
+    await driver.findElement(By.name('q')).sendKeys('webdriver');
+    await driver.findElement(By.name('btnK')).click();
+    await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
+  } finally {
+    await driver.quit();
+  }
+})();
+```
+
+<br><br>
+
+## 2-2. 프로젝트의 구성
 
 ![프로젝트 구성](./images/vue_architecture20.png)
 
 <br>
 
-#### 2-1-1-1. 프로젝트 구조 및 파일 설명
+### 2-2-1. 프로젝트 구조 및 파일 설명
 
 **루트 디렉토리**
 
@@ -4191,7 +5044,7 @@ study01
 
 <br><br>
 
-#### 2-1-1-2. 주요 파일의 용도
+#### 2-2-2. 주요 파일의 용도
 
 | 주요 파일 | 용도 |
 |----------------------|------------------------------------------------------|
@@ -4215,9 +5068,9 @@ study01
 
 <br><br>
 
-## 2-2. 프로젝트 환경설정
+## 2-3. 프로젝트 환경설정
 
-### 2-2-1. 포트번호 변경
+### 2-3-1. 포트번호 변경
 
 **package.json 에서 포트 번호 변경** 
 
@@ -4249,7 +5102,7 @@ study01
 
 <br><br>
 
-## 2-3. 프로젝트 실행
+## 2-4. 프로젝트 실행
 
 
 ```shell
@@ -4265,17 +5118,21 @@ D:\gitRepository\kkt09072\vuejs\study01>npm run serve
 
 <br><br>
 
-## 2-4. Vue 프로그래밍 디자인 패턴
+## 2-5. 프로그래밍 디자인 패턴
 
 소프트웨어 디자인 패턴(software design pattern)은 소프트웨어 공학의 소프트웨어 디자인에서 특정 문맥에서 공통적으로 발생하는 문제에 대해 재사용 가능한 해결책입니다. 소스나 기계 코드로 바로 전환될수 있는 완성된 디자인은 아니며, 다른 상황에 맞게 사용될 수 있는 문제들을 해결하는데에 쓰이는 서술이나 템플릿이며, 디자인 패턴은 프로그래머가 어플리케이션이나 시스템을 디자인할 때 공통된 문제들을 해결하는데에 쓰이는 형식화 된 가장 좋은 방법입니다.
 
-### 2-4-1. MVC 패턴
+### 2-5-1. MVC 패턴
 
 - 가장 기본적인 프로그래밍 디자인 패턴입니다.
 
-Model : 애플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분입니다.
-View : 사용자에게 보여지는 UI 부분입니다.
-Controller : 사용자의 입력(Action)을 받고 처리하는 부분입니다.
+<br>
+
+**주요 구성 요소 및 동작원리**
+
+Model : 애플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분으로 비즈니스 로직을 관리합니다.
+View : 사용자에게 보여지는 UI 부분으로 사용자 인터페이스를 정의합니다.
+Controller : 사용자의 입력(Action)을 받고 처리하는 부분으로 사용자 입력을 처리하고 모델과 상호작용합니다.
 
 <br>
 
@@ -4290,9 +5147,10 @@ Controller : 사용자의 입력(Action)을 받고 처리하는 부분입니다.
 
 <br>
 
-**예시 코드**
+**간단한 예시 코드**
 
 ```javascript
+//src/pattern/mvcpattern.js
 // Model (Vuex store)
 const store = new Vuex.Store({
   state: { count: 0 },
@@ -4316,13 +5174,380 @@ const app = new Vue({
 
 <br><br>
 
-### 2-4-2. MVP 패턴
+#### 2-5-1-1. MVC 패턴의 프로젝트 구조
+
+```lua
+mvcproject/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── controllers/
+│   ├── models/
+│   ├── views/
+│   ├── router/
+│   ├── store/
+│   ├── App.vue
+│   └── main.ts
+├── public/
+├── tests/
+├── .eslintrc.js
+├── babel.config.js
+├── package.json
+├── tsconfig.json
+├── vue.config.js
+└── webpack.config.js
+```
+
+<br>
+
+**폴더 및 파일 설명**
+
+src: 소스 코드가 위치한 폴더입니다.
+assets: 이미지, 폰트 등 정적 파일을 저장하는 폴더입니다.
+components: Vue 컴포넌트를 저장하는 폴더입니다. View에서 사용할 재사용 가능한 컴포넌트를 여기서 정의합니다.
+**controllers**: 비즈니스 로직과 사용자 입력을 처리하는 컨트롤러 파일을 저장하는 폴더입니다.
+**models**: 애플리케이션의 데이터 구조와 로직을 정의하는 모델 파일을 저장하는 폴더입니다.
+**views**: 라우팅된 뷰 컴포넌트를 저장하는 폴더입니다. 일반적으로 페이지 단위의 컴포넌트를 여기서 정의합니다.
+router: Vue Router 설정 파일을 저장하는 폴더입니다.
+store: Vuex 상태 관리 파일을 저장하는 폴더입니다.
+App.vue: 애플리케이션의 최상위 컴포넌트입니다.
+main.ts: Vue 인스턴스를 생성하고 애플리케이션을 마운트하는 진입점 파일입니다.
+.eslintrc.js : ESLint는 JavaScript와 TypeScript 코드의 문법과 스타일을 검사하고 오류를 식별하는 도구이며, 이 파일에서 ESLint 설정 파일로서 프로젝트의 코드 규칙을 정의하고 ESLint가 사용하는 파서와 플러그인 등을 설정합니다.
+babel.config.js : Babel은 최신 JavaScript 문법을 구형 브라우저에서도 호환되도록 변환하는 도구이며, 이 파일은 Babel 설정 파일로서 변환할 규칙과 플러그인을 설정합니다.
+package.json : 프로젝트의 메타데이터와 의존성을 관리합니다. scripts 섹션은 프로젝트의 명령을 정의하고, dependencies와 devDependencies 섹션은 프로젝트가 필요한 패키지를 명시합니다.
+tsconfig.json : TypeScript 컴파일러의 설정을 정의합니다. 여기에는 타입 검사 옵션, 모듈 해석 옵션 및 파일 경로 매핑 설정이 포함됩니다.
+vue.config.js : Vue CLI 프로젝트의 사용자 정의 설정 파일로서 webpack 설정을 확장하거나 덮어쓸 수 있습니다. 또한, 개발 서버 설정이나 빌드 옵션 등을 정의할 수 있습니다.
+webpack.config.js : Webpack 설정 파일로, 여기서 프로젝트의 모듈 번들링 옵션을 정의합니다. alias를 사용하여 경로 별칭을 설정할 수 있습니다.
+
+<br>
+
+**라이브러리 설치**
+
+```shell
+npm install axios@^1.7.2 core-js@^3.8.3 store@^2.0.12 vue@^3.2.13 vue-router@^4.3.3 vuex@^4.1.0 @babel/core@^7.24.7 @babel/eslint-parser@^7.12.16 @babel/preset-env@^7.24.7 @vue/cli-plugin-babel@~5.0.0 @vue/cli-plugin-eslint@~5.0.0 @vue/cli-plugin-typescript@~5.0.0 @vue/cli-service@~5.0.0 babel-loader@^9.1.3 eslint@^7.32.0 eslint-plugin-vue@^8.0.3 typescript@^5.4.5 webpack@^5.92.0 webpack-cli@^5.1.4 webpack-dev-server@^5.0.4
+npm install --save-dev @babel/plugin-proposal-private-methods
+```
+
+<br>
+
+**Model 구현**
+
+```javascript
+// src/models/User.ts
+export default class User {
+  constructor(public id: number, public name: string, public email: string) {}
+}
+```
+
+<br>
+
+**View 구현**
+
+```vue
+<!-- src/views/UserView.vue -->
+<template>
+  <div>
+    <h1>User Details</h1>
+    <p>Name: {{ user.name }}</p>
+    <p>Email: {{ user.email }}</p>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import User from '@/models/User';
+
+export default defineComponent({
+  data() {
+    return {
+      user: new User(1, 'John Doe', 'john@example.com')
+    };
+  }
+});
+</script>
+```
+
+<br>
+
+**Controller 구현**
+
+```javascript
+// src/controllers/UserController.ts
+import User from '@/models/User';
+
+export default class UserController {
+  getUser(): User {
+    return new User(1, 'John Doe', 'john@example.com');
+  }
+}
+```
+
+<br>
+
+**main.ts - 애플리케이션 설정 및 마운트**
+
+```typescript
+//src/main.ts
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+
+createApp(App)
+  .use(router)
+  .use(store)
+  .mount('#app');
+```
+
+<br>
+
+**router/index.ts - Vue Router 설정 파일**
+
+```typescript
+//src/router/index.ts
+import { createRouter, createWebHistory } from 'vue-router';
+import UserView from '@/views/UserView.vue';
+
+const routes = [
+  { path: '/', component: UserView }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**store/index.ts - Vuex 상태 관리 설정 파일 작성**
+
+```typescript
+//src/store/index.ts
+import { createStore } from 'vuex';
+
+export default createStore({
+  state: {},
+  mutations: {},
+  actions: {},
+  modules: {}
+});
+```
+
+<br>
+
+**App.vue - 최상위 컴포넌트**
+
+```vue
+<template>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'App'
+});
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+<br>
+
+**package.json - 프로젝트의 메타데이터와 의존성 관리**
+
+```json
+{
+  "name": "mvcproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "core-js": "^3.8.3",
+    "store": "^2.0.12",
+    "vue": "^3.2.13",
+    "vue-router": "^4.3.3",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/eslint-parser": "^7.12.16",
+    "@babel/preset-env": "^7.24.7",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-loader": "^9.1.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "typescript": "^5.4.5",
+    "webpack": "^5.92.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "@babel/plugin-proposal-private-methods": "^7.16.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**tsconfig.json - TypeScript 컴파일러 옵션 설정**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["webpack-env"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+<br>
+
+**webpack.config.js - Webpack 설정 관리**
+
+```javascript
+const { defineConfig } = require('@vue/cli-service');
+const path = require('path');
+
+module.exports = defineConfig({
+  transpileDependencies: true,
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src')
+      }
+    }
+  }
+});
+```
+
+<br>
+
+**vue.config.js - vue 프로젝트 설정**
+
+```javascript
+module.exports = {
+  // Vue CLI 프로젝트 설정 (필요시 추가)
+}
+```
+
+<br>
+
+**.eslintrc.js - vue3 eslint 설정**
+
+```jsvascript
+module.exports = {
+  root: true,
+  env: {
+    node: true
+  },
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/typescript/recommended'
+  ],
+  parserOptions: {
+    ecmaVersion: 2020
+  },
+  rules: {
+    // 사용자 정의 규칙 추가
+  }
+}
+```
+
+<br>
+
+**babel.config.js - 바벨 환경 설정**
+
+```javascript
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ],
+  plugins: [
+    '@babel/plugin-proposal-private-methods'
+  ]
+}
+```
+
+<br><br>
+
+### 2-5-2. MVP 패턴
 
 - Model과 View는 MVC 패턴과 동일하지만, Controller 대신 Presenter가 존재합니다.
 
-Model : 어플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분입니다.
-View : 사용자에서 보여지는 UI 부분입니다.
-Presenter : View에서 요청한 정보로 Model을 가공하여 View에 전달해 주는 부분입니다. View와 Model을 붙여주는 역할을 합니다.
+<br>
+
+**주요 구성 요소 및 동작원리**
+
+Model : 어플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분으로 데이터와 비즈니스 로직을 담당합니다.
+View : 사용자에서 보여지는 UI 부분으로 사용자 인터페이스를 담당하며, 사용자가 볼 수 있는 화면을 정의합니다.
+Presenter : View에서 요청한 정보로 Model을 가공하여 View에 전달해 주는 부분으로 View와 Model을 붙여주는 역할을 하며, Model과 View 사이의 중간 관리자로, 사용자 입력을 처리하고, Model과 View를 업데이트합니다.
 
 <br>
 
@@ -4337,9 +5562,10 @@ Presenter : View에서 요청한 정보로 Model을 가공하여 View에 전달�
 
 <br>
 
-**예시 코드**
+**간단한 예시 코드**
 
 ```javascript
+//src/pattern/mvppattern.js
 // Model (State)
 const state = { count: 0 };
 
@@ -4363,13 +5589,393 @@ new Vue({
 
 <br><br>
 
-### 2-4-3. MVVM 패턴
+#### 2-5-2-1. MVP 프로젝트 구조
+
+```lua
+mvpproject/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── models/
+│   ├── views/
+│   ├── presenters/
+│   ├── router/
+│   ├── store/
+│   ├── App.vue
+│   └── main.ts
+├── public/
+├── tests/
+├── .eslintrc.js
+├── babel.config.js
+├── package.json
+├── tsconfig.json
+├── vue.config.js
+└── webpack.config.js
+```
+
+<br>
+
+**폴더 및 파일 설명**
+
+src: 소스 코드가 위치한 폴더입니다.
+assets: 이미지, 폰트 등 정적 파일을 저장하는 폴더입니다.
+components: 재사용 가능한 Vue 컴포넌트를 저장하는 폴더입니다.
+**models**: 데이터 구조와 비즈니스 로직을 정의하는 파일을 저장하는 폴더입니다.
+**views**: 라우팅된 뷰 컴포넌트를 저장하는 폴더입니다. 일반적으로 페이지 단위의 컴포넌트를 여기서 정의합니다.
+**presenters**: Model과 View를 연결하고, 비즈니스 로직을 처리하는 파일을 저장하는 폴더입니다.
+router: Vue Router 설정 파일을 저장하는 폴더입니다.
+store: Vuex 상태 관리 파일을 저장하는 폴더입니다.
+App.vue: 최상위 Vue 컴포넌트입니다.
+main.ts: Vue 인스턴스를 생성하고 애플리케이션을 마운트하는 진입점 파일입니다.
+.eslintrc.js : ESLint는 JavaScript와 TypeScript 코드의 문법과 스타일을 검사하고 오류를 식별하는 도구이며, 이 파일에서 ESLint 설정 파일로서 프로젝트의 코드 규칙을 정의하고 ESLint가 사용하는 파서와 플러그인 등을 설정합니다.
+babel.config.js : Babel은 최신 JavaScript 문법을 구형 브라우저에서도 호환되도록 변환하는 도구이며, 이 파일은 Babel 설정 파일로서 변환할 규칙과 플러그인을 설정합니다.
+package.json : 프로젝트의 메타데이터와 의존성을 관리합니다. scripts 섹션은 프로젝트의 명령을 정의하고, dependencies와 devDependencies 섹션은 프로젝트가 필요한 패키지를 명시합니다.
+tsconfig.json : TypeScript 컴파일러의 설정을 정의합니다. 여기에는 타입 검사 옵션, 모듈 해석 옵션 및 파일 경로 매핑 설정이 포함됩니다.
+vue.config.js : Vue CLI 프로젝트의 사용자 정의 설정 파일로서 webpack 설정을 확장하거나 덮어쓸 수 있습니다. 또한, 개발 서버 설정이나 빌드 옵션 등을 정의할 수 있습니다.
+webpack.config.js : Webpack 설정 파일로, 여기서 프로젝트의 모듈 번들링 옵션을 정의합니다. alias를 사용하여 경로 별칭을 설정할 수 있습니다.
+
+<br>
+
+**필요한 라이브러리 및 패키지 설치**
+
+```shell
+npm install axios@^1.7.2 core-js@^3.8.3 store@^2.0.12 vue@^3.2.13 vue-router@^4.3.3 vuex@^4.1.0 @babel/core@^7.24.7 @babel/eslint-parser@^7.12.16 @babel/preset-env@^7.24.7 @vue/cli-plugin-babel@~5.0.0 @vue/cli-plugin-eslint@~5.0.0 @vue/cli-plugin-typescript@~5.0.0 @vue/cli-service@~5.0.0 babel-loader@^9.1.3 eslint@^7.32.0 eslint-plugin-vue@^8.0.3 typescript@^5.4.5 webpack@^5.92.0 webpack-cli@^5.1.4 webpack-dev-server@^5.0.4
+npm install babel-loader --save-dev
+npm install --save-dev @babel/plugin-proposal-private-methods
+```
+
+<br>
+
+
+**Model 구현**
+
+```typescript
+// src/models/User.ts
+export default class User {
+  constructor(public id: number, public name: string, public email: string) {}
+}
+```
+
+<br>
+
+**View 구현**
+
+```vue
+<!-- src/views/UserView.vue -->
+<template>
+    <div>
+      <h1>User Details</h1>
+      <p>Name: {{ user.name }}</p>
+      <p>Email: {{ user.email }}</p>
+      <button @click="fetchUser">Fetch User</button>
+    </div>
+  </template>
+  
+  <script lang="ts">
+  import { defineComponent } from 'vue';
+  import User from '@/models/User';
+  import UserPresenter from '@/presenters/UserPresenter';
+  
+  export default defineComponent({
+    data() {
+      return {
+        user: new User(1, 'Gitae Kim', 'kim@example.com')
+      };
+    },
+    methods: {
+      async fetchUser() {
+        const presenter = new UserPresenter();
+        this.user = await presenter.getUser();
+      }
+    }
+  });
+  </script>
+```
+
+<br>
+
+**Presenter 구현**
+
+```typescript
+// src/presenters/UserPresenter.ts
+import User from '@/models/User';
+
+export default class UserPresenter {
+  async getUser(): Promise<User> {
+    // API 호출을 통해 사용자 데이터를 가져오는 예시
+    const response = await fetch('https://api.example.com/user/1');
+    const data = await response.json();
+    return new User(data.id, data.name, data.email);
+  }
+}
+```
+
+<br>
+
+**main.ts - Vue 인스턴스 생성 및 마운트**
+
+```typescript
+//src/main.ts
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+
+createApp(App)
+  .use(router)
+  .use(store)
+  .mount('#app');
+```
+
+<br>
+
+**router/index.ts - Vue Router 설정**
+
+```typescript
+//src/router/index.ts
+import { createRouter, createWebHistory } from 'vue-router';
+import UserView from '@/views/UserView.vue';
+
+const routes = [
+  { path: '/', component: UserView }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**store/index.ts - Vuex 상태 관리**
+
+```typescript
+//src/store/index.ts
+import { createStore } from 'vuex';
+
+export default createStore({
+  state: {},
+  mutations: {},
+  actions: {},
+  modules: {}
+});
+```
+
+<br>
+
+**App.vue - 최상위 컴포넌트**
+
+```vue
+<template>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'App'
+});
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+<br>
+
+**package.json - 프로젝트의 메타데이터와 의존성 관리**
+
+```json
+{
+  "name": "mvcproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "core-js": "^3.8.3",
+    "store": "^2.0.12",
+    "vue": "^3.2.13",
+    "vue-router": "^4.3.3",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/eslint-parser": "^7.12.16",
+    "@babel/preset-env": "^7.24.7",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-loader": "^9.1.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "typescript": "^5.4.5",
+    "webpack": "^5.92.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "@babel/plugin-proposal-private-methods": "^7.16.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**tsconfig.json - TypeScript 컴파일러 옵션 설정**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["webpack-env"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+<br>
+
+**webpack.config.js - Webpack 설정 관리**
+
+```javascript
+const { defineConfig } = require('@vue/cli-service');
+const path = require('path');
+
+module.exports = defineConfig({
+  transpileDependencies: true,
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src')
+      }
+    }
+  }
+});
+```
+
+<br>
+
+**vue.config.js - vue 프로젝트 설정**
+
+```javascript
+module.exports = {
+  // Vue CLI 프로젝트 설정 (필요시 추가)
+}
+```
+
+<br>
+
+**.eslintrc.js - vue3 eslint 설정**
+
+```jsvascript
+module.exports = {
+  root: true,
+  env: {
+    node: true
+  },
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/typescript/recommended'
+  ],
+  parserOptions: {
+    ecmaVersion: 2020
+  },
+  rules: {
+    // 사용자 정의 규칙 추가
+  }
+}
+```
+
+<br>
+
+**babel.config.js - 바벨 환경 설정**
+
+```javascript
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ],
+  plugins: [
+    '@babel/plugin-proposal-private-methods'
+  ]
+}
+```
+
+<br><br>
+
+### 2-5-3. MVVM 패턴
 
 - Model과 View는 다른 패턴과 동일하지만, 중계 역할을 하는 ViewModel이 존재합니다.
 
-Model : 어플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분입니다.
-View : 사용자에서 보여지는 UI 부분입니다.
-View Model : View를 표현하기 위해 만든 View를 위한 Model입니다. View를 나타내 주기 위한 Model이자 View를 나타내기 위한 데이터 처리를 하는 부분입니다.
+<br>
+
+**주요 구성 요소 및 동작원리**
+
+Model : 어플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분으로 데이터와 비즈니스 로직을 담당합니다.
+View : 사용자에서 보여지는 UI 부분으로 사용자 인터페이스를 담당하며, 사용자가 볼 수 있는 화면을 정의합니다.
+View Model : View를 표현하기 위해 만든 View를 위한 Model입니다. View를 나타내 주기 위한 Model이자 View를 나타내기 위한 데이터 처리를 하는 부분으로 Model과 View 사이의 중간 관리자로, 데이터를 바인딩하고, View의 상태를 관리합니다.
 
 [MVVM 패턴](./images/pattern03.png)
 
@@ -4380,9 +5986,10 @@ View Model : View를 표현하기 위해 만든 View를 위한 Model입니다. V
 
 <br>
 
-**예시 코드**
+**간단한 예시 코드**
 
 ```javascript
+//src/pattern/mvvmpattern.js
 // Model (Vuex store)
 const store = new Vuex.Store({
   state: { count: 0 },
@@ -4405,7 +6012,388 @@ new Vue({
 
 <br><br>
 
-### 2-4-4. Flux 패턴
+#### 2-5-3-1. MVVM 프로젝트 구조
+
+```lua
+mvvmproject/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── models/
+│   ├── views/
+│   ├── viewmodels/
+│   ├── router/
+│   ├── store/
+│   ├── App.vue
+│   └── main.ts
+├── public/
+├── tests/
+├── .eslintrc.js
+├── babel.config.js
+├── package.json
+├── tsconfig.json
+├── vue.config.js
+└── webpack.config.js
+```
+
+<br>
+
+**폴더 및 파일 설명**
+
+src: 소스 코드가 위치한 폴더입니다.
+assets: 이미지, 폰트 등 정적 파일을 저장하는 폴더입니다.
+components: 재사용 가능한 Vue 컴포넌트를 저장하는 폴더입니다.
+**models**: 데이터 구조와 비즈니스 로직을 정의하는 파일을 저장하는 폴더입니다.
+**views**: 라우팅된 뷰 컴포넌트를 저장하는 폴더입니다. 일반적으로 페이지 단위의 컴포넌트를 여기서 정의합니다.
+**viewmodels**: Model과 View를 연결하고, 데이터 바인딩 및 상태 관리를 담당하는 파일을 저장하는 폴더입니다.
+router: Vue Router 설정 파일을 저장하는 폴더입니다.
+store: Vuex 상태 관리 파일을 저장하는 폴더입니다.
+App.vue: 최상위 Vue 컴포넌트입니다.
+main.ts: Vue 인스턴스를 생성하고 애플리케이션을 마운트하는 진입점 파일입니다.
+.eslintrc.js : ESLint는 JavaScript와 TypeScript 코드의 문법과 스타일을 검사하고 오류를 식별하는 도구이며, 이 파일에서 ESLint 설정 파일로서 프로젝트의 코드 규칙을 정의하고 ESLint가 사용하는 파서와 플러그인 등을 설정합니다.
+babel.config.js : Babel은 최신 JavaScript 문법을 구형 브라우저에서도 호환되도록 변환하는 도구이며, 이 파일은 Babel 설정 파일로서 변환할 규칙과 플러그인을 설정합니다.
+package.json : 프로젝트의 메타데이터와 의존성을 관리합니다. scripts 섹션은 프로젝트의 명령을 정의하고, dependencies와 devDependencies 섹션은 프로젝트가 필요한 패키지를 명시합니다.
+tsconfig.json : TypeScript 컴파일러의 설정을 정의합니다. 여기에는 타입 검사 옵션, 모듈 해석 옵션 및 파일 경로 매핑 설정이 포함됩니다.
+vue.config.js : Vue CLI 프로젝트의 사용자 정의 설정 파일로서 webpack 설정을 확장하거나 덮어쓸 수 있습니다. 또한, 개발 서버 설정이나 빌드 옵션 등을 정의할 수 있습니다.
+webpack.config.js : Webpack 설정 파일로, 여기서 프로젝트의 모듈 번들링 옵션을 정의합니다. alias를 사용하여 경로 별칭을 설정할 수 있습니다.
+
+<br>
+
+**필요한 라이브러리 및 패키지 설치**
+
+```shell
+npm install axios@^1.7.2 core-js@^3.8.3 store@^2.0.12 vue@^3.2.13 vue-router@^4.3.3 vuex@^4.1.0 @babel/core@^7.24.7 @babel/eslint-parser@^7.12.16 @babel/preset-env@^7.24.7 @vue/cli-plugin-babel@~5.0.0 @vue/cli-plugin-eslint@~5.0.0 @vue/cli-plugin-typescript@~5.0.0 @vue/cli-service@~5.0.0 babel-loader@^9.1.3 eslint@^7.32.0 eslint-plugin-vue@^8.0.3 typescript@^5.4.5 webpack@^5.92.0 webpack-cli@^5.1.4 webpack-dev-server@^5.0.4
+npm install babel-loader --save-dev
+npm install --save-dev @babel/plugin-proposal-private-methods
+```
+
+<br>
+
+**Model 구현**
+
+```typescript
+// src/models/User.ts
+export default class User {
+  constructor(public id: number, public name: string, public email: string) {}
+}
+```
+
+<br>
+
+**View 구현**
+
+```vue
+<!-- src/views/UserView.vue -->
+<template>
+  <div>
+    <h1>User Details</h1>
+    <p>Name: {{ user.name }}</p>
+    <p>Email: {{ user.email }}</p>
+    <button @click="fetchUser">Fetch User</button>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { useUserViewModel } from '@/viewmodels/UserViewModel';
+
+export default defineComponent({
+  setup() {
+    const { user, fetchUser } = useUserViewModel();
+
+    return {
+      user,
+      fetchUser
+    };
+  }
+});
+</script>
+```
+
+<br>
+
+**ViewModel 구현**
+
+```typescript
+// src/viewmodels/UserViewModel.ts
+import { ref } from 'vue';
+import User from '@/models/User';
+
+export function useUserViewModel() {
+  const user = ref<User | null>(null);
+
+  async function fetchUser() {
+    const response = await fetch('https://api.example.com/user/1');
+    const data = await response.json();
+    user.value = new User(data.id, data.name, data.email);
+  }
+
+  return {
+    user,
+    fetchUser
+  };
+}
+```
+
+<br>
+
+**main.ts**
+
+```typescript
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+
+createApp(App)
+  .use(router)
+  .use(store)
+  .mount('#app');
+```
+
+<br>
+
+**router/index.ts**
+
+```typescript
+import { createRouter, createWebHistory } from 'vue-router';
+import UserView from '@/views/UserView.vue';
+
+const routes = [
+  { path: '/', component: UserView }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**store/index.ts**
+
+```typescript
+import { createStore } from 'vuex';
+
+export default createStore({
+  state: {},
+  mutations: {},
+  actions: {},
+  modules: {}
+});
+```
+
+<br>
+
+**App.vue - 최상위 컴포넌트**
+
+```vue
+<template>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'App'
+});
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+<br>
+
+**package.json - 프로젝트의 메타데이터와 의존성 관리**
+
+```json
+{
+  "name": "mvvmproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "core-js": "^3.8.3",
+    "store": "^2.0.12",
+    "vue": "^3.2.13",
+    "vue-router": "^4.3.3",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/eslint-parser": "^7.12.16",
+    "@babel/preset-env": "^7.24.7",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-loader": "^9.1.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "typescript": "^5.4.5",
+    "webpack": "^5.92.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "@babel/plugin-proposal-private-methods": "^7.16.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**tsconfig.json - TypeScript 컴파일러 옵션 설정**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["webpack-env"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+<br>
+
+**webpack.config.js - Webpack 설정 관리**
+
+```javascript
+const { defineConfig } = require('@vue/cli-service');
+const path = require('path');
+
+module.exports = defineConfig({
+  transpileDependencies: true,
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src')
+      }
+    }
+  }
+});
+```
+
+<br>
+
+**vue.config.js - vue 프로젝트 설정**
+
+```javascript
+module.exports = {
+  // Vue CLI 프로젝트 설정 (필요시 추가)
+}
+```
+
+<br>
+
+**.eslintrc.js - vue3 eslint 설정**
+
+```jsvascript
+module.exports = {
+  root: true,
+  env: {
+    node: true
+  },
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/typescript/recommended'
+  ],
+  parserOptions: {
+    ecmaVersion: 2020
+  },
+  rules: {
+    // 사용자 정의 규칙 추가
+  }
+}
+```
+
+<br>
+
+**babel.config.js - 바벨 환경 설정**
+
+```javascript
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ],
+  plugins: [
+    '@babel/plugin-proposal-private-methods'
+  ]
+}
+```
+
+<br><br>
+
+### 2-5-4. Flux 패턴
+
+- Flux는 단방향 데이터 흐름을 통해 애플리케이션 상태 관리를 체계화하는 패턴입니다. Vue.js에서 Flux 패턴을 구현할 때는 Vuex를 주로 사용합니다.
+
+<br>
+
+**주요 구성 요소와 동작원리**
 
 Actions: 상태 변화를 트리거하는 함수들입니다.
 Dispatcher: 모든 액션을 관리하는 중앙 허브입니다.
@@ -4414,17 +6402,20 @@ Views: Vue 컴포넌트를 사용합니다.
 
 [Flux 패턴](./images/pattern04.png)
 
+```
 1. Action : 사용자가 View(Vue Component)를 통하여 Dispacher에 요청합니다.
 2. Dispatch : Dispatcher가 Vuex의 Actions를 통하여 Backend에 처리를 요청합니다.
 3. Commit : Backend에서 응답된 데이터는 Vuex Actions 에서 Vuex Mutations 으로 전달됩니다.
 4. Mutate : Vuex Mutations에서 Vuex State로 저장합니다.
-Render : Vuex State에 저장된 데이터는 View(Vue Component)에 표시됩니다.
+   Render : Vuex State에 저장된 데이터는 View(Vue Component)에 표시됩니다.
+```
 
 <br>
 
-**예시 코드**
+**간단한 예시 코드**
 
 ```javascript
+//src/pattern/fluxpattern.js
 // Action
 const actions = {
   increment(context) { context.commit('increment'); }
@@ -4453,9 +6444,428 @@ new Vue({
 
 <br><br>
 
-### 2-4-5. 여러 가지 프로그래밍 디자인 패턴
+#### 2-5-4-1. Flux 프로젝트 구조
 
-#### 2-4-5-1. Observer 패턴
+```lua
+fluxproject/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── actions/
+│   ├── mutations/
+│   ├── state/
+│   ├── getters/
+│   ├── store/
+│   ├── views/
+│   ├── router/
+│   ├── App.vue
+│   └── main.ts
+├── public/
+├── tests/
+├── .eslintrc.js
+├── babel.config.js
+├── package.json
+├── tsconfig.json
+├── vue.config.js
+└── webpack.config.js
+```
+
+**각 폴더 및 파일 설명**
+
+src: 소스 코드가 위치한 폴더입니다.
+assets: 정적 파일 (이미지, 폰트 등)을 이곳에 추가합니다.
+components: 재사용 가능한 Vue 컴포넌트입니다.
+**actions**: Vuex 액션 정의 파일입니다.
+**mutations**: Vuex 뮤테이션 정의 파일입니다.
+**state**: Vuex 상태 정의 파일입니다.
+**getters**: Vuex 게터 정의 파일입니다.
+store: Vuex 스토어 설정 파일입니다.
+views: 라우팅된 뷰 컴포넌트입니다.
+router: Vue Router 설정 파일입니다.
+App.vue: 최상위 Vue 컴포넌트입니다.
+main.ts: 애플리케이션의 진입점 파일
+.eslintrc.js : ESLint는 JavaScript와 TypeScript 코드의 문법과 스타일을 검사하고 오류를 식별하는 도구이며, 이 파일에서 ESLint 설정 파일로서 프로젝트의 코드 규칙을 정의하고 ESLint가 사용하는 파서와 플러그인 등을 설정합니다.
+babel.config.js : Babel은 최신 JavaScript 문법을 구형 브라우저에서도 호환되도록 변환하는 도구이며, 이 파일은 Babel 설정 파일로서 변환할 규칙과 플러그인을 설정합니다.
+package.json : 프로젝트의 메타데이터와 의존성을 관리합니다. scripts 섹션은 프로젝트의 명령을 정의하고, dependencies와 devDependencies 섹션은 프로젝트가 필요한 패키지를 명시합니다.
+tsconfig.json : TypeScript 컴파일러의 설정을 정의합니다. 여기에는 타입 검사 옵션, 모듈 해석 옵션 및 파일 경로 매핑 설정이 포함됩니다.
+vue.config.js : Vue CLI 프로젝트의 사용자 정의 설정 파일로서 webpack 설정을 확장하거나 덮어쓸 수 있습니다. 또한, 개발 서버 설정이나 빌드 옵션 등을 정의할 수 있습니다.
+webpack.config.js : Webpack 설정 파일로, 여기서 프로젝트의 모듈 번들링 옵션을 정의합니다. alias를 사용하여 경로 별칭을 설정할 수 있습니다.
+
+<br>
+
+**필요한 라이브러리 및 패키지 설치**
+
+```shell
+npm install axios@^1.7.2 core-js@^3.8.3 store@^2.0.12 vue@^3.2.13 vue-router@^4.3.3 vuex@^4.1.0 @babel/core@^7.24.7 @babel/eslint-parser@^7.12.16 @babel/preset-env@^7.24.7 @vue/cli-plugin-babel@~5.0.0 @vue/cli-plugin-eslint@~5.0.0 @vue/cli-plugin-typescript@~5.0.0 @vue/cli-service@~5.0.0 babel-loader@^9.1.3 eslint@^7.32.0 eslint-plugin-vue@^8.0.3 typescript@^5.4.5 webpack@^5.92.0 webpack-cli@^5.1.4 webpack-dev-server@^5.0.4
+npm install babel-loader --save-dev
+npm install --save-dev @babel/plugin-proposal-private-methods
+```
+
+<br>
+
+**Model 구현**
+
+```javascript
+// src/models/User.ts
+export default class User {
+  constructor(public id: number, public name: string, public email: string) {}
+}
+```
+
+<br>
+
+**View 구현**
+
+```vue
+<!-- src/views/UserView.vue -->
+<template>
+  <div>
+    <h1>User Details</h1>
+    <p>Name: {{ user.name }}</p>
+    <p>Email: {{ user.email }}</p>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import User from '@/models/User';
+
+export default defineComponent({
+  data() {
+    return {
+      user: new User(1, 'John Doe', 'john@example.com')
+    };
+  }
+});
+</script>
+```
+
+<br>
+
+**Actions 구현**
+
+```typescript
+// src/actions/userActions.ts
+import { ActionContext } from 'vuex';
+import { State } from '@/state';
+import { User } from '@/models/User';
+
+export const actions = {
+  async fetchUser(context: ActionContext<State, State>, userId: number) {
+    const response = await fetch(`https://api.example.com/users/${userId}`);
+    const user = await response.json();
+    context.commit('setUser', user);
+  }
+};
+```
+
+<br>
+
+**Mutations 구현**
+
+
+```typescript
+// src/mutations/userMutations.ts
+import { State } from '@/state';
+import { User } from '@/models/User';
+
+export const mutations = {
+  setUser(state: State, user: User) {
+    state.user = user;
+  }
+};
+```
+
+<br>
+
+**State 구현**
+
+```typescript
+// src/state/index.ts
+import { User } from '@/models/User';
+
+export interface State {
+  user: User | null;
+}
+
+export const state: State = {
+  user: null
+};
+```
+
+<br>
+
+**Getters 구현**
+
+```typescript
+// src/getters/userGetters.ts
+import { State } from '@/state';
+
+export const getters = {
+  getUser: (state: State) => state.user
+};
+```
+
+<br>
+
+**Store 작성**
+
+```typescript
+// src/store/index.ts
+import { createStore } from 'vuex';
+import { state } from '@/state';
+import { mutations } from '@/mutations/userMutations';
+import { actions } from '@/actions/userActions';
+import { getters } from '@/getters/userGetters';
+
+export default createStore({
+  state,
+  mutations,
+  actions,
+  getters
+});
+```
+
+<br>
+
+**main.ts**
+
+```typescript
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+
+createApp(App)
+  .use(router)
+  .use(store)
+  .mount('#app');
+```
+
+<br>
+
+**router/index.ts**
+
+```typescript
+import { createRouter, createWebHistory } from 'vue-router';
+import UserView from '@/views/UserView.vue';
+
+const routes = [
+  { path: '/', component: UserView }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**App.vue**
+
+```vue
+<template>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'App'
+});
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+<br>
+
+**package.json - 프로젝트의 메타데이터와 의존성 관리**
+
+```json
+{
+  "name": "mvvmproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "core-js": "^3.8.3",
+    "store": "^2.0.12",
+    "vue": "^3.2.13",
+    "vue-router": "^4.3.3",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/eslint-parser": "^7.12.16",
+    "@babel/preset-env": "^7.24.7",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-loader": "^9.1.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "typescript": "^5.4.5",
+    "webpack": "^5.92.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "@babel/plugin-proposal-private-methods": "^7.16.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**tsconfig.json - TypeScript 컴파일러 옵션 설정**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["webpack-env"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+<br>
+
+**webpack.config.js - Webpack 설정 관리**
+
+```javascript
+const { defineConfig } = require('@vue/cli-service');
+const path = require('path');
+
+module.exports = defineConfig({
+  transpileDependencies: true,
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src')
+      }
+    }
+  }
+});
+```
+
+<br>
+
+**vue.config.js - vue 프로젝트 설정**
+
+```javascript
+module.exports = {
+  // Vue CLI 프로젝트 설정 (필요시 추가)
+}
+```
+
+<br>
+
+**.eslintrc.js - vue3 eslint 설정**
+
+```jsvascript
+module.exports = {
+  root: true,
+  env: {
+    node: true
+  },
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/typescript/recommended'
+  ],
+  parserOptions: {
+    ecmaVersion: 2020
+  },
+  rules: {
+    // 사용자 정의 규칙 추가
+  }
+}
+```
+
+<br>
+
+**babel.config.js - 바벨 환경 설정**
+
+```javascript
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ],
+  plugins: [
+    '@babel/plugin-proposal-private-methods'
+  ]
+}
+```
+
+<br><br>
+
+### 2-5-5. 여러 가지 프로그래밍 디자인 패턴
+
+#### 2-5-5-1. Observer 패턴
 
 - 이 패턴은 객체의 상태 변화를 감지하고 자동으로 관련 객체에 알리는 메커니즘입니다. Vue.js의 반응형 시스템은 이 패턴을 기반으로 작동합니다.
 - Vue.js에서는 Vue의 반응형 객체와 watch 함수를 사용하여 구현합니다.
@@ -4463,6 +6873,7 @@ new Vue({
 **예시 코드**
 
 ```javascript
+//src/other_pattern/Observer.js
 import { ref, watch } from 'vue';
 
 const count = ref(0);
@@ -4476,7 +6887,7 @@ count.value++;
 
 <br>
 
-#### 2-4-5-2. Singleton 패턴
+#### 2-5-5-2. Singleton 패턴
 
 - 싱글톤 패턴은 클래스의 인스턴스가 하나만 존재하도록 보장하는 패턴입니다.
 - Vue.js에서는 싱글톤 패턴 방식이 Vuex 스토어에서 활용되며, 애플리케이션 전역에서 하나의 인스턴스를 공유하도록 설계되어 있습니다. 
@@ -4484,6 +6895,7 @@ count.value++;
 **예시 코드**
 
 ```javascript
+//src/other_pattern/Singleton.js
 import { createStore } from 'vuex';
 
 const store = createStore({
@@ -4502,7 +6914,7 @@ export default store;
 
 <br>
 
-#### 2-4-5-3. Factory 패턴
+#### 2-5-5-3. Factory 패턴
 
 - 객체 생성을 위한 인터페이스를 정의하고, 서브클래스가 어떤 클래스의 인스턴스를 생성할지를 결정하도록 하는 패턴입니다.
 - Vue.js에서는 Vue 컴포넌트를 동적으로 생성할 때 팩토리 패턴을 사용할 수 있습니다.
@@ -4510,6 +6922,7 @@ export default store;
 **예시 코드**
 
 ```javascript
+//src/other_pattern/Factory.js
 import { defineComponent, h } from 'vue';
 
 const ButtonFactory = (type) => {
@@ -4526,7 +6939,7 @@ const SecondaryButton = ButtonFactory('secondary');
 
 <br>
 
-#### 2-4-5-4. Proxy 패턴
+#### 2-5-5-4. Proxy 패턴
 
 - 다른 객체에 대한 접근을 제어하는 대리 객체를 제공하는 패턴입니다. Vue 3에서 Proxy 객체를 사용하여 반응형 시스템을 구현합니다.
 - Vue.js에서의 반응형 API (reactive, ref 등)는 Proxy 객체를 사용하여 상태 변화를 감지하고 반응형으로 동작합니다.
@@ -4534,6 +6947,7 @@ const SecondaryButton = ButtonFactory('secondary');
 **예시 코드**
 
 ```javascript
+//src/other_pattern/Proxy.js
 import { reactive } from 'vue';
 
 const state = reactive({
@@ -4547,7 +6961,7 @@ const increment = () => {
 
 <br>
 
-#### 2-4-5-5. Decorator 패턴
+#### 2-5-5-5. Decorator 패턴
 
 - 객체에 새로운 기능을 동적으로 추가할 수 있게 하는 패턴입니다.
 - Vue.js에서는 장식자 패턴을 활용해 HTML 요소에 동적으로 기능을 추가할 수 있습니다.
@@ -4555,6 +6969,7 @@ const increment = () => {
 **예시 코드**
 
 ```javascript
+//src/other_pattern/Decorator.js
 // 사용자 정의 디렉티브
 const vFocus = {
   mounted(el) {
@@ -4572,7 +6987,7 @@ app.mount('#app');
 
 <br>
 
-#### 2-4-5-6. Strategy 패턴
+#### 2-5-5-6. Strategy 패턴
 
 - 전략 패턴은 알고리즘을 개별 클래스들로 캡슐화하여 교체할 수 있도록 하는 패턴입니다.
 - Vue.js에서의 사용는 컴포넌트 내부에서 다양한 전략을 구현하여 필요한 전략을 선택적으로 사용할 수 있습니다.
@@ -4580,6 +6995,7 @@ app.mount('#app');
 **예시 코드**
 
 ```javascript
+//src/other_pattern/Strategy.js
 const strategies = {
   strategyA() {
     console.log('Executing Strategy A');
@@ -4610,7 +7026,47 @@ app.mount('#app');
 
 # 3. Vuejs의 요소
 
-<br><br>
+```shell
+vue create study03
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: (Press <space> to select, <a> to toggle all, <i> to invert selection, and
+<enter> to proceed)
+ (*) Babel
+ (*) TypeScript
+ ( ) Progressive Web App (PWA) Support
+ (*) Router
+ (*) Vuex
+ (*) CSS Pre-processors
+ (*) Linter / Formatter
+>(*) Unit Testing
+ ( ) E2E Testing
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex, CSS Pre-processors, Linter, Unit
+? Choose a version of Vue.js that you want to start the project with (Use arrow keys)
+> 3.x
+  2.x
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex, CSS Pre-processors, Linter, Unit
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? Yes
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Pick a CSS pre-processor (PostCSS, Autoprefixer and CSS Modules are supported by default): Sass/SCSS (with dart-sass)
+? Pick a linter / formatter config: Standard
+? Pick additional lint features: Lint on save
+? Pick a unit testing solution: Jest
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? Yes
+? Save preset as: project03
+```
+
+<br>
 
 ## 3-1. Typescript
 
@@ -4631,9 +7087,482 @@ app.mount('#app');
 
 <br>
 
-### 3-1-2. 타입 정의
+### 3-1-2. Typescript의 기본 문법
 
-1. TypeScript의 강점은 데이터 타입을 정의할 수 있으며, Event 타입과 HTMLInputElement 타입을 사용하여 이벤트 핸들러를 구현할 수 있습니다.
+- TypeScript의 강점은 데이터 타입을 정의할 수 있으며, Event 타입과 HTMLInputElement 타입을 사용하여 이벤트 핸들러를 구현할 수 있습니다.
+
+<br>
+
+#### 3-1-2-1. 기본 타입 선언
+
+- 프로그램이 유용하려면 숫자, 문자열, 구조체, 불리언 값과 같은 간단한 데이터 단위가 필요합니다. 
+- TypeScript는 JavaScript와 거의 동일한 데이터 타입을 지원하며, 열거 타입을 사용하여 더 편리하게 사용할 수 있습니다.
+
+<br>
+
+**typescript/exam01.ts**
+
+<br>
+
+**1-1. 문자열**
+
+```typescript
+let hello: string = "helloWorld!";
+```
+
+<br>
+
+**1-2. 숫자**
+
+```typescript
+let tripleSeven: number = 1004;
+```
+
+<br>
+
+**1-3. 배열**
+
+```typescript
+let arr1: number[] = [100, 200, 300];
+let arr2: Array<number> = [100 , 200, 300];
+let arr3: Array<string> = ["hello", "world"];
+let arr4: [string, number] = ["gitae", 42];
+```
+
+<br>
+
+**1-4. 객체**
+
+```typescript
+let man: object = { name: "gitae", age: 42 };
+let person: { name: string; age: number } = {
+  name: "gitae",
+  age: 42
+};
+```
+
+<br>
+
+**1-5. 불리언 (Boolean)**
+
+```typescript
+let isAngel: boolean = true;
+```
+
+<br><br>
+
+#### 3-1-2-2. 함수 선언
+
+- TypeScript 함수는 JavaScript와 마찬가지로 기명 함수(named function)과 익명 함수(anonymous function)로 만들 수 있습니다. 이를 통해 API에서 함수 목록을 작성하든 일회성 함수를 써서 다른 함수로 전달하든 애플리케이션에 가장 적합한 방법을 선택할 수 있습니다.
+
+<br>
+
+**typescript/exam02.ts**
+
+<br>
+
+**2-1. 함수 타입 선언**
+
+- TypeScript에선 parameter와 return 값의 타입 선언을 할 수 있습니다.
+
+```typescript
+function add(x: number, y: number): number {
+  return x + y;
+}
+```
+
+<br>
+
+**2-2. 선택적 매개변수 (optional parameter)**
+
+- optional parameter는 있어도 되고 없어도 되는 parameter로 `?`를 앞에 추가해주면 됩니다.
+
+```typescript
+function parseName(firstName: string, lastName?: string) {
+    if (lastName)
+        return firstName + " " + lastName;
+    else
+        return firstName;
+}
+
+let result1 = parseName("Kim"); // 문제 없음
+let result2 = parseName("Kim", "Cortez", "Pg"); // 에러
+let result3 = parseName("Kim", "Cortez"); // 문제 없음
+```
+
+<br><br>
+
+#### 3-1-2-3. 인터페이스 (Interface)
+
+- TypeScript의 핵심 원칙 중 하나는 타입 검사가 값의 형태에 초점을 맞추고 있다는 것입니다. 
+- 인터페이스를 "덕 타이핑(duck typing)" 혹은 "구조적 서브타이핑 (structural subtyping)"이라고도 합니다. 
+- TypeScript에서는 인터페이스는 이런 타입들의 이름을 짓는 역할을 하고 코드 안의 계약을 정의하는 것뿐만 아니라 프로젝트 외부에서 사용하는 코드의 계약을 정의하는 강력한 방법입니다.
+- interface는 자주 사용하는 타입들을 object 형태의 묶음으로 정의해 새로운 타입을 만드는 기능입니다.
+
+<br>
+
+**typescript/exam03.ts**
+
+<br>
+
+**3-1. interface 선언**
+
+```typescript
+interface User {
+  age: number;
+  name: string;
+}
+```
+
+<br>
+
+**3-2. 변수 활용**
+
+```typescript
+const gitae: User = { name: "gitae", age: 42 }
+```
+
+<br>
+
+**3-3. 함수 인자로의 활용**
+
+```typescript
+function getUser(user: User) {
+  console.log(user);
+}
+
+getUser({ name: "gitae", age: 42 });
+```
+
+<br>
+
+**3-4. 함수 구조 활용**
+
+```typescript
+interface Add {
+  (x: number, y: number): number;
+}
+
+let addFunc: Add = (a, b) => a + b;
+
+console.log(addFunc(48, 6));
+```
+
+<br>
+
+**3-5. 배열 활용**
+
+```typescript
+interface StringArr {
+  [index: number]: string;
+}
+
+let arr: StringArr = ["a", "b", "c"];
+```
+
+<br>
+
+**3-6. 객체 활용**
+
+```typescript
+interface Obj {
+  [key: string]: string;
+}
+
+const obj: Obj = {
+  person1: "Gitae",
+  person2: "Eric"
+}
+```
+
+<br>
+
+**3-7. Interface 확장**
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Developer extends Person {
+  position: string;
+}
+
+const dev: Developer = {
+  name: "gitae",
+  age: 42,
+  position: "Fullstack"
+};
+```
+
+<br><br>
+
+#### 3-1-2-4. 타입 (type)
+
+- type 키워드는 interface와는 다르게 새로운 타입을 생성하는 것이 아닌 별칭을 부여하는 것으로서 extends 키워드는 사용할 수 없습니다.
+
+<br>
+
+**typescript/exam04.ts**
+
+<br>
+
+**4-1. 타입 별칭 선언**
+
+```typescript
+type StrOrNum = string | number;
+
+const str1: StrOrNum = "hello world";
+const str2: StrOrNum = 1004;
+```
+
+<br>
+
+**4-2. type과 interface 차이점**
+
+- 타입 별칭과 인터페이스의 가장 큰 차이점은 타입의 확장 가능 / 불가능 여부입니다.
+- 인터페이스는 확장이 가능한데 반해 타입 별칭은 확장이 불가능므로 가능하면, type 보다는 interface로 선언해서 사용하는 것이 좋습니다.
+
+<br><br>
+
+#### 3-1-2-5. 연산자 (Operator)
+
+<br>
+
+**typescript/exam05.ts**
+
+<br>
+
+**5-1. 유니언 타입 (Union Type)**
+
+- 한 개 이상의 type을 선언할 때 사용할 수 있으며, `|` 키워드를 사용합니다.
+
+<br>
+
+```typescript
+function strOrNum (value: string | number) {
+  if(typeof value === 'string') {
+    value.toString();
+  } else if(typeof value === 'number') {
+    value.toLocaleString();
+  } else {
+    throw new TypeError('문자열 또는 숫자를 입력해주세요!');
+  }
+}
+
+strOrNum('hello world');
+strOrNum(1004);
+```
+
+<br>
+
+**5-2. 교차 타입 (Intersection Type)**
+
+- 합집합과 같은 개념으로 함수 호출의 경우, 함수 인자에 명시한 type을 모두 제공해야 하고, `&` 키워드를 사용합니다.
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Developer {
+  name: string;
+  skill: string;
+}
+
+type Capt = Person & Developer;
+
+let devPerson: Capt = {
+  name: "kim",
+  age: 777,
+  skill: "FE"
+};
+```
+
+#### 3-1-2-6. Class
+
+**6-1. 접근 제한자**
+
+- 클래스 기반 객체 지향 언어가 지원하는 접근 제한자(Access modifier) public, private, protected를 지원하며 의미 또한 동일합니다.
+
+<br>
+
+**접근 제한자를 명시하지 않았을 때**
+
+- 다른 클래스 기반 언어 : protected로 지정
+- TypeScript : public으로 지정
+
+| 접근 가능성 | public | protected | private |
+|------------------|------------|------------|------------|
+| 클래스 내부	| O	| O	| O |
+| 자식 클래스 내부 | O | O | X |
+| 클래스 인스턴스 | O	 | X | X |
+
+<br>
+
+**6-2. Class에서의 타입 선언**
+
+```typescript
+class Person {
+    private nick: string;
+    public age: number;
+    readonly log: string;
+
+    constructor(nick: string, age: number) {
+        this.nick = nick;
+        this.age = age;
+        this.log = `Created person: ${nick}, age: ${age}`;
+    }
+
+    // getter method for nick
+    public getNick(): string {
+        return this.nick;
+    }
+
+    // setter method for nick
+    public setNick(nick: string): void {
+        this.nick = nick;
+    }
+}
+```
+
+<br><br>
+
+#### 3-1-2-7. Enum
+
+- 열거형(Enums)으로 이름이 있는 상수들의 집합을 정의할 수 있습니다. 
+- 열거형을 사용하면 의도를 문서화 하거나 구분되는 사례 집합을 더 쉽게 만들수 있습니다. 
+- TypeScript는 숫자와 문자열-기반 열거형을 제공합니다.
+- enum 키워드를 사용하면 default 값을 선언할 수 있습니다.
+
+<br>
+
+**typescript/exam07.ts**
+
+<br>
+
+**7-1. 숫자형 enum**
+
+- 자동으로 0에서 1씩 증가하는 값을 부여한다.
+
+```typescript
+enum Brands {
+  Nike,		    // 0
+  Adidas,		// 1
+  NewBalance	// 2
+}
+
+const myShoes = Brands.Nike;	// 0
+```
+
+<br>
+
+**7-2. 문자형 enum**
+
+```typescript
+enum Player {
+  kim = '김',
+  park = '박'
+}
+
+const player = Player.kim;	// 김
+```
+
+<br><br>
+
+#### 3-1-2-8. 제네릭(generics)
+
+- C#과 Java 같은 언어에서, 재사용 가능한 컴포넌트를 생성하는 도구상자의 주요 도구 중 하나는 제네릭입니다.
+- 즉, 단일 타입이 아닌 다양한 타입에서 작동하는 컴포넌트를 작성할 수 있습니다. 
+- 사용자는 제네릭을 통해 여러 타입의 컴포넌트나 자신만의 타입을 사용할 수 있습니다.
+- 제네릭을 활용하면 같은 기능의 함수를 또 만들 필요가 없고, 타입 추론에 있어서 강점을 가진다는 장점이 있습니다.
+
+<br>
+
+**8-1. 제네릭 선언**
+
+`<T>`와 같이 타입을 선언한다. 알파벳은 대부분 T를 사용한다.
+
+```typescript
+function logText<T>(text: T): T {
+  consol.log(text);
+  return text;
+}
+
+logText<string>('Hello World!');
+```
+
+<br>
+
+**8-2. interface에 제네릭 선언**
+
+```typescript
+interface Menu<T> {
+  value: T;
+  price: number;
+}
+
+const donut: Menu<string> = { value: 'donut', price : 3000 };
+const potato: Menu<string> = { value: 'potato', price : 2000 };
+const hamburger: Menu<string> = { value: 'hamburger', price : 5000 };
+```
+
+<br>
+
+**8-3. 제네릭 타입 제한**
+
+**8-3-1. 배열 힌트**
+
+```typescript
+function textLength<T>(text: T[]): T[] {
+    console.log(text.length);
+    return text;
+}
+
+textLength<string>(['hello', 'world']);
+```
+
+<br>
+
+**8-3-2. 정의된 타입 이용 (extends)**
+
+```typescript
+interface LengthType {
+    length: number;
+}
+
+function logTextLen<T extends LengthType>(text: T): T {
+    console.log(text.length);
+    return text;
+}
+
+logTextLen('hello world'); // 11
+logTextLen(100); // 에러!
+logTextLen({ length: 100 }); // 100
+```
+
+<br>
+
+**8-3-3. keyof**
+
+- interface에 정의된 key 값만을 허용
+
+```typescript
+interface Item {
+    name: string;
+    price: number;
+    stock: number;
+}
+
+function getItemOption<T extends keyof Item>(itemOption: T): T {
+    return itemOption;
+}
+
+// 'name', 'price', 'stock'만 인자로 사용 가능
+getShoppingItemOption('price');
+```
 
 <br>
 
@@ -4702,8 +7631,9 @@ createApp(App)
 - Vue 애플리케이션의 인스턴스는 createApp 함수를 사용하여 정의됩니다. 
 - TypeScript를 사용하면 인스턴스에 타입을 명시하여 코드의 안전성을 높일 수 있습니다.
 
+**instance/main1.ts**
+
 ```typescript
-코드 복사
 import { createApp } from 'vue';
 import App from './App.vue';
 
@@ -4721,6 +7651,8 @@ app.mount('#app');
 - Vue 인스턴스는 여러 옵션을 통해 설정할 수 있습니다. 
 - 주요 옵션에는 data, methods, computed, watch, components 등이 있습니다. 
 - TypeScript를 사용하면 각 옵션의 타입을 명시하여 안전성을 확보할 수 있습니다.
+
+**instance/main2.ts**
 
 ```typescript
 import { createApp, defineComponent, reactive, computed } from 'vue';
@@ -4763,6 +7695,7 @@ app.mount('#app');
 - 이 hook(훅)들은 인스턴스의 생성, 마운트, 업데이트, 소멸 등의 단계에서 호출됩니다. 
 - 주요 생명주기 훅으로는 beforeCreate, created, beforeMount, mounted, beforeUpdate, updated, beforeUnmount, unmounted 등이 있습니다.
 
+**instance/main3.ts**
 
 ```typescript
 import { createApp, defineComponent } from 'vue';
@@ -4814,6 +7747,7 @@ app.mount('#app');
 **인스턴스 종합 예시코드**
 
 ```typescript
+//instance/main4.ts
 import { createApp, defineComponent, ref, computed, watch } from 'vue';
 
 // 루트 컴포넌트 정의
@@ -4922,6 +7856,7 @@ app.mount('#app');
 **Vue 인스턴스의 속성과 메소드 종합 실습**
 
 ```typescript
+//instance/main5.ts
 import { createApp, defineComponent, ref, computed, watch, nextTick } from 'vue';
 
 const MyComponent = defineComponent({
@@ -5025,6 +7960,7 @@ app.mount('#app');
 **템플릿 바인딩 예시코드**
 
 ```html
+<!-- template/template01.vue -->
 <template>
   <div>
     <p>{{ message }}</p>
@@ -5080,12 +8016,14 @@ v-bind : 데이터 바인딩
 
 <br>
 
-#### 3-3-2-1. v-if와 v-else
+#### 3-3-2-1. v-if와 v-else-if/v-else
 
 ```html
+<!-- template/template02.vue -->
 <template>
   <div>
-    <p v-if="isVisible">This is visible</p>
+    <p v-if="status === 'switch'">Switch</p>
+    <p v-else-if="status === 'pending'">Pending</p>
     <p v-else>This is not visible</p>
     <button @click="toggleVisibility">Toggle Visibility</button>
   </div>
@@ -5095,20 +8033,25 @@ v-bind : 데이터 바인딩
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
+  name: 'StatusComponent',
   setup() {
-    const isVisible = ref(true);
+    const status = ref<string>('switch');
 
     const toggleVisibility = () => {
-      isVisible.value = !isVisible.value;
+      status.value = status.value === 'switch' ? 'pending' : 'switch';
     };
 
     return {
-      isVisible,
+      status,
       toggleVisibility
     };
   }
 });
 </script>
+
+<style scoped>
+/* 스타일은 필요에 따라 추가하세요 */
+</style>
 ```
 
 <br>
@@ -5116,6 +8059,7 @@ export default defineComponent({
 #### 3-3-2-2. v-for
 
 ```html
+<!-- template/template03.vue -->
 <template>
   <div>
     <ul>
@@ -5148,6 +8092,7 @@ export default defineComponent({
 #### 3-3-2-3. v-bind
 
 ```html
+<!-- template/template04.vue -->
 <template>
   <div>
     <img :src="imageUrl" alt="Vue logo">
@@ -5173,6 +8118,7 @@ export default defineComponent({
 #### 3-3-2-4. v-on
 
 ```html
+<!-- template/template05.vue -->
 <template>
   <div>
     <button @click="showAlert">Click me</button>
@@ -5198,10 +8144,49 @@ export default defineComponent({
 
 <br>
 
+#### 3-3-2-5. v-text/v-html/v-show
+
+```html
+<span v-text="message"></span> <!-- 엘리먼트의 텍스트 콘텐츠를 설정합니다. -->
+<div v-html="htmlContent"></div> <!-- 엘리먼트의 HTML 콘텐츠를 설정합니다. -->
+<div v-show="isVisible"></div>  <!-- 조건에 따라 엘리먼트의 표시 여부를 결정합니다. -->
+```
+
+<br>
+
+#### 3-3-2-6. v-model
+
+```html
+<input v-model="message" type="text"> <!-- 양방향 데이터 바인딩을 설정하여 폼 입력과 Vue 인스턴스 데이터를 동기화합니다. -->
+```
+<br>
+
+#### 3-3-2-7. v-slot
+
+```html
+<template v-slot:header><h1>Title</h1></template> <!-- 슬롯(slot)을 사용하여 컴포넌트의 콘텐츠를 삽입합니다. -->
+```
+<br>
+
+#### 3-3-2-8. v-pre
+
+```html
+<div v-pre>{{ rawHtml }}</div>  <!-- 엘리먼트와 그 하위 엘리먼트들의 텍스트를 렌더링하기 전에 그대로 표시합니다. -->
+```
+<br>
+
+#### 3-3-2-9. v-once
+
+```html
+<div v-once>{{ trsData }}</div>  <!-- 엘리먼트를 한 번만 렌더링합니다. -->
+```
+
+<br><br>
+
 ### 3-3-3. 컴포넌트 사용
 
 ```html
-<!-- ParentComponent.vue -->
+<!-- components/ParentComponent.vue -->
 <template>
   <div>
     <ChildComponent :message="parentMessage" />
@@ -5229,7 +8214,7 @@ export default defineComponent({
 <br>
 
 ```html
-<!-- ChildComponent.vue -->
+<!-- components/ChildComponent.vue -->
 <template>
   <div>
     <p>{{ message }}</p>
@@ -5255,6 +8240,7 @@ export default defineComponent({
 ### 3-3-4. 메서드 호출
 
 ```html
+<!-- components/MethodComponent.vue -->
 <template>
   <div>
     <button @click="increment">Increment</button>
@@ -5307,7 +8293,7 @@ export default defineComponent({
 - 단일 파일 컴포넌트는 .vue 확장자를 가지며, 템플릿, 스크립트, 스타일을 하나의 파일에 작성하는 방식이며, Vue.js의 대표적인 코드 구조로 사용됩니다.
 
 ```vue
-<!-- MyComponent.vue -->
+<!-- components/SingleFileComponent.vue -->
 <template>
   <div>
     <h1>{{ title }}</h1>
@@ -5346,20 +8332,35 @@ h1 {
 - 함수형 컴포넌트는 단순하고 성능적으로 유리한 경우에 사용됩니다. 
 
 ```vue
+<!-- components/FuntionalComponent.vue -->
 <template functional>
   <div>
-    <h1>{{ props.title }}</h1>
-    <p>{{ props.message }}</p>
+    <h1>{{ title }}</h1>
+    <p>{{ message }}</p>
   </div>
 </template>
-
+  
 <script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   props: {
-    title: String,
-    message: String
+    title: {
+      type: String,
+      default: 'Default Title' // title의 기본값 설정
+    },
+    message: {
+      type: String,
+      default: 'Default Message' // message의 기본값 설정
+    }
+  },
+  computed: {
+    title() {
+      return this.$props.title;
+    },
+    message() {
+      return this.$props.message;
+    }
   }
 });
 </script>
@@ -5375,6 +8376,7 @@ export default defineComponent({
 - 주로 Composition API를 사용하여 컴포넌트를 정의하고 관리합니다. 그러나 이전 버전과의 호환성을 유지하기 위해 클래스형 컴포넌트를 사용할 수도 있습니다.
 
 ```vue
+<!-- components/ClassicalComponent.vue -->
 <template>
   <div>
     <h1>{{ title }}</h1>
@@ -5384,17 +8386,35 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { defineComponent, ref, toRefs } from 'vue';
 
-@Component
-export default class MyComponent extends Vue {
-  @Prop(String) readonly title!: string;
-  @Prop(String) readonly message!: string;
+export default defineComponent({
+  name: 'MyComponent',
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+    message: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props) {
+    const { title, message } = toRefs(props);
+    const updatedMessage = ref(message.value);
 
-  updateMessage() {
-    this.message = 'Message updated!';
-  }
-}
+    const updateMessage = () => {
+      updatedMessage.value = 'Message updated!';
+    };
+
+    return {
+      title,
+      message: updatedMessage,
+      updateMessage,
+    };
+  },
+});
 </script>
 ```
 
@@ -5407,6 +8427,7 @@ export default class MyComponent extends Vue {
 - 동적 컴포넌트는 템플릿에서 컴포넌트를 동적으로 교체하고 렌더링할 수 있는 기능입니다. Vue.js에서는 <component> 태그를 사용하여 동적으로 컴포넌트를 변경할 수 있습니다.
 
 ```vue
+<!-- components/DynamicComponent.vue -->
 <template>
   <div>
     <button @click="toggleComponent">Toggle Component</button>
@@ -5448,6 +8469,7 @@ export default defineComponent({
 - 재귀적 컴포넌트는 자기 자신을 호출하여 재귀적으로 사용되는 컴포넌트입니다. 이를 통해 트리 구조와 같은 구조를 표현할 수 있습니다. 
 
 ```vue
+<!-- components/RecursiveComponent.vue -->
 <template>
   <div>
     <p>{{ node.name }}</p>
@@ -5485,6 +8507,7 @@ export default defineComponent({
 **템플릿 파일: MyComponent.template.html**
 
 ```html
+<!-- components/MyComponent.template.html -->
 <div>
   <h1>{{ title }}</h1>
   <p>{{ message }}</p>
@@ -5493,11 +8516,11 @@ export default defineComponent({
 
 <br>
 
-**스크립트 파일: MyComponent.ts**
+**스크립트 파일: MultiFileComponent.ts**
 
 ```typescript
-import { defineComponent, ref } from 'vue';
-import template from './MyComponent.template.html';
+import { defineComponent, ref, onMounted } from 'vue';
+import template from './MultiFileComponent.template.html';
 
 export default defineComponent({
   name: 'MyComponent',
@@ -5505,6 +8528,20 @@ export default defineComponent({
   setup() {
     const title = ref('Hello Vue 3');
     const message = ref('This is a multi file component');
+    
+    // 스타일을 동적으로 로드하는 함수
+    const loadStyles = (href: string) => {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      document.head.appendChild(link);
+    };
+
+    onMounted(() => {
+      // 컴포넌트가 마운트될 때 스타일을 로드합니다.
+      loadStyles('./MultiFileComponent.style.css');
+    });
+
     return {
       title,
       message
@@ -5515,7 +8552,7 @@ export default defineComponent({
 
 <br>
 
-**스타일 파일: MyComponent.style.css**
+**스타일 파일: MultiFileComponent.style.css**
 
 ```css
 h1 {
@@ -5546,6 +8583,7 @@ h1 {
 **예시 코드**
 
 ```javascript
+//components/VirtualDOM.js
 // 초기 렌더링
 const oldVNode = createElement('div', { id: 'container' }, [
   createElement('p', {}, 'Hello, Vue!')
@@ -5569,6 +8607,7 @@ patch(oldVNode, newVNode);
 **예시 코드**
 
 ```vue
+<!-- componets/ScopedCSSComponent.vue -->
 <template>
   <div class="container">
     <p class="text">Scoped CSS Example</p>
@@ -5602,6 +8641,7 @@ export default defineComponent({
 **단일 파일 컴포넌트: MyComponent.vue**
 
 ```vue
+<!-- components/MyComponent.vue -->
 <template>
   <div>
     <h1>{{ title }}</h1>
@@ -5648,6 +8688,7 @@ h1 {
 **템플릿 파일: MyComponent.template.html**
 
 ```html
+<!-- components/MyComponent.template.html -->
 <div>
   <h1>{{ title }}</h1>
   <p>{{ message }}</p>
@@ -5659,6 +8700,7 @@ h1 {
 **스크립트 파일: MyComponent.ts**
 
 ```typescript
+//components/MyComponent.ts
 import { defineComponent, ref } from 'vue';
 import template from './MyComponent.template.html';
 
@@ -5681,6 +8723,7 @@ export default defineComponent({
 **스타일 파일: MyComponent.style.css**
 
 ```css
+/* components/MyComponent.style.css  */
 h1 {
   color: blue;
 }
@@ -5689,100 +8732,9 @@ h1 {
 <br><br><br>
 
 
-# 4. Vuex
+# 4. Vuex와 Vue 3의 프로그래밍 패턴
 
-## 4-1. MVC 패턴
-
-- MVC (Model-View-Controller) 패턴은 애플리케이션을 세 가지 주요 부분으로 나누는 디자인 패턴입니다:
-
-Model: 데이터와 비즈니스 로직을 처리.
-View: 사용자 인터페이스를 담당.
-Controller: Model과 View를 연결하고 사용자 입력을 처리.
-
-<br>
-
-### 4-1-1. Model
-
-```javascript
-// model.js
-export default {
-  data() {
-    return {
-      message: 'Hello Vue!'
-    };
-  },
-  methods: {
-    setMessage(newMessage) {
-      this.message = newMessage;
-    }
-  }
-};
-```
-
-<br>
-
-### 4-1-2. View
-
-```html
-<!-- view.html -->
-<template>
-  <div>
-    <h1>{{ message }}</h1>
-    <input v-model="newMessage" @input="updateMessage">
-    <button @click="submitMessage">Update Message</button>
-  </div>
-</template>
-```
-
-<br>
-
-### 4-1-3. Controller
-
-```javascript
-코드 복사
-// controller.js
-import model from './model.js';
-
-export default {
-  data() {
-    return {
-      newMessage: ''
-    };
-  },
-  computed: {
-    message() {
-      return model.data().message;
-    }
-  },
-  methods: {
-    updateMessage(event) {
-      this.newMessage = event.target.value;
-    },
-    submitMessage() {
-      model.methods.setMessage(this.newMessage);
-    }
-  }
-};
-```
-
-### 4-1-4. App Initialization
-
-```javascript
-// main.js
-import { createApp } from 'vue';
-import View from './view.html';
-import Controller from './controller.js';
-
-const app = createApp({
-  ...View,
-  ...Controller
-});
-app.mount('#app');
-```
-
-<br><br>
-
-## 4-2. Flux 패턴
+## 4-1. Flux 패턴
 
 - Flux 패턴은 Facebook에서 개발한 애플리케이션 아키텍처 패턴으로, 단방향 데이터 흐름을 강조합니다. Flux는 다음과 같은 네 가지 주요 요소로 구성됩니다.
 
@@ -5793,7 +8745,7 @@ app.mount('#app');
 
 <br>
 
-### 4-2-1. Action
+### 4-1-1. Action
 
 ```javascript
 // actions.js
@@ -5805,7 +8757,7 @@ export const updateMessage = (newMessage) => ({
 
 <br>
 
-### 4-2-2. Dispatcher
+### 4-1-2. Dispatcher
 
 ```javascript
 // dispatcher.js
@@ -5817,7 +8769,7 @@ export default dispatcher;
 
 <br>
 
-### 4-2-3. Store
+### 4-1-3. Store
 
 Store는 Vuex의 중심 개념으로, 애플리케이션의 전역 상태를 관리하는 객체입니다. Store는 다음과 같은 속성을 포함합니다.
 
@@ -5864,7 +8816,7 @@ export default store;
 
 <br>
 
-### 4-2-4. View
+### 4-1-4. View
 
 ```html
 <!-- view.html -->
@@ -5879,7 +8831,7 @@ export default store;
 
 <br>
 
-### 4-2-5. Controller
+### 4-1-5. Controller
 
 ```javascript
 // controller.js
@@ -5918,7 +8870,7 @@ export default {
 
 <br>
 
-### 4-2-6. App Initialization
+### 4-1-6. App Initialization
 
 ```javascript
 // main.js
@@ -5935,7 +8887,7 @@ app.mount('#app');
 
 <br><br>
 
-## 4-3. State(상태)
+## 4-2. State(상태)
 
 - 상태(State)는 애플리케이션의 전역 상태를 저장합니다.
 - 상태(State)는 Vue 컴포넌트에서 this.$store.state를 통해 접근할 수 있습니다.
@@ -5944,11 +8896,12 @@ app.mount('#app');
 
 <br>
 
-### 4-3-1. reactive 객체
+### 4-2-1. reactive 객체
 
 - reactive 객체는 객체 또는 배열을 반응형으로 만들어주는 Vue의 내장 함수입니다. 이 객체 내의 속성이 변경될 때 Vue는 자동으로 UI를 업데이트합니다.
 
 ```typescript
+//components/HelloVue.ts
 import { reactive } from 'vue';
 
 const state = reactive({
@@ -5961,6 +8914,7 @@ const state = reactive({
 - 객체의 속성이 변경될 때마다 Vue가 자동으로 반응하여 UI를 업데이트합니다.
 
 ```vue
+<!-- components/ReactiveComponent.vue -->
 <template>
   <div>
     <p>Count: {{ state.count }}</p>
@@ -6000,11 +8954,12 @@ export default defineComponent({
 
 <br>
 
-### 4-3-2. ref
+### 4-2-2. ref
 
 - ref는 기본 자료형의 값을 감싸는 래퍼(wrapper) 객체를 생성합니다. 이 객체를 통해 기본 자료형 값을 반응형으로 만들 수 있습니다.
 
 ```typescript
+//components/RefVue.ts
 import { ref } from 'vue';
 
 const count = ref(0);
@@ -6015,6 +8970,7 @@ const message = ref('Hello Vue!');
 - 이 객체를 직접 변경하거나 .value 속성을 통해 접근할 수 있습니다.
 
 ```vue
+<!-- components/RefComponent.vue -->
 <template>
   <div>
     <p>Count: {{ count }}</p>
@@ -6056,44 +9012,133 @@ export default defineComponent({
 
 <br><br>
 
-### 4-3-3. Vuex를 이용한 상태(State) 관리
+### 4-2-3. Vuex를 이용한 상태(State) 관리
 
-#### 4-3-3-1. Vuex Store 생성
+#### 4-2-3-1. Vuex Store 생성
 
 - 먼저 Vuex Store를 생성합니다. Store는 애플리케이션의 상태를 중앙 집중식으로 관리하는 곳입니다.
 
 **store/index.ts**
 
 ```typescript
-import { createStore } from 'vuex';
+import { createStore, Store as VuexStore, CommitOptions, DispatchOptions, Commit } from 'vuex';
 
-export default createStore({
-  state: {
-    count: 0
+// RootState 인터페이스 정의
+export interface RootState {
+  count: number;
+  messages: { [id: number]: string }; // messages 필드 추가
+  firstName: string;
+  lastName: string;
+}
+
+// 기본 상태 값
+const rootState: RootState = {
+  count: 0,
+  messages: {},
+  firstName: "",
+  lastName: ""
+};
+
+// State 인터페이스 정의
+export interface State {
+  count: number;
+  messages: { [id: number]: string }; // messages 필드 추가
+  firstName: string;
+  lastName: string;
+}
+
+// 기본 상태 값
+const state: State = {
+  count: 0,
+  messages: {},
+  firstName: "",
+  lastName: ""
+};
+
+// 뮤테이션 타입 정의
+export type Mutations<S = State> = {
+  increment(state: S): void;
+  setData(state: S, data: any): void;
+  setError(state: S, error: any): void;
+};
+
+// 뮤테이션 정의
+const mutations: Mutations = {
+  increment(state) {
+    state.count++;
   },
-  mutations: {
-    increment(state) {
-      state.count++;
-    }
+  setData(state, data) {
+    // 데이터 처리 로직을 여기에 추가하세요.
   },
-  actions: {
-    incrementAsync({ commit }) {
-      setTimeout(() => {
-        commit('increment');
-      }, 1000);
-    }
-  },
-  getters: {
-    doubleCount(state) {
-      return state.count * 2;
-    }
+  setError(state, error) {
+    // 에러 처리 로직을 여기에 추가하세요.
   }
+};
+
+// 액션 타입 정의
+export type Actions = {
+  incrementAsync({ commit }: { commit: Commit }, payload?: any): void;
+  fetchData({ commit }: { commit: Commit }): void;
+};
+
+// 액션 정의
+const actions: Actions = {
+  incrementAsync({ commit }) {
+    setTimeout(() => {
+      commit('increment');
+    }, 1000);
+  },
+  fetchData({ commit }) {
+    fetch('https://api.example.com/data')
+      .then(response => response.json())
+      .then(data => {
+        commit('setData', data);
+      })
+      .catch(error => {
+        commit('setError', error);
+      });
+  }
+};
+
+// 게터 정의
+const getters = {
+  doubleCount(state: State) {
+    return state.count * 2;
+  }
+};
+
+// 스토어 생성
+const store = createStore<State>({
+  state,
+  mutations,
+  actions,
+  getters
 });
+
+// 타입 추론을 위한 Vuex 스토어 타입 정의
+export type Store = Omit<
+  VuexStore<State>,
+  'commit' | 'dispatch'
+> & {
+  commit<K extends keyof Mutations>(
+    key: K,
+    payload?: Parameters<Mutations[K]>[1],
+    options?: CommitOptions
+  ): ReturnType<Mutations[K]>;
+} & {
+  dispatch<K extends keyof Actions>(
+    key: K,
+    payload?: Parameters<Actions[K]>[1],
+    options?: DispatchOptions
+  ): ReturnType<Actions[K]>;
+};
+
+export default store;
 ```
 
 <br>
 
-#### 4-3-3-2. Vue 인스턴스에 Store 주입
+#### 4-2-3-2. Vue 인스턴스에 Store 주입
 
 - Vue 인스턴스에 Vuex Store를 주입하여 컴포넌트에서 사용할 수 있도록 합니다.
 
@@ -6109,7 +9154,7 @@ createApp(App).use(store).mount('#app');
 
 <br>
 
-#### 4-3-3-3. 컴포넌트에서 Store 상태에 접근하는 방법
+#### 4-2-3-3. 컴포넌트에서 Store 상태에 접근하는 방법
 
 - 컴포넌트에서 Store에 접근하고 상태를 변경하기 위해 mapState 헬퍼 함수나 객체 전개 연산자를 사용할 수 있습니다.
 
@@ -6148,7 +9193,7 @@ export default defineComponent({
 
 <br><br>
 
-## 4-4. Getters(게터)
+## 4-3. Getters(게터)
 
 - Getters(게터)는 Vuex를 통해 상태를 조작하고 반환하는 함수입니다. 
 - Getters(게터)는 상태를 기반으로 계산된 값을 가져옵니다.
@@ -6156,11 +9201,11 @@ export default defineComponent({
 - Vuex의 경우, 게터(Getter)는 상태에서 값을 도출하는 역할을 합니다. 컴포넌트에서 상태를 쉽게 접근하고 계산할 수 있도록 합니다.
 - Getters를 사용하면 상태를 가공하거나 필터링하여 컴포넌트에서 사용하기 편리한 형태로 변환할 수 있습니다. 
 
-### 4-4-1. 기본 Getters
+### 4-3-1. 기본 Getters
 
 - 기본적인 형태의 Getters는 Vuex Store에 정의되어 있는 상태(state)에 접근하여 가공된 값을 반환하는 함수입니다.
 
-#### 4-4-1-1. 사용 문법:
+#### 4-3-1-1. 사용 문법:
 
 ```typescript
 import { GetterTree } from 'vuex';
@@ -6194,7 +9239,7 @@ export const getters: GetterTree<RootState, RootState> = {
 **예시 코드2**
 
 ```typescript
-// store/getters.ts
+// store/getters2.ts
 import { GetterTree } from 'vuex';
 import { RootState } from './index';
 
@@ -6210,11 +9255,11 @@ export const getters: GetterTree<RootState, RootState> = {
 
 <br><br>
 
-### 4-4-2. 컴퓨티드 Getters
+### 4-3-2. 컴퓨티드 Getters
 
 - 컴퓨티드 Getters는 Vuex Store의 상태를 기반으로 다른 값들을 계산하는 함수입니다. 컴퓨티드 Getters는 Vuex Store의 상태를 변경하지 않고 새로운 값을 반환합니다.
 
-#### 4-4-2-1. 사용 문법
+#### 4-3-2-1. 사용 문법
 
 ```typescript
 import { GetterTree } from 'vuex';
@@ -6232,7 +9277,7 @@ export const getters: GetterTree<State, RootState> = {
 **예시 코드**
 
 ```typescript
-// store/getters.ts
+// store/getters3.ts
 import { GetterTree } from 'vuex';
 import { RootState } from './index';
 
@@ -6245,11 +9290,12 @@ export const getters: GetterTree<RootState, RootState> = {
 
 <br><br>
 
-### 4-4-3. 메소드 사용
+### 4-3-3. 메소드 사용
 
 - Getters를 Vuex Store에서 사용하려면 getters 속성을 통해 등록해야 합니다. 이후 컴포넌트에서는 $store.getters를 통해 Getters에 접근할 수 있습니다.
 
 ```vue
+<!-- components/MethodComponent.vue -->
 <template>
   <div>
     <p>Count: {{ count }}</p>
@@ -6283,12 +9329,12 @@ export default defineComponent({
 
 <br>
 
-#### 4-4-3-1. 게터 내에서 다른 게터의 사용
+#### 4-3-3-1. 게터 내에서 다른 게터의 사용
 
 - 게터 내에서 다른 게터를 사용할 수 있습니다. 이렇게 하면 코드의 재사용성이 높아지고 유지 보수가 용이해집니다.
 
 ```typescript
-// store/getters.ts
+// store/getters4.ts
 import { GetterTree } from 'vuex';
 import { RootState } from './index';
 
@@ -6310,11 +9356,12 @@ export const getters: GetterTree<RootState, RootState> = {
 
 <br>
 
-#### 4-4-3-2. 컴포넌트 내에서 게터의 사용
+#### 4-3-3-2. 컴포넌트 내에서 게터의 사용
 
 - 컴포넌트에서 게터에 접근하기 위해 useStore 훅을 사용하여 Vuex Store를 가져온 다음 $store.getters를 통해 해당 게터에 접근합니다.
 
 ```vue
+<!-- components/GetterUseComponent.vue -->
 <template>
   <div>
     <p>Count: {{ count }}</p>
@@ -6343,11 +9390,12 @@ export default defineComponent({
 
 <br>
 
-#### 4-4-3-3. mapGetters 헬퍼 함수를 이용한 방법
+#### 4-3-3-3. mapGetters 헬퍼 함수를 이용한 방법
 
 - mapGetters 헬퍼 함수를 사용하면 컴포넌트 내에서 게터를 훨씬 더 간결하게 사용할 수 있습니다.
 
 ```vue
+<!-- components/MapGettersComponent.vue -->
 <template>
   <div>
     <p>Count: {{ count }}</p>
@@ -6377,7 +9425,7 @@ export default defineComponent({
 
 <br><br>
 
-## 4-5. Mutation(변이)
+## 4-4. Mutation(변이)
 
 - Mutation은 상태를 변경하는 메서드로서 동기적으로 실행됩니다.
 - Mutation은 this.$store.commit을 통해 호출할 수 있습니다.
@@ -6387,11 +9435,11 @@ export default defineComponent({
 
 <br>
 
-### 4-5-1. 기본 Mutation
+### 4-4-1. 기본 Mutation
 
 - 기본적인 형태의 Mutation은 Vuex Store에 정의되어 있는 상태를 직접 변경하는 함수입니다.
 
-#### 4-5-1-1. 사용 문법
+#### 4-4-1-1. 사용 문법
 
 ```typescript
 import { MutationTree } from 'vuex';
@@ -6431,7 +9479,7 @@ export const mutations: MutationTree<State> = {
 **예시 코드2**
 
 ```typescript
-// store/mutations.ts
+// store/mutations2.ts
 import { MutationTree } from 'vuex';
 import { State } from './index';
 
@@ -6451,11 +9499,11 @@ export const mutations: MutationTree<State> = {
 <br><br>
 
 
-### 4-5-2. Payload Mutation
+### 4-4-2. Payload Mutation
 
 - Payload Mutation은 추가적인 데이터(payload)를 전달받아 상태를 변경하는 함수입니다.
 
-#### 4-5-2. 사용 문법
+#### 4-4-2-1. 사용 문법
 
 ```typescript
 import { MutationTree } from 'vuex';
@@ -6472,7 +9520,7 @@ export const mutations: MutationTree<State> = {
 **예시 코드**
 
 ```typescript
-// store/mutations.ts
+// store/mutations3.ts
 import { MutationTree } from 'vuex';
 import { State } from './index';
 
@@ -6485,11 +9533,12 @@ export const mutations: MutationTree<State> = {
 
 <br><br>
 
-### 4-5-3. 메소드 사용
+### 4-4-3. 메소드 사용
 
 - Mutation을 Vuex Store에 등록하고 컴포넌트에서 사용하기 위해 $store.commit 메소드를 사용합니다.
 
 ```vue
+<!-- components/MethodUseComponent.vue -->
 <template>
   <div>
     <p>Count: {{ count }}</p>
@@ -6539,11 +9588,12 @@ export default defineComponent({
 
 <br>
 
-#### 4-5-3-1. Mutation 호출
+#### 4-4-3-1. Mutation 호출
 
 - Mutation을 호출하기 위해서는 Vuex Store에 등록된 Mutation을 commit 메소드를 통해 호출합니다.
 
 ```vue
+<!-- components/MutationCallComponent.vue -->
 <template>
   <div>
     <p>Count: {{ count }}</p>
@@ -6588,11 +9638,12 @@ export default defineComponent({
 
 <br>
 
-#### 4-5-3-2. mapMutations 헬퍼 함수를 사용하여 Mutation 호출
+#### 4-4-3-2. mapMutations 헬퍼 함수를 사용하여 Mutation 호출
 
 - mapMutations 헬퍼 함수를 사용하면 Vuex Store에 등록된 Mutation을 컴포넌트 내에서 더욱 간편하게 사용할 수 있습니다.
 
 ```vue
+<!-- components/MapMutationsUseComponent.vue -->
 <template>
   <div>
     <p>Count: {{ count }}</p>
@@ -6632,12 +9683,12 @@ export default defineComponent({
 
 <br>
 
-#### 4-5-3-3. Object 형태의 payload를 인자로 받는 Mutation 함수 선언/호출
+#### 4-4-3-3. Object 형태의 payload를 인자로 받는 Mutation 함수 선언/호출
 
 - Mutation 함수는 두 번째 매개변수로 payload를 받아 상태를 변경할 수 있습니다.
 
 ```typescript
-// store/mutations.ts
+// store/mutations4.ts
 import { MutationTree } from 'vuex';
 import { State } from './index';
 
@@ -6652,6 +9703,7 @@ export const mutations: MutationTree<State> = {
 - Mutation을 호출할 때에는 payload를 전달합니다.
 
 ```vue
+<!-- components/ObjectMutaionCallComponent.vue -->
 <template>
   <div>
     <input type="text" v-model="newMessage" />
@@ -6684,7 +9736,7 @@ export default defineComponent({
 
 <br>
 
-### 4-5-4. 변이 내에서 비동기 처리
+### 4-4-4. 변이 내에서 비동기 처리
 
 - 변이 내에서 비동기 작업을 수행할 수도 있지만, 일반적으로 비동기 작업은 액션(Action)을 통해 처리하는 것이 좋습니다.
 - 변이(Mutation) 내에서 직접적으로 비동기 작업을 수행하는 것은 권장되지 않습니다. 
@@ -6695,7 +9747,7 @@ export default defineComponent({
 ```typescript
 // store/actions.ts
 import { ActionTree } from 'vuex';
-import { State } from './index';
+import { State, RootState } from './index';
 
 export const actions: ActionTree<State, RootState> = {
   fetchData({ commit }) {
@@ -6720,6 +9772,7 @@ export const actions: ActionTree<State, RootState> = {
 - 컴포넌트에서 액션을 호출하여 비동기 작업을 시작합니다.
 
 ```vue
+<!-- components/FetchDataComponent.vue -->
 <template>
   <div>
     <button @click="fetchData">Fetch Data</button>
@@ -6751,7 +9804,7 @@ export default defineComponent({
 
 <br><br>
 
-## 4-6. Actions(액션)
+## 4-5. Actions(액션)
 
 - Actions(액션)은 비동기 작업을 포함할 수 있는 메서드입니다.
 - Actions(액션)은 this.$store.dispatch를 통해 호출할 수 있습니다.
@@ -6761,11 +9814,11 @@ export default defineComponent({
 
 <br>
 
-### 4-6-1. 기본 액션
+### 4-5-1. 기본 액션
 
 - 기본적인 형태의 액션은 Vuex Store에 정의되어 있는 상태를 변경하는 비동기 함수입니다.
 
-#### 4-6-1-1. 사용 문법:
+#### 4-5-1-1. 사용 문법:
 
 ```typescript
 import { ActionTree } from 'vuex';
@@ -6793,9 +9846,9 @@ export const actions: ActionTree<State, RootState> = {
 **예시 코드**
 
 ```typescript
-// store/actions.ts
+// store/actions1.ts
 import { ActionTree } from 'vuex';
-import { RootState } from './index';
+import { State, RootState } from './index';
 
 export const actions: ActionTree<State, RootState> = {
   fetchData({ commit }) {
@@ -6816,9 +9869,9 @@ export const actions: ActionTree<State, RootState> = {
 **예시 코드2**
 
 ```typescript
-// store/actions.ts
+// store/actions2.ts
 import { ActionTree } from 'vuex';
-import { RootState } from './index';
+import { State, RootState } from './index';
 
 export const actions: ActionTree<State, RootState> = {
   fetchData({ commit }) {
@@ -6839,11 +9892,11 @@ export const actions: ActionTree<State, RootState> = {
 
 <br><br>
 
-### 4-6-2. Payload 액션
+### 4-5-2. Payload 액션
 
 - Payload 액션은 추가적인 데이터(payload)를 전달받아 비동기 작업을 수행하는 함수입니다.
 
-#### 4-6-2-1. 사용 문법
+#### 4-5-2-1. 사용 문법
 
 ```typescript
 import { ActionTree } from 'vuex';
@@ -6868,9 +9921,9 @@ export const actions: ActionTree<State, RootState> = {
 **예시 코드**
 
 ```typescript
-// store/actions.ts
+// store/actions3.ts
 import { ActionTree } from 'vuex';
-import { RootState } from './index';
+import { State, RootState } from './index';
 
 export const actions: ActionTree<State, RootState> = {
   fetchData({ commit }, payload: string) {
@@ -6888,13 +9941,14 @@ export const actions: ActionTree<State, RootState> = {
 
 <br><br>
 
-### 4-6-3. 메소드 사용
+### 4-5-3. 메소드 사용
 
 - 액션을 호출하기 위해 Vuex Store의 dispatch 메소드를 사용합니다.
 
 **예시 코드**
 
 ```vue
+<!-- components/UseStoreFetchDataComponent.vue -->
 <template>
   <div>
     <button @click="fetchData">Fetch Data</button>
@@ -6927,11 +9981,12 @@ export default defineComponent({
 
 <br>
 
-#### 4-6-3-1. 기본적인 액션 호출
+#### 4-5-3-1. 기본적인 액션 호출
 
 - 액션을 호출하기 위해 Vuex Store의 dispatch 메소드를 사용합니다.
 
 ```vue
+<!-- components/UseStoreFetchDataComponent.vue -->
 <template>
   <div>
     <button @click="fetchData">Fetch Data</button>
@@ -6960,11 +10015,12 @@ export default defineComponent({
 
 <br>
 
-#### 4-6-3-2. mapActions 헬퍼 함수를 통한 액션 호출
+#### 4-5-3-2. mapActions 헬퍼 함수를 통한 액션 호출
 
 - mapActions 헬퍼 함수를 사용하면 Vuex Store에 등록된 액션을 컴포넌트 내에서 더욱 간편하게 사용할 수 있습니다.
 
 ```vue
+<!-- components/MapActionsFetchDataComponent.vue -->
 <template>
   <div>
     <button @click="fetchData">Fetch Data</button>
@@ -6986,14 +10042,14 @@ export default defineComponent({
 
 <br><br>
 
-#### 4-6-3-3. 액션을 사용하여 비동기 처리 후 변이 사용
+#### 4-5-3-3. 액션을 사용하여 비동기 처리 후 변이 사용
 
 - 비동기 작업이 완료된 후에 변이를 호출하여 상태를 변경할 수 있습니다.
 
 ```typescript
-// store/actions.ts
+// store/actions4.ts
 import { ActionTree } from 'vuex';
-import { RootState } from './index';
+import { State, RootState } from './index';
 
 export const actions: ActionTree<State, RootState> = {
   fetchData({ commit }) {
@@ -7011,14 +10067,14 @@ export const actions: ActionTree<State, RootState> = {
 
 <br>
 
-#### 4-6-3-4. 액션 내에서 연속적인 비동기 처리
+#### 4-5-3-4. 액션 내에서 연속적인 비동기 처리
 
 - 액션 내에서 여러 개의 비동기 작업을 연달아 수행할 수 있습니다.
 
 ```typescript
-// store/actions.ts
+// store/actions5.ts
 import { ActionTree } from 'vuex';
-import { RootState } from './index';
+import { State, RootState } from './index';
 
 export const actions: ActionTree<State, RootState> = {
   fetchDataAndProcess({ commit }) {
@@ -7044,14 +10100,14 @@ export const actions: ActionTree<State, RootState> = {
 
 <br>
 
-#### 4-6-3-5. Promise 객체 반환 액션과 그 사용
+#### 4-5-3-5. Promise 객체 반환 액션과 그 사용
 
 - 액션은 Promise 객체를 반환할 수 있습니다.
 
 ```typescript
-// store/actions.ts
+// store/actions6.ts
 import { ActionTree } from 'vuex';
-import { RootState } from './index';
+import { State, RootState } from './index';
 
 export const actions: ActionTree<State, RootState> = {
   fetchDataWithPromise({ commit }) {
@@ -7074,6 +10130,7 @@ export const actions: ActionTree<State, RootState> = {
 - 액션을 호출한 후에는 해당 Promise 객체를 사용하여 성공 또는 실패를 처리할 수 있습니다.
 
 ```vue
+<!-- components/FetchDataWithPromise.vue -->
 <template>
   <div>
     <button @click="fetchDataWithPromise">Fetch Data</button>
@@ -7110,7 +10167,7 @@ export default defineComponent({
 
 <br><br>
 
-## 4-7. Module Management(모듈 관리)
+## 4-6. Module Management(모듈 관리)
 
 - 모듈 관리는 Vuex를 사용하여 수행됩니다. 
 - Vuex는 Vue.js 애플리케이션의 상태 관리를 위한 공식 상태 관리 패턴 라이브러리입니다. 
@@ -7119,12 +10176,12 @@ export default defineComponent({
 
 <br>
 
-### 4-7-1. 모듈 정의
+### 4-6-1. 모듈 정의
 
 ```typescript
 // store/modules/cart.ts
 import { Module } from 'vuex';
-import { RootState } from '../index';
+import { CartState, RootState } from '../index';
 
 interface CartState {
   items: Array<string>;
@@ -7158,12 +10215,12 @@ export default cartModule;
 
 <br><br>
 
-### 4-7-2. 모듈 등록
+### 4-6-2. 모듈 등록
 
 - 모듈을 Vuex Store에 등록하기 위해 modules 옵션을 사용합니다.
 
 ```typescript
-// store/index.ts
+// store/index2.ts
 import { createStore, Store } from 'vuex';
 import cartModule from './modules/cart';
 
@@ -7184,14 +10241,14 @@ export default store;
 
 <br><br>
 
-### 4-7-3. 모듈 상태 접근
+### 4-6-3. 모듈 상태 접근
 
 - 다른 모듈의 상태에 접근하려면 $store.state를 사용하여 접근할 수 있습니다.
 
 ```typescript
 // store/modules/user.ts
 import { Module } from 'vuex';
-import { RootState } from '../index';
+import { UserState, RootState } from '../index';
 
 interface UserState {
   name: string;
@@ -7213,12 +10270,12 @@ export default userModule;
 
 <br>
 
-### 4-7-3-1. 다른 모듈의 상태에 접근하는 방법
+### 4-6-3-1. 다른 모듈의 상태에 접근하는 방법
 
 ```typescript
-// store/modules/cart.ts
+// store/modules/cart2.ts
 import { GetterTree } from 'vuex';
-import { RootState } from '../index';
+import { CartState, RootState } from '../index';
 
 const getters: GetterTree<CartState, RootState> = {
   totalItems(state, getters, rootState) {
@@ -7232,7 +10289,7 @@ export default getters;
 
 <br><br>
 
-### 4-7-4. 모듈 상태 조작
+### 4-6-4. 모듈 상태 조작
 
 - 모듈의 상태를 조작하기 위해서는 commit 및 dispatch 메소드를 사용합니다.
 
@@ -7262,7 +10319,7 @@ setup() {
 
 <br><br>
 
-#### 4-7-4-1. mapState, mapGetters, mapActions 헬퍼 함수 사용
+#### 4-6-4-1. mapState, mapGetters, mapActions 헬퍼 함수 사용
 
 - Vue 컴포넌트에서 Vuex Store의 상태, 게터, 액션에 간편하게 접근하기 위해 mapState, mapGetters, mapActions 헬퍼 함수를 사용할 수 있습니다.
 
@@ -7315,7 +10372,7 @@ setup() {
 
 <br><br><br>
 
-# 5. Vue Router
+# 5. Vue Router와 Axois
 
 - Vue.js 애플리케이션에서 페이지 네비게이션을 관리하기 위한 공식 라우팅 라이브러리입니다.
 - Vue Router는 Vue.js 애플리케이션에 라우팅 기능을 추가하며, 이를 통해 페이지 간 네비게이션을 관리할 수 있습니다.
@@ -7363,7 +10420,7 @@ setup() {
 
 <br><br>
 
-### 5-1-3. 단일 페이지 애플리케이션(SPA)의 라우팅:
+### 5-1-3. 단일 페이지 애플리케이션(SPA)의 라우팅
 
 #### 5-1-3-1. 흐름과 개념:
 
@@ -7386,30 +10443,561 @@ setup() {
 
 - 초기 로딩 시간이 길어질 수 있습니다. 모든 자원이 한 번에 로드되므로 초기 로딩 시간이 오래 걸릴 수 있습니다. 또한, 검색 엔진 최적화가 어려울 수 있습니다.
 
+<br><br>
+
+#### 5-1-4-3. 애플리케이션 작성 실습
+
+**SPA 프로젝트 생성**
+
+```bash
+D:\gitRepository\vuejs>md study05
+D:\gitRepository\vuejs>cd study05
+D:\gitRepository\vuejs\study05>vue create spaproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: (Press <space> to select, <a> to toggle all, <i> to invert selection, and
+<enter> to proceed)
+ (*) Babel
+ (*) TypeScript
+ ( ) Progressive Web App (PWA) Support
+ (*) Router
+>(*) Vuex
+ ( ) CSS Pre-processors
+ ( ) Linter / Formatter
+ ( ) Unit Testing
+ ( ) E2E Testing
+```
+
 <br>
 
-**예시 코드**
+**프로젝트 구조도**
+
+```lua
+spaproject/
+├── node_modules/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Footer.vue
+│   │   └── Header.vue
+│   ├── model/
+│   │   └── index.ts
+│   ├── router/
+│   │   └── index.ts
+│   ├── store/
+│   │   ├── actions.ts
+│   │   ├── index.ts
+│   │   ├── mutations.ts
+│   │   └── state.ts
+│   ├── views/
+│   │   ├── AboutView.vue
+│   │   ├── CommunityView.vue
+│   │   ├── HomeView.vue
+│   │   └── ProductView.vue
+│   ├── App.vue
+│   ├── main.ts
+│   └── shims-vue.d.ts
+├── babel.config.js
+├── package-lock.json
+├── package.json
+├── tsconfig.json
+└── vue.config.js
+```
+
+<br>
+
+**01. package.json**
+
+```json
+{
+  "name": "spaproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "typescript": "~4.5.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**02. babel.config.js**
 
 ```javascript
-// Vue Router를 사용한 예시 코드
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from './views/Home.vue';
-import About from './views/About.vue';
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+}
+```
+
+<br>
+
+**03. tsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+<br>
+
+**04. vue.config.js**
+
+```javascript
+module.exports = {
+  lintOnSave: false,
+  devServer: {
+    port: 8080
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@': require('path').resolve(__dirname, 'src')
+      }
+    }
+  }
+}
+```
+
+<br>
+
+**05. src/main.ts**
+
+```typescript
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from './store'
+
+createApp(App)
+  .use(router)
+  .use(store)
+  .mount('#app')
+```
+
+<br>
+
+**06. src/App.vue**
+
+```vue
+<template>
+  <div id="app">
+    <Header />
+    <router-view/>
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    Header,
+    Footer
+  }
+})
+</script>
+
+<style>
+/* 글로벌 스타일 설정 */
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+<br>
+
+**07. src/views/HomeView.vue**
+
+```vue
+<template>
+  <div class="home">
+    <h1>Home Page</h1>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'HomeView'
+})
+</script>
+
+<style scoped>
+/* 홈 뷰 스타일 */
+</style>
+```
+
+<br>
+
+**08. src/views/AboutView.vue**
+
+```vue
+<template>
+  <div class="about">
+    <h1>About Page</h1>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'AboutView'
+})
+</script>
+
+<style scoped>
+/* 어바웃 뷰 스타일 */
+</style>
+```
+
+<br>
+
+**09. src/views/ProductView.vue**
+
+```vue
+<template>
+  <div class="product">
+    <h1>Product Page</h1>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'ProductView'
+})
+</script>
+
+<style scoped>
+/* 제품 뷰 스타일 */
+</style>
+```
+
+<br>
+
+**10. src/views/CommunityView.vue**
+
+```vue
+<template>
+  <div class="community">
+    <h1>Community Page</h1>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'CommunityView'
+})
+</script>
+
+<style scoped>
+/* 커뮤니티 뷰 스타일 */
+</style>
+```
+
+<br>
+
+**11. src/components/Header.vue**
+
+```vue
+<template>
+  <header>
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+      <router-link to="/product">Product</router-link>
+      <router-link to="/community">Community</router-link>
+    </nav>
+  </header>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'Header'
+})
+</script>
+
+<style scoped>
+/* 헤더 스타일 */
+nav {
+  display: flex;
+  gap: 1rem;
+}
+</style>
+```
+
+<br>
+
+**12. src/components/Footer.vue**
+
+```vue
+<template>
+  <footer>
+    <p>&copy; 2024 Your Company</p>
+  </footer>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'Footer'
+})
+</script>
+
+<style scoped>
+/* 푸터 스타일 */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f1f1f1;
+}
+</style>
+```
+
+<br>
+
+**13. src/router/index.ts**
+
+```typescript
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+import AboutView from '../views/AboutView.vue'
+import ProductView from '../views/ProductView.vue'
+import CommunityView from '../views/CommunityView.vue'
+
+const routes: Array<RouteRecordRaw> = [
+  { path: '/', name: 'Home', component: HomeView },
+  { path: '/about', name: 'About', component: AboutView },
+  { path: '/product', name: 'Product', component: ProductView },
+  { path: '/community', name: 'Community', component: CommunityView }
+]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    { path: '/', component: Home },
-    { path: '/about', component: About }
-  ]
-});
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
 
-export default router;
+export default router
 ```
+
+<br>
+
+**14. src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex'
+import state from './state'
+import mutations from './mutations'
+import actions from './actions'
+
+export default createStore({
+  state,
+  mutations,
+  actions
+})
+```
+
+<br>
+
+**15. src/store/state.ts**
+
+```typescript
+import { Product } from '@/model'
+
+export interface State {
+  products: Product[]
+}
+
+export default {
+  products: []
+} as State
+```
+
+<br>
+
+**16. src/store/mutations.ts**
+
+```typescript
+import { State } from './state'
+import { Product } from '@/model'
+
+export default {
+  setProducts(state: State, products: Product[]) {
+    state.products = products
+  }
+}
+```
+
+<br>
+
+**17. src/store/actions.ts**
+
+```typescript
+import { ActionContext } from 'vuex'
+import { State } from './state'
+import { Product } from '@/model'
+
+export default {
+  fetchProducts({ commit }: ActionContext<State, State>) {
+    // 여기에 API 호출 또는 비동기 작업을 추가하여 제품 데이터를 가져옵니다.
+    const products: Product[] = [
+      { id: 1, name: 'Product A', price: 100 },
+      { id: 2, name: 'Product B', price: 200 }
+    ]
+    commit('setProducts', products)
+  }
+}
+```
+
+<br>
+
+**18. src/model/index.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+```
+
+<br>
+
+**19. src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
+}
+```
+
+<br>
+
+**프로젝트 실행**
+
+```bash
+D:\gitRepository\vuejs\study05>cd spaproject
+
+D:\gitRepository\vuejs\study05\spaproject>npm run serve
+
+> spaproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+
+ DONE  Compiled successfully in 2448ms                                                                      오후 2:36:02
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+```
+
+<br>
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+
+![SPAPROJECT Home](./images/spaproject01.png)
+
+![SPAPROJECT About](./images/spaproject02.png)
+
+![SPAPROJECT Product](./images/spaproject03.png)
+
+![SPAPROJECT Community](./images/spaproject04.png)
 
 <br><br>
 
-### 5-1-4. 여러 페이지 애플리케이션의 라우팅:
+### 5-1-4. 여러 페이지 애플리케이션의 라우팅
 
 #### 5-1-4-1. 흐름과 개념:
 
@@ -7430,27 +11018,671 @@ export default router;
 
 페이지 간의 전환 시 새로 고침이 발생하므로 사용자 경험이 덜 부드러울 수 있습니다.
 
+<br><br>
+
+#### 5-1-4-3. 애플리케이션 작성 실습
+
+**MPA 프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study05>vue create mpaproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: (Press <space> to select, <a> to toggle all, <i> to invert selection, and
+<enter> to proceed)
+ (*) Babel
+ (*) TypeScript
+ ( ) Progressive Web App (PWA) Support
+ (*) Router
+>(*) Vuex
+ ( ) CSS Pre-processors
+ ( ) Linter / Formatter
+ ( ) Unit Testing
+ ( ) E2E Testing
+```
+
 <br>
 
-**예시 코드**
+**프로젝트 구조도**
+
+```lua
+mpaproject/
+├── node_modules/
+├── public/
+│   ├── index.html
+│   ├── about.html
+│   ├── community.html
+│   ├── product.html
+│   └── favicon.ico
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Footer.vue
+│   │   └── Header.vue
+│   ├── model/
+│   │   └── index.ts
+│   ├── store/
+│   │   ├── actions.ts
+│   │   ├── index.ts
+│   │   ├── mutations.ts
+│   │   └── state.ts
+│   ├── pages/
+│   │   ├── about.ts
+│   │   ├── community.ts
+│   │   ├── home.ts
+│   │   └── product.ts
+│   ├── views/
+│   │   ├── AboutView.vue
+│   │   ├── CommunityView.vue
+│   │   ├── HomeView.vue
+│   │   └── ProductView.vue
+│   ├── main.ts
+│   └── shims-vue.d.ts
+├── babel.config.js
+├── package-lock.json
+├── package.json
+├── tsconfig.json
+└── vue.config.js
+```
+
+<br>
+
+**각 파일 및 폴더의 설명**
+
+public/: 각 페이지의 HTML 파일을 포함.
+  index.html: 홈 페이지 HTML 파일.
+  about.html: 어바웃 페이지 HTML 파일.
+  community.html: 커뮤니티 페이지 HTML 파일.
+  product.html: 제품 페이지 HTML 파일.
+  favicon.ico: 웹사이트의 파비콘.
+src/: 소스 코드가 위치하는 디렉토리.
+assets/: 이미지, 폰트, 스타일 등 정적 자산.
+components/: 재사용 가능한 Vue 컴포넌트.
+model/: TypeScript 인터페이스 및 모델 정의.
+store/: Vuex 상태 관리 파일.
+pages/: 각 페이지의 진입점 파일.
+  about.ts: 어바웃 페이지 진입점.
+  community.ts: 커뮤니티 페이지 진입점.
+  home.ts: 홈 페이지 진입점.
+  product.ts: 제품 페이지 진입점.
+views/: 페이지 컴포넌트.
+main.ts: 공통 로직이 있는 메인 파일.
+shims-vue.d.ts: TypeScript가 .vue 파일을 인식할 수 있도록 도와주는 파일.
+babel.config.js: Babel 설정 파일.
+package-lock.json: 설치된 정확한 의존성 트리를 보장하는 파일.
+package.json: 프로젝트 메타데이터 및 의존성 관리 파일.
+tsconfig.json: TypeScript 설정 파일.
+vue.config.js: Vue CLI 프로젝트 설정 파일.
+
+<br>
+
+**01. package.json**
+
+```json
+{
+  "name": "mpaproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "typescript": "~4.5.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**02. babel.config.js**
+
+```javascript
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+}
+```
+
+<br>
+
+**03. tsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+<br>
+
+**04. vue.config.js**
+
+```javascript
+module.exports = {
+  pages: {
+    index: {
+      entry: 'src/pages/home.ts',
+      template: 'public/index.html',
+      filename: 'index.html',
+      title: 'Home'
+    },
+    about: {
+      entry: 'src/pages/about.ts',
+      template: 'public/about.html',
+      filename: 'about.html',
+      title: 'About'
+    },
+    community: {
+      entry: 'src/pages/community.ts',
+      template: 'public/community.html',
+      filename: 'community.html',
+      title: 'Community'
+    },
+    product: {
+      entry: 'src/pages/product.ts',
+      template: 'public/product.html',
+      filename: 'product.html',
+      title: 'Product'
+    }
+  },
+  configureWebpack: {
+    devtool: 'source-map'
+  }
+}
+```
+
+<br>
+
+**05. public/index.html**
 
 ```html
-<!-- 각 HTML 파일의 내용은 다음과 같을 수 있습니다. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Page</title>
+  <title>Home</title>
 </head>
 <body>
-  <h1>About Page</h1>
-  <p>This is the about page content.</p>
+  <div id="app"></div>
+  <script src="/js/home.js"></script>
 </body>
 </html>
 ```
 
+<br>
+
+**06. public/about.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="/js/about.js"></script>
+</body>
+</html>
+```
+
+<br>
+
+**07. public/community.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="/js/community.js"></script>
+</body>
+</html>
+```
+
+<br>
+
+**08. public/product.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="/js/product.js"></script>
+</body>
+</html>
+```
+
+<br>
+
+**09. src/main.ts**
+
+```typescript
+import { createApp } from 'vue'
+import store from './store'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+
+export function initApp(component: any) {
+  const app = createApp(component)
+  app.component('Header', Header)
+  app.component('Footer', Footer)
+  app.use(store)
+  app.mount('#app')
+}
+```
+
+<br>
+
+**10. src/pages/home.ts**
+
+```typescript
+import { initApp } from '../main'
+import HomeView from '../views/HomeView.vue'
+
+initApp(HomeView)
+```
+
+<br>
+
+**11. src/pages/about.ts**
+
+```typescript
+import { initApp } from '../main'
+import AboutView from '../views/AboutView.vue'
+
+initApp(AboutView)
+```
+
+<br>
+
+**12. src/pages/community.ts**
+
+```typescript
+import { initApp } from '../main'
+import CommunityView from '../views/CommunityView.vue'
+
+initApp(CommunityView)
+```
+
+<br>
+
+**13. src/pages/product.ts**
+
+```typescript
+import { initApp } from '../main'
+import ProductView from '../views/ProductView.vue'
+
+initApp(ProductView)
+```
+
+<br>
+
+**14. src/views/HomeView.vue**
+
+```vue
+<template>
+  <div>
+    <Header />
+    <h1>Home</h1>
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'HomeView'
+})
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**15. src/views/AboutView.vue**
+
+```vue
+<template>
+  <div>
+    <Header />
+    <h1>About</h1>
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'AboutView'
+})
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**16. src/views/CommunityView.vue**
+
+```vue
+<template>
+  <div>
+    <Header />
+    <h1>Community</h1>
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'CommunityView'
+})
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**17. src/views/ProductView.vue**
+
+```vue
+<template>
+  <div>
+    <Header />
+    <h1>Product</h1>
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'ProductView'
+})
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**18. src/store/state.ts**
+
+```typescript
+import { Product } from '@/model'
+
+export interface State {
+  products: Product[]
+}
+
+export default {
+  products: []
+} as State
+```
+
+<br>
+
+**19. src/store/mutations.ts**
+
+```typescript
+import { State } from './state'
+import { Product } from '@/model'
+
+export default {
+  setProducts(state: State, products: Product[]) {
+    state.products = products
+  }
+}
+```
+
+<br>
+
+**20. src/store/actions.ts**
+
+```typescript
+import { ActionContext } from 'vuex'
+import { State } from './state'
+import { Product } from '@/model'
+
+export default {
+  fetchProducts({ commit }: ActionContext<State, State>) {
+    const products: Product[] = [
+      { id: 1, name: 'Product A', price: 100 },
+      { id: 2, name: 'Product B', price: 200 }
+    ]
+    commit('setProducts', products)
+  }
+}
+```
+
+<br>
+
+**21. src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex'
+import state from './state'
+import mutations from './mutations'
+import actions from './actions'
+
+export default createStore({
+  state,
+  mutations,
+  actions
+})
+```
+
+<br>
+
+**22. src/model/index.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+```
+
+<br>
+
+**23. src/components/Header.vue**
+
+```vue
+<template>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/community.html">Community</a></li>
+        <li><a href="/product.html">Product</a></li>
+      </ul>
+    </nav>
+  </header>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'Header'
+})
+</script>
+
+<style scoped>
+nav ul {
+  list-style: none;
+  display: flex;
+}
+nav ul li {
+  margin-right: 1rem;
+}
+</style>
+```
+
+<br>
+
+**24. src/components/Footer.vue**
+
+```vue
+<template>
+  <footer>
+    <p>&copy; 2024 My Company</p>
+  </footer>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'Footer'
+})
+</script>
+
+<style scoped>
+footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+</style>
+```
+
+<br>
+
+**25. src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
+}
+```
+
 - 각 페이지별로 별도의 HTML 파일을 가지고 있으며, 서버 측에서 라우팅을 처리할 수 있습니다.
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05\mpaproject>npm run serve
+
+> mpaproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1884ms                                                                      오후 4:46:49
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+
+![MPAPROJECT Home](./images/mpaproject01.png)
+
+![MPAPROJECT About](./images/mpaproject02.png)
+
+![MPAPROJECT Product](./images/mpaproject03.png)
+
+![MPAPROJECT Community](./images/mpaproject04.png)
 
 <br><br>
 
@@ -7475,10 +11707,14 @@ import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
 import Home from './views/Home.vue';
 import About from './views/About.vue';
+import Product from './views/Product.vue';
+import Community from './views/Community.vue';
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/about', component: About }
+  { path: '/about', component: About },
+  { path: '/product', component: Product },
+  { path: '/community', component: Community }
 ];
 
 const router = createRouter({
@@ -7497,6 +11733,8 @@ app.mount('#app');
   <div id="app">
     <router-link to="/">Home</router-link>
     <router-link to="/about">About</router-link>
+    <router-link to="/product">Product</router-link>
+    <router-link to="/community">Community</router-link>
     <router-view></router-view>
   </div>
 </template>
@@ -7537,7 +11775,577 @@ export default {
 | beforeEach     | `router.beforeEach(guard: NavigationGuard)` | 라우트 이동 전에 실행할 전역 가드를 등록합니다.         | ```typescript router.beforeEach((to, from) => { /* logic */ })``` |
 | afterEach      | `router.afterEach(hook: (to: Route, from: Route) => void)` | 라우트 이동 후에 실행할 후킹 함수를 등록합니다.        | ```typescript router.afterEach((to, from) => { /* logic */ })``` |
 
+<br>
 
+### 5-3-1. Vue Router 를 활용한 애플리케이션 제작 실습
+
+**프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study05>vue create vuerouterproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
+```
+
+<br>
+
+**프로젝트 구조**
+
+```lua
+vuerouterproject/
+├── node_modules/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Footer.vue
+│   │   └── Header.vue
+│   ├── model/
+│   │   └── index.ts
+│   ├── store/
+│   │   ├── actions.ts
+│   │   ├── index.ts
+│   │   ├── mutations.ts
+│   │   └── state.ts
+│   ├── views/
+│   │   ├── About.vue
+│   │   ├── Community.vue
+│   │   ├── Home.vue
+│   │   └── Product.vue
+│   ├── App.vue
+│   ├── main.ts
+│   └── shims-vue.d.ts
+├── babel.config.js
+├── package-lock.json
+├── package.json
+├── tsconfig.json
+└── vue.config.js
+```
+
+<br>
+
+**01. package.json**
+
+```json
+{
+  "name": "vuerouterproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "typescript": "~4.5.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**02. babel.config.js**
+
+```javascript
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+};
+```
+
+<br>
+
+**03. tsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+<br>
+
+**04. vue.config.js**
+
+```javascript
+module.exports = {
+  configureWebpack: {
+    devtool: 'source-map'
+  }
+};
+```
+
+<br>
+
+**05. public/index.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Router Project</title>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+</html>
+```
+
+<br>
+
+**06. src/main.ts**
+
+```typescript
+import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import App from './App.vue';
+import Home from './views/Home.vue';
+import About from './views/About.vue';
+import Product from './views/Product.vue';
+import Community from './views/Community.vue';
+
+const routes = [
+  { path: '/', component: Home },
+  { path: '/about', component: About },
+  { path: '/product', component: Product },
+  { path: '/community', component: Community }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+const app = createApp(App);
+app.use(router);
+app.mount('#app');
+```
+
+<br>
+
+**07. src/App.vue**
+
+```vue
+<template>
+  <div id="app">
+    <header>
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+      <router-link to="/product">Product</router-link>
+      <router-link to="/community">Community</router-link>
+    </header>
+    <router-view></router-view>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'App'
+});
+</script>
+
+<style scoped>
+header {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f8f9fa;
+  padding: 1rem;
+}
+header a {
+  text-decoration: none;
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**08. src/views/Home.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Home</h1>
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Header from '../components/Header.vue';
+import Footer from '../components/Footer.vue';
+
+export default defineComponent({
+  name: 'Home',
+  components: {
+    Header,
+    Footer
+  }
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**09. src/views/About.vue**
+
+```vue
+<template>
+  <div>
+    <h1>About</h1>
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Header from '../components/Header.vue';
+import Footer from '../components/Footer.vue';
+
+export default defineComponent({
+  name: 'About',
+  components: {
+    Header,
+    Footer
+  }
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**10. src/views/Product.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Product</h1>
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Header from '../components/Header.vue';
+import Footer from '../components/Footer.vue';
+
+export default defineComponent({
+  name: 'Product',
+  components: {
+    Header,
+    Footer
+  }
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**11. src/views/Community.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Community</h1>
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Header from '../components/Header.vue';
+import Footer from '../components/Footer.vue';
+
+export default defineComponent({
+  name: 'Community',
+  components: {
+    Header,
+    Footer
+  }
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**12. src/components/Header.vue**
+
+```vue
+<template>
+  <header>
+    <nav>
+      <ul>
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/about">About</router-link></li>
+        <li><router-link to="/product">Product</router-link></li>
+        <li><router-link to="/community">Community</router-link></li>
+      </ul>
+    </nav>
+  </header>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Header'
+});
+</script>
+
+<style scoped>
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+}
+nav ul li {
+  margin-right: 1rem;
+}
+nav ul li a {
+  text-decoration: none;
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**13. src/components/Footer.vue**
+
+```vue
+<template>
+  <footer>
+    <p>&copy; 2024 My Company</p>
+  </footer>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Footer'
+});
+</script>
+
+<style scoped>
+footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+</style>
+```
+
+<br>
+
+**14. src/store/state.ts**
+
+```typescript
+import { Product } from '@/model';
+
+export interface State {
+  products: Product[];
+}
+
+export default {
+  products: []
+} as State;
+```
+
+<br>
+
+**15. src/store/mutations.ts**
+
+```typescript
+import { State } from './state';
+import { Product } from '@/model';
+
+export default {
+  setProducts(state: State, products: Product[]) {
+    state.products = products;
+  }
+};
+```
+
+<br>
+
+**16. src/store/actions.ts**
+
+```typescript
+import { ActionContext } from 'vuex';
+import { State } from './state';
+import { Product } from '@/model';
+
+export default {
+  fetchProducts({ commit }: ActionContext<State, State>) {
+    const products: Product[] = [
+      { id: 1, name: 'Product A', price: 100 },
+      { id: 2, name: 'Product B', price: 200 }
+    ];
+    commit('setProducts', products);
+  }
+};
+```
+
+<br>
+
+**17. src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex';
+import state from './state';
+import mutations from './mutations';
+import actions from './actions';
+
+export default createStore({
+  state,
+  mutations,
+  actions
+});
+```
+
+<br>
+
+**18. src/model/index.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+```
+
+<br>
+
+**19. src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+```
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05\vuerouterproject>npm run serve
+
+> mpaproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1884ms                                                                      오후 4:46:49
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+
+![VUEROUTERPROJECT Home](./images/vuerouterproject01.png)
+
+![VUEROUTERPROJECT About](./images/vuerouterproject02.png)
+
+![VUEROUTERPROJECT Product](./images/vuerouterproject03.png)
+
+![VUEROUTERPROJECT Community](./images/vuerouterproject04.png)
 
 <br><br>
 
@@ -7599,6 +12407,539 @@ export default {
 위의 예시 코드에서는 `/user/:userId`와 같은 형태의 동적 경로를 정의하여 사용자 프로필 페이지를 렌더링합니다. 해당 경로에서 userId는 동적으로 변하는 매개변수를 나타냅니다. 이를 `$route.params.userId`를 통해 접근하여 현재 사용자의 ID를 가져올 수 있습니다.
 
 <br><br>
+
+### 5-4-3. 동작 라우트 매칭의 애플리케이션 제작 실습
+
+**프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study05>vue create dynamicproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
+```
+
+<br>
+
+**프로젝트 구조**
+
+```lua
+dynamicproject/
+├── node_modules/
+├── public/
+│   └── index.html
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Header.vue
+│   │   └── Footer.vue
+│   ├── model/
+│   │   └── index.ts
+│   ├── router/
+│   │   └── index.ts
+│   ├── store/
+│   │   ├── actions.ts
+│   │   ├── mutations.ts
+│   │   └── index.ts
+│   ├── views/
+│   │   ├── AboutView.vue
+│   │   ├── CommunityView.vue
+│   │   ├── HomeView.vue
+│   │   ├── ProductView.vue
+│   │   └── NotFound.vue
+│   ├── App.vue
+│   ├── main.ts
+│   ├── shims-vue.d.ts
+│   ├── types/
+│   │   └── index.d.ts
+├── babel.config.js
+├── package.json
+├── tsconfig.json
+└── vue.config.js
+```
+
+<br>
+
+**01. package.json**
+
+```json
+{
+  "name": "dynamicproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "typescript": "~4.5.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**02. babel.config.js**
+
+```javascript
+// babel.config.js
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+};
+```
+
+<br>
+
+**03. tsconfig.json**
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules"]
+}
+```
+
+<br>
+
+**04. vue.config.js**
+
+```javascript
+module.exports = {
+  configureWebpack: {
+    devtool: 'source-map'
+  }
+};
+```
+
+<br>
+
+**05. public/index.html**
+
+```html
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Project</title>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+</html>
+```
+
+<br>
+
+**06. src/App.vue**
+
+```vue
+<!-- src/App.vue -->
+<template>
+  <div id="app">
+    <Header />
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+      <router-link to="/product/123">Product</router-link>
+      <router-link to="/community/some-slug">Community</router-link>
+    </nav>
+    <router-view></router-view>
+    <Footer />
+  </div>
+</template>
+
+<script setup>
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+</script>
+
+<style>
+nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+</style>
+```
+
+<br>
+
+**07. src/components/Header.vue**
+
+```vue
+<!-- src/components/Header.vue -->
+<template>
+  <header>
+    <h1>Dynamic Project</h1>
+  </header>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+</style>
+```
+
+<br>
+
+**08. src/components/Footer.vue**
+
+```vue
+<!-- src/components/Footer.vue -->
+<template>
+  <footer>
+    <p>© 2024 My Company</p>
+  </footer>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+</style>
+```
+
+<br>
+
+**09. src/router/index.ts**
+
+```typescript
+// src/router/index.ts
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import HomeView from '@/views/HomeView.vue';
+import AboutView from '@/views/AboutView.vue';
+import ProductView from '@/views/ProductView.vue';
+import CommunityView from '@/views/CommunityView.vue';
+import NotFound from '@/views/NotFound.vue';
+
+const routes: Array<RouteRecordRaw> = [
+  { path: '/', name: 'Home', component: HomeView },
+  { path: '/about', name: 'About', component: AboutView },
+  { path: '/product/:id', name: 'Product', component: ProductView },
+  { path: '/community/:slug', name: 'Community', component: CommunityView },
+  { path: '/:catchAll(.*)', name: 'NotFound', component: NotFound }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**10. src/views/HomeView.vue**
+
+```vue
+<!-- src/views/HomeView.vue -->
+<template>
+  <div>
+    <h1>Home</h1>
+    <p>Welcome to the home page.</p>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**11. src/views/AboutView.vue**
+
+```vue
+<!-- src/views/AboutView.vue -->
+<template>
+  <div>
+    <h1>About</h1>
+    <p>This is the about page.</p>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**12. src/views/ProductView.vue**
+
+```vue
+<!-- src/views/ProductView.vue -->
+<template>
+  <div>
+    <h1>Product</h1>
+    <p>Product details for ID: {{ $route.params.id }}</p>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**13. src/views/CommunityView.vue**
+
+```vue
+<!-- src/views/CommunityView.vue -->
+<template>
+  <div>
+    <h1>Community</h1>
+    <p>Community details for slug: {{ $route.params.slug }}</p>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**14. src/views/NotFound.vue**
+
+```vue
+<!-- src/views/NotFound.vue -->
+<template>
+  <div>
+    <h1>404 Not Found</h1>
+    <p>Sorry, the page you are looking for does not exist.</p>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+h1 {
+  color: red;
+}
+</style>
+```
+
+<br>
+
+**15. src/store/state.ts**
+
+```typescript
+import { Product } from '@/model';
+
+export interface State {
+  products: Product[];
+}
+
+export default {
+  products: []
+} as State;
+```
+
+<br>
+
+**16. src/store/mutations.ts**
+
+```typescript
+import { State } from './state';
+import { Product } from '@/model';
+
+export default {
+  setProducts(state: State, products: Product[]) {
+    state.products = products;
+  }
+};
+```
+
+<br>
+
+**17. src/store/actions.ts**
+
+```typescript
+import { ActionContext } from 'vuex';
+import { State } from './state';
+import { Product } from '@/model';
+
+export default {
+  fetchProducts({ commit }: ActionContext<State, State>) {
+    const products: Product[] = [
+      { id: 1, name: 'Product A', price: 100 },
+      { id: 2, name: 'Product B', price: 200 }
+    ];
+    commit('setProducts', products);
+  }
+};
+```
+
+<br>
+
+**18. src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex';
+import state from './state';
+import mutations from './mutations';
+import actions from './actions';
+
+export default createStore({
+  state,
+  mutations,
+  actions
+});
+```
+
+<br>
+
+**19. src/model/index.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+```
+
+<br>
+
+
+**20. src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+```
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05>cd dynamicproject
+
+D:\gitRepository\vuejs\study05\dynamicproject>npm run serve
+
+> dynamicproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1838ms                                                                      오후 7:04:28
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+
+![DYNAMICPROJECT Home](./images/dynamicproject01.png)
+
+![DYNAMICPROJECT About](./images/dynamicproject02.png)
+
+![DYNAMICPROJECT Product](./images/dynamicproject03.png)
+
+![DYNAMICPROJECT Community](./images/dynamicproject04.png)
+
+<br><br>
+
 
 ## 5-5. Nested Route(중첩 라우트)
 
@@ -7726,6 +13067,524 @@ export default {
 - router-view를 사용하여 부모 컴포넌트 내에서 자식 컴포넌트를 렌더링하며, 자식 라우트는 부모 라우트의 경로를 기준으로 상대적으로 정의됩니다.
 
 <br><br>
+
+### 5-5-4. 중첩 라우트 매칭 애플리케이션 제작
+
+**프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study05>vue create nestedproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
+```
+
+<br>
+
+**프로젝트 구조**
+
+```lua
+nestedproject/
+├── node_modules/
+├── public/
+│   └── index.html
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Header.vue
+│   │   └── Footer.vue
+│   ├── model/
+│   │   └── index.ts
+│   ├── router/
+│   │   └── index.ts
+│   ├── store/
+│   │   ├── actions.ts
+│   │   ├── mutations.ts
+│   │   ├── state.ts
+│   │   └── index.ts
+│   ├── views/
+│   │   ├── About.vue
+│   │   ├── Community.vue
+│   │   ├── Home.vue
+│   │   ├── Product.vue
+│   │   └── ProductDetail.vue
+│   ├── App.vue
+│   ├── main.ts
+│   ├── shims-vue.d.ts
+│   └── types/
+│       └── index.d.ts
+├── babel.config.js
+├── package.json
+├── tsconfig.json
+└── vue.config.js
+```
+
+<br>
+
+**01. babel.config.js**
+
+```javascript
+// babel.config.js
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+};
+```
+
+<br>
+
+**02. tsconfig.json**
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules"]
+}
+```
+
+<br>
+
+**03. vue.config.js**
+
+```javascript
+// vue.config.js
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true
+})
+```
+
+<br>
+
+**04. public/index.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nested Project</title>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+</html>
+```
+
+<br>
+
+**05. src/App.vue**
+
+```vue
+<template>
+  <div id="app">
+    <Header />
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+      <router-link to="/product">Product</router-link>
+      <router-link to="/community">Community</router-link>
+    </nav>
+    <router-view></router-view>
+    <Footer />
+  </div>
+</template>
+
+<script setup>
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+</script>
+
+<style>
+nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+</style>
+```
+
+<br>
+
+**06. src/main.ts**
+
+```typescript
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+
+const app = createApp(App);
+app.use(router);
+app.use(store);
+app.mount('#app');
+```
+
+<br>
+
+**07. src/router/index.ts**
+
+```typescript
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
+import Product from '@/views/Product.vue';
+import ProductDetail from '@/views/ProductDetail.vue';
+import Community from '@/views/Community.vue';
+
+const routes: Array<RouteRecordRaw> = [
+  { path: '/', name: 'Home', component: Home },
+  { path: '/about', name: 'About', component: About },
+  {
+    path: '/product',
+    name: 'Product',
+    component: Product,
+    children: [
+      { path: ':id', name: 'ProductDetail', component: ProductDetail }
+    ]
+  },
+  { path: '/community', name: 'Community', component: Community }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**08. src/components/Header.vue**
+
+```vue
+<template>
+  <header>
+    <h1>Nested Project</h1>
+  </header>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+</style>
+```
+
+<br>
+
+**09. src/components/Footer.vue**
+
+```vue
+<template>
+  <footer>
+    <p>© 2024 My Company</p>
+  </footer>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+</style>
+```
+
+<br>
+
+**10. src/views/Home.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Home</h1>
+    <p>Welcome to the home page.</p>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**11. src/views/About.vue**
+
+```vue
+<template>
+  <div>
+    <h1>About</h1>
+    <p>This is the about page.</p>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**12. src/views/Product.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Product</h1>
+    <p>Select a product to view details:</p>
+    <ul>
+      <li><router-link :to="{ name: 'ProductDetail', params: { id: 1 } }">Product 1</router-link></li>
+      <li><router-link :to="{ name: 'ProductDetail', params: { id: 2 } }">Product 2</router-link></li>
+      <li><router-link :to="{ name: 'ProductDetail', params: { id: 3 } }">Product 3</router-link></li>
+    </ul>
+    <router-view></router-view>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**13. src/views/ProductDetail.vue**
+
+```vue
+<template>
+  <div>
+    <h2>Product Detail</h2>
+    <p>Details for product with ID: {{ $route.params.id }}</p>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+h2 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**14. src/views/Community.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Community</h1>
+    <p>Welcome to the community page.</p>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**15. src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex';
+import state from './state';
+import actions from './actions';
+import mutations from './mutations';
+
+export default createStore({
+  state,
+  actions,
+  mutations
+});
+```
+
+<br>
+
+**16. src/store/state.ts**
+
+```typescript
+import { Product } from '@/model';
+
+export interface State {
+  products: Product[];
+}
+
+export default {
+  products: []
+} as State;
+```
+
+<br>
+
+**17. src/store/mutations.ts**
+
+```typescript
+import { State } from './state';
+import { Product } from '@/model';
+
+export default {
+  setProducts(state: State, products: Product[]) {
+    state.products = products;
+  }
+};
+```
+
+<br>
+
+**18. src/store/actions.ts**
+
+```typescript
+import { ActionContext } from 'vuex';
+import { State } from './state';
+import { Product } from '@/model';
+
+export default {
+  fetchProducts({ commit }: ActionContext<State, State>) {
+    const products: Product[] = [
+      { id: 1, name: 'Product A', price: 100 },
+      { id: 2, name: 'Product B', price: 200 }
+    ];
+    commit('setProducts', products);
+  }
+};
+```
+
+<br>
+
+**19. src/model/index.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+```
+
+<br>
+
+
+**20. src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+```
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05>cd nestedproject
+
+D:\gitRepository\vuejs\study05\nestedproject>npm run serve
+
+> dynamicproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1838ms                                                                      오후 7:04:28
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+3. Product 페이지에서는 목록으로 나타난 제품목록에서 `Product 1` 을 클릭한다. 
+
+![NESTEDPROJECT Home](./images/nestedproject01.png)
+
+![NESTEDPROJECT About](./images/nestedproject02.png)
+
+![NESTEDPROJECT Product](./images/nestedproject03.png)
+
+![NESTEDPROJECT Product Product 1 클릭시](./images/nestedproject04.png)
+
+![NESTEDPROJECT Community](./images/nestedproject05.png)
+
+<br><br><br>
 
 ## 5-6. Navigation of Programming Method(프로그래밍 방식의 메뉴 구성)
 
@@ -7872,9 +13731,11 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
+      //this.$router.back();
     },
     goForward() {
       this.$router.go(1);
+      //this.$router.forward();
     }
   }
 };
@@ -7885,6 +13746,548 @@ export default {
 - 프로그래밍 방식의 메뉴 구성 방식으로 사용자가 특정 조건이나 이벤트에 따라 동적으로 경로를 변경할 수 있도록 라우팅을 구성할 수 있습니다.
 
 <br><br>
+
+### 5-6-7. 프로그래밍 방식의 메뉴 구성의 애플리케이션 제작 실습
+
+**프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study05>vue create pgmenuproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
+```
+
+<br>
+
+**프로젝트 구조**
+
+```lua
+pgmenuproject/
+├── node_modules/
+├── public/
+│   └── index.html
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Header.vue
+│   │   └── Footer.vue
+│   ├── model/
+│   │   └── index.ts
+│   ├── router/
+│   │   └── index.ts
+│   ├── store/
+│   │   ├── actions.ts
+│   │   ├── mutations.ts
+│   │   ├── state.ts
+│   │   └── index.ts
+│   ├── views/
+│   │   ├── About.vue
+│   │   ├── Community.vue
+│   │   ├── Home.vue
+│   │   └── Product.vue
+│   ├── App.vue
+│   ├── main.ts
+│   ├── shims-vue.d.ts
+│   └── types/
+│       └── index.d.ts
+├── babel.config.js
+├── package.json
+├── tsconfig.json
+└── vue.config.js
+```
+
+<br>
+
+**01. babel.config.js**
+
+```javascript
+// babel.config.js
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+};
+```
+
+<br>
+
+**02. tsconfig.json**
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules"]
+}
+```
+
+<br>
+
+**03. vue.config.js**
+
+```javascript
+// vue.config.js
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true
+});
+```
+
+<br>
+
+**04. public/index.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PG Menu Project</title>
+  <style>
+  button { background-color:transparent; outline:0; border:0; color:#333; 
+    font-weight:bold; padding:1.2em; cursor:pointer; }
+  button:hover { color:deepskyblue; }  
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+</html>
+```
+
+<br>
+
+**05. src/App.vue**
+
+```vue
+<template>
+  <div id="app">
+    <Header />
+    <router-view></router-view>
+    <Footer />
+  </div>
+</template>
+
+<script setup>
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+</script>
+
+<style>
+nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+</style>
+```
+
+<br>
+
+**06. src/main.ts**
+
+```typescript
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+
+const app = createApp(App);
+app.use(router);
+app.use(store);
+app.mount('#app');
+```
+
+<br>
+
+**07. src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+```
+
+<br>
+
+**08. src/router/index.ts**
+
+```typescript
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
+import Product from '@/views/Product.vue';
+import Community from '@/views/Community.vue';
+
+const routes: Array<RouteRecordRaw> = [
+  { path: '/', name: 'home', component: Home },
+  { path: '/about', name: 'about', component: About },
+  { path: '/product', name: 'product', component: Product },
+  { path: '/community', name: 'community', component: Community }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**09. src/components/Header.vue**
+
+```vue
+<template>
+  <div>
+    <button @click="goToPage('home')">Home</button>
+    <button @click="goToPage('about')">About</button>
+    <button @click="goToPage('product')">Product</button>
+    <button @click="goToPage('community')">Community</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    goToPage(page) {
+      this.$router.push({ name: page });
+    }
+  }
+};
+</script>
+```
+
+<br>
+
+**10. src/components/Footer.vue**
+
+```vue
+<template>
+  <footer>
+    <p>© 2024 My Company</p>
+  </footer>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+</style>
+```
+
+<br>
+
+**11. src/views/Home.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Home</h1>
+    <p>Welcome to the home page.</p>
+    <button @click="replaceToPage('home')">Replace to Home</button>
+    <button @click="goBack">Back</button>
+    <button @click="goForward">Forward</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    replaceToPage(page) {
+      this.$router.replace({ name: page });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**12. src/views/About.vue**
+
+```vue
+<template>
+  <div>
+    <h1>About</h1>
+    <p>This is the about page.</p>
+    <button @click="replaceToPage('home')">Replace to Home</button>
+    <button @click="goBack">Back</button>
+    <button @click="goForward">Forward</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    replaceToPage(page) {
+      this.$router.replace({ name: page });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**13. src/views/Product.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Product</h1>
+    <p>Here are our products.</p>
+    <button @click="replaceToPage('home')">Replace to Home</button>
+    <button @click="goBack">Back</button>
+    <button @click="goForward">Forward</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    replaceToPage(page) {
+      this.$router.replace({ name: page });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**14. src/views/Community.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Community</h1>
+    <p>Welcome to the community page.</p>
+    <button @click="replaceToPage('home')">Replace to Home</button>
+    <button @click="goBack">Back</button>
+    <button @click="goForward">Forward</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    replaceToPage(page) {
+      this.$router.replace({ name: page });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**15. src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex';
+import state from './state';
+import actions from './actions';
+import mutations from './mutations';
+
+export default createStore({
+  state,
+  actions,
+  mutations
+});
+```
+
+<br>
+
+**16. src/store/state.ts**
+
+```typescript
+import { Product } from '@/model';
+
+export interface State {
+  products: Product[];
+}
+
+export default {
+  products: []
+} as State;
+```
+
+<br>
+
+**17. src/store/mutations.ts**
+
+```typescript
+import { State } from './state';
+import { Product } from '@/model';
+
+export default {
+  setProducts(state: State, products: Product[]) {
+    state.products = products;
+  }
+};
+```
+
+<br>
+
+**18. src/store/actions.ts**
+
+```typescript
+import { ActionContext } from 'vuex';
+import { State } from './state';
+import { Product } from '@/model';
+
+export default {
+  fetchProducts({ commit }: ActionContext<State, State>) {
+    const products: Product[] = [
+      { id: 1, name: 'Product A', price: 100 },
+      { id: 2, name: 'Product B', price: 200 }
+    ];
+    commit('setProducts', products);
+  }
+};
+```
+
+<br>
+
+**19. src/model/index.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+```
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05>cd pgmenuproject
+
+D:\gitRepository\vuejs\study05\pgmenuproject>npm run serve
+
+> dynamicproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1838ms                                                                      오후 7:04:28
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+3. 각 페이지에서 Replace to Home/ Back / Forward 버튼 링크를 클릭해본다. 
+
+![PGMENUPROJECT Home](./images/pgmenuproject01.png)
+
+![PGMENUPROJECT About](./images/pgmenuproject02.png)
+
+![PGMENUPROJECT Product](./images/pgmenuproject03.png)
+
+![PGMENUPROJECT Community](./images/pgmenuproject04.png)
+
+<br><br><br>
 
 ## 5-7. Redirect & Alias(리다이렉트와 별칭)
 
@@ -7995,7 +14398,7 @@ export default router;
 
 ### 5-7-3. 리다이렉트와 별칭의 종합 예시
 
-```javascript
+```typescript
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from './views/Home.vue';
 import About from './views/About.vue';
@@ -8023,6 +14426,543 @@ export default router;
 - 리다이렉트와 별칭을 적절히 활용하면 사용자 경험을 향상시키고, 애플리케이션의 경로 구조를 보다 유연하게 관리할 수 있습니다.
 
 <br><br>
+
+### 5-7-4. 리다이렉트와 별칭을 사용한 애플리케이션 제작 실습
+
+**프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study05\pgmenuproject>vue create aliasproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In dedicated config files
+? Save this as a preset for future projects? No
+```
+
+**프로젝트 구조**
+
+```lua
+aliasproject/
+├── node_modules/
+├── public/
+│   └── index.html
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Header.vue
+│   │   └── Footer.vue
+│   ├── model/
+│   │   └── index.ts
+│   ├── router/
+│   │   └── index.ts
+│   ├── store/
+│   │   ├── actions.ts
+│   │   ├── mutations.ts
+│   │   ├── state.ts
+│   │   └── index.ts
+│   ├── views/
+│   │   ├── About.vue
+│   │   ├── Community.vue
+│   │   ├── Home.vue
+│   │   └── Product.vue
+│   ├── App.vue
+│   ├── main.ts
+│   ├── shims-vue.d.ts
+│   └── types/
+│       └── index.d.ts
+├── babel.config.js
+├── package.json
+├── tsconfig.json
+└── vue.config.js
+```
+
+<br>
+
+**01. babel.config.js**
+
+```javascript
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+};
+```
+
+<br>
+
+**02. tsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules"]
+}
+```
+
+<br>
+
+**03. vue.config.js**
+
+```javascript
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true
+});
+```
+
+<br>
+
+**04. public/index.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    button { background-color:transparent; outline:0; border:0; color:#333; 
+      font-weight:bold; padding:1.2em; cursor:pointer; }
+    button:hover { color:deepskyblue; }  
+  </style>
+  <title>Alias Project</title>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+</html>
+```
+
+<br>
+
+**05. src/App.vue**
+
+```vue
+<template>
+  <div id="app">
+    <Header />
+    <router-view></router-view>
+    <Footer />
+  </div>
+</template>
+
+<script setup>
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+</script>
+
+<style>
+nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+</style>
+```
+
+<br>
+
+**06. src/main.ts**
+
+```typescript
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+
+const app = createApp(App);
+app.use(router);
+app.use(store);
+app.mount('#app');
+```
+
+<br>
+
+**07. src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+```
+
+<br>
+
+**08. src/router/index.ts**
+
+```typescript
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
+import Product from '@/views/Product.vue';
+import Community from '@/views/Community.vue';
+
+const routes = [
+  { path: '/', component: Home },
+  { path: '/home', redirect: '/' },
+  { path: '/about', alias: '/info', component: About },
+  { path: '/product', alias:['/goods', '/event'], component: Product },
+  { path: '/community', alias: ['/board', '/notice'], component: Community }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**09. src/components/Header.vue**
+
+```vue
+<template>
+  <div>
+    <button @click="goToPage('home')">홈</button>
+    <button @click="goToPage('about')">소개</button>
+    <button @click="goToPage('product')">상품</button>
+    <button @click="goToPage('community')">커뮤니티</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    goToPage(page) {
+      this.$router.push({ path: `/${page}` });
+    }
+  }
+};
+</script>
+```
+
+<br>
+
+**10. src/components/Footer.vue**
+
+```vue
+<template>
+  <footer>
+    <p>© 2024 My Company</p>
+  </footer>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+</style>
+```
+
+<br>
+
+**11. src/views/Home.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Home</h1>
+    <p>Welcome to the home page.</p>
+    <button @click="replaceToPage('home')">Replace to Home</button>
+    <button @click="goBack">Back</button>
+    <button @click="goForward">Forward</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    replaceToPage(page) {
+      this.$router.push({ path: `/${page}` });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**12. src/views/About.vue**
+
+```vue
+<template>
+  <div>
+    <h1>About</h1>
+    <p>This is the about page.</p>
+    <button @click="replaceToPage('home')">Replace to Home</button>
+    <button @click="replaceToPage('event')">Event</button>
+    <button @click="replaceToPage('notice')">Notice</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    replaceToPage(page) {
+      this.$router.push({ path: `/${page}` });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**13. src/views/Product.vue**
+
+```vue
+<template>
+    <div>
+      <h1>Product</h1>
+      <p>Here are our products.</p>
+      <button @click="replaceToPage('home')">Replace to Home</button>
+      <button @click="replaceToPage('info')">Info</button>
+      <button @click="replaceToPage('board')">Board</button>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    methods: {
+      replaceToPage(page) {
+        this.$router.push({ path: `/${page}` });
+      },
+      goBack() {
+        this.$router.go(-1);
+      },
+      goForward() {
+        this.$router.go(1);
+      }
+    }
+  };
+  </script>
+  
+  <style scoped>
+  h1 {
+    color: #42b983;
+  }
+  </style>
+```
+
+<br>
+
+**14. src/views/Community.vue**
+
+```vue
+<template>
+    <div>
+      <h1>Community</h1>
+      <p>Welcome to the community page.</p>
+      <button @click="replaceToPage('home')">Home</button>
+      <button @click="replaceToPage('info')">Info</button>
+      <button @click="replaceToPage('goods')">Goods</button>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    methods: {
+      replaceToPage(page) {
+        this.$router.push({ path: `/${page}` });
+      },
+      goBack() {
+        this.$router.go(-1);
+      },
+      goForward() {
+        this.$router.go(1);
+      }
+    }
+  };
+  </script>
+  
+  <style scoped>
+  h1 {
+    color: #42b983;
+  }
+  </style>
+```
+
+<br>
+
+**15. src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex';
+import state from './state';
+import actions from './actions';
+import mutations from './mutations';
+
+export default createStore({
+  state,
+  actions,
+  mutations
+});
+```
+
+<br>
+
+**16. src/store/state.ts**
+
+```typescript
+import { Product } from '@/model';
+
+export interface State {
+  products: Product[];
+}
+
+export default {
+  products: []
+} as State;
+```
+
+<br>
+
+**17. src/store/mutations.ts**
+
+```typescript
+import { State } from './state';
+import { Product } from '@/model';
+
+export default {
+  setProducts(state: State, products: Product[]) {
+    state.products = products;
+  }
+};
+```
+
+<br>
+
+**18. src/store/actions.ts**
+
+```typescript
+import { ActionContext } from 'vuex';
+import { State } from './state';
+import { Product } from '@/model';
+
+export default {
+  fetchProducts({ commit }: ActionContext<State, State>) {
+    const products: Product[] = [
+      { id: 1, name: 'Product A', price: 100 },
+      { id: 2, name: 'Product B', price: 200 }
+    ];
+    commit('setProducts', products);
+  }
+};
+```
+
+<br>
+
+**19. src/model/index.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+```
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05>cd aliasproject
+
+D:\gitRepository\vuejs\study05\aliasproject>npm run serve
+
+> dynamicproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1838ms                                                                      오후 7:04:28
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+3. 각 페이지에서 Replace to Home / Event / Notice / Info / Board / Goods 버튼 링크를 클릭해본다. 
+
+![ALIASPROJECT Home](./images/aliasproject01.png)
+
+![ALIASPROJECT About](./images/aliasproject02.png)
+
+![ALIASPROJECT Product](./images/aliasproject03.png)
+
+![ALIASPROJECT Community](./images/aliasproject04.png)
+
+<br><br><br>
 
 ## 5-8. Forward To Route Component(라우트 컴포넌트에 데이터 전달)
 
@@ -8281,6 +15221,27 @@ export default {
 
 <br><br>
 
+### 5-8-6. 라우트 컴포넌트에 데이터 전달 애플리케이션 제작 실습
+
+**프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study05>vue create datatransproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
+```
+
+<br><br><br>
+
+
 ## 5-9. Route Mode(라우트 모드)
 
 - 라우터 모드를 설정하여 브라우저의 주소(URL) 구조를 관리할 수 있습니다. 두 가지 주요 라우트 모드가 있습니다.
@@ -8482,6 +15443,26 @@ export default router;
 ```
 
 <br><br>
+
+### 5-9-4. 라우트 모드를 활용한 애플리케이션 제작 실습
+
+**프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study05>vue create routemodeproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
+```
+
+<br><br><br>
 
 ## 5-10. Navigation Gard(네비게이션 가드)
 
@@ -8689,6 +15670,26 @@ export default router;
 
 <br><br>
 
+### 5-10-5. 네비게이션 가드를 활용한 애플리케이션 제작 실습
+
+**프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study05>vue create navigardproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
+```
+
+<br><br><br>
+
 ## 5-11. Route 를 활용한 메뉴 구성
 
 ```html
@@ -8737,12 +15738,20 @@ export default router;
 
 <div style="font-size:32px;color:red;">위와 같은 html에서 작성된 메뉴를 Vue 에서의 코드로 변환하도록 하겠습니다.</div>
 
-### 5-11-1. Vue Router 설치
-
-먼저, Vue 프로젝트에 Vue Router를 설치해야 합니다.
+### 5-11-1. 프로젝트 생성
 
 ```bash
-npm install vue-router
+D:\gitRepository\vuejs\study05>vue create routemenuproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
 ```
 
 <br><br>
@@ -9188,7 +16197,7 @@ export default {
 
 <br>
 
-views/service/Delivery.vue
+**views/service/Delivery.vue**
 
 ```html
 <template>
@@ -9329,6 +16338,476 @@ export default {
   name: 'CommunityChatbot'
 };
 </script>
+```
+
+<br><br><br>
+
+## 5-12. Axios
+
+- Axios를 사용하면 Vue.js 애플리케이션에서 HTTP 요청을 효율적으로 관리할 수 있습니다.
+
+**Axios 구성 요소**
+
+| 구성 요소       | 설명                                                                 | 기본 문법 및 예시 코드                                                                                                     |
+|----------------|--------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| **Axios 인스턴스** | Axios는 기본 인스턴스 외에도 설정을 커스터마이징한 인스턴스를 생성할 수 있습니다. | ```javascript<br>import axios from 'axios';<br>const instance = axios.create({<br>  baseURL: 'https://api.example.com',<br>  timeout: 1000,<br>  headers: {'X-Custom-Header': 'foobar'}<br>});<br>``` |
+| **요청 메서드**   | Axios는 GET, POST, PUT, DELETE 등 다양한 HTTP 요청 메서드를 지원합니다. | ```javascript<br>axios.get('/user?ID=12345')<br>  .then(response => {<br>    console.log(response);<br>  })<br>  .catch(error => {<br>    console.log(error);<br>  });<br>``` |
+| **응답 인터셉터** | 요청이나 응답을 가로채고 처리할 수 있는 메서드입니다.                               | ```javascript<br>axios.interceptors.response.use(function (response) {<br>  // 응답 데이터 가공<br>  return response;<br>}, function (error) {<br>  // 오류 응답 처리<br>  return Promise.reject(error);<br>});<br>``` |
+| **요청 취소**    | Axios는 요청을 취소할 수 있는 기능을 제공합니다.                                     | ```javascript<br>const CancelToken = axios.CancelToken;<br>const source = CancelToken.source();<br>axios.get('/user/12345', {<br>  cancelToken: source.token<br>})<br>  .catch(function (thrown) {<br>    if (axios.isCancel(thrown)) {<br>      console.log('Request canceled', thrown.message);<br>    } else {<br>      // handle error<br>    }<br>  });<br>source.cancel('Operation canceled by the user.');<br>``` |
+| **병렬 요청**    | 여러 요청을 병렬로 처리할 수 있습니다.                                               | ```javascript<br>function getUserAccount() {<br>  return axios.get('/user/12345');<br>}<br>function getUserPermissions() {<br>  return axios.get('/user/12345/permissions');<br>}<br>axios.all([getUserAccount(), getUserPermissions()])<br>  .then(axios.spread(function (acct, perms) {<br>    // 두 요청이 모두 완료될 때 실행<br>  }));<br>``` |
+
+<br><br>
+
+### 5-12-1. Axios를 Vue.js와 함께 사용하기
+
+#### 5-12-1-1. Axios 설치
+
+```bash
+npm install axios
+```
+
+<br>
+
+#### 5-12-1-2. Axios 기본 설정
+
+```javascript
+// main.js
+import { createApp } from 'vue';
+import App from './App.vue';
+import axios from 'axios';
+
+const app = createApp(App);
+
+// Axios를 Vue 애플리케이션에 플러그인으로 추가
+app.config.globalProperties.$axios = axios;
+
+app.mount('#app');
+```
+
+<br>
+
+#### 5-12-1-3. 컴포넌트에서의 사용 예시
+
+```javascript
+<template>
+  <div>
+    <h1>{{ user.name }}</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      user: {}
+    };
+  },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const response = await this.$axios.get('https://api.example.com/user/12345');
+        this.user = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+};
+</script>
+```
+
+<br><br>
+
+### 5-12-2. Axios 의 메소드
+
+| 메소드명      | 기본 문법                                                      | 설명                                                                 | 사용 예시                                                                                   |
+|--------------|----------------------------------------------------------------|--------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| **axios.get** | `axios.get(url[, config])`                                      | 지정된 URL로 GET 요청을 보냅니다.                                      | ```javascript<br>axios.get('/user?ID=12345')<br>  .then(response => {<br>    console.log(response);<br>  })<br>  .catch(error => {<br>    console.log(error);<br>  });<br>``` |
+| **axios.post** | `axios.post(url[, data[, config]])`                            | 지정된 URL로 POST 요청을 보냅니다.                                    | ```javascript<br>axios.post('/user', {<br>  firstName: 'Fred',<br>  lastName: 'Flintstone'<br>})<br>  .then(response => {<br>    console.log(response);<br>  })<br>  .catch(error => {<br>    console.log(error);<br>  });<br>``` |
+| **axios.put** | `axios.put(url[, data[, config]])`                              | 지정된 URL로 PUT 요청을 보냅니다.                                     | ```javascript<br>axios.put('/user/12345', {<br>  firstName: 'Fred',<br>  lastName: 'Flintstone'<br>})<br>  .then(response => {<br>    console.log(response);<br>  })<br>  .catch(error => {<br>    console.log(error);<br>  });<br>``` |
+| **axios.delete** | `axios.delete(url[, config])`                                    | 지정된 URL로 DELETE 요청을 보냅니다.                                  | ```javascript<br>axios.delete('/user/12345')<br>  .then(response => {<br>    console.log(response);<br>  })<br>  .catch(error => {<br>    console.log(error);<br>  });<br>``` |
+| **axios.head** | `axios.head(url[, config])`                                      | 지정된 URL로 HEAD 요청을 보냅니다.                                    | ```javascript<br>axios.head('/user?ID=12345')<br>  .then(response => {<br>    console.log(response);<br>  })<br>  .catch(error => {<br>    console.log(error);<br>  });<br>``` |
+| **axios.patch** | `axios.patch(url[, data[, config]])`                            | 지정된 URL로 PATCH 요청을 보냅니다.                                   | ```javascript<br>axios.patch('/user/12345', {<br>  firstName: 'Fred'<br>})<br>  .then(response => {<br>    console.log(response);<br>  })<br>  .catch(error => {<br>    console.log(error);<br>  });<br>``` |
+| **axios.options** | `axios.options(url[, config])`                                    | 지정된 URL로 OPTIONS 요청을 보냅니다.                                 | ```javascript<br>axios.options('/user?ID=12345')<br>  .then(response => {<br>    console.log(response);<br>  })<br>  .catch(error => {<br>    console.log(error);<br>  });<br>``` |
+| **axios.request** | `axios.request(config)`                                           | 설정을 바탕으로 요청을 보냅니다.                                      | ```javascript<br>axios.request({<br>  method: 'get',<br>  url: '/user/12345'<br>})<br>  .then(response => {<br>    console.log(response);<br>  })<br>  .catch(error => {<br>    console.log(error);<br>  });<br>``` |
+| **axios.create** | `axios.create([config])`                                          | 새로운 Axios 인스턴스를 생성합니다.                                    | ```javascript<br>const instance = axios.create({<br>  baseURL: 'https://api.example.com'<br>});<br>instance.get('/user/12345');<br>``` |
+| **axios.all** | `axios.all(iterable)`                                             | 여러 요청을 병렬로 수행합니다.                                         | ```javascript<br>axios.all([<br>  axios.get('/user/12345'),<br>  axios.get('/user/67890')<br>])<br>  .then(axios.spread((acct, perms) => {<br>    console.log(acct, perms);<br>  }));<br>``` |
+| **axios.spread** | `axios.spread(callback)`                                           | 여러 요청의 응답을 분리된 인수로 전달하는 헬퍼 함수입니다.                     | ```javascript<br>function getUserAccount() {<br>  return axios.get('/user/12345');<br>}<br>function getUserPermissions() {<br>  return axios.get('/user/12345/permissions');<br>}<br>axios.all([getUserAccount(), getUserPermissions()])<br>  .then(axios.spread((acct, perms) => {<br>    console.log(acct, perms);<br>  }));<br>``` |
+| **axios.interceptors** | `axios.interceptors`                                             | 요청 및 응답을 가로채고 처리하는 인터셉터를 정의할 수 있습니다.                    | ```javascript<br>axios.interceptors.request.use(config => {<br>  console.log('Request made with ', config);<br>  return config;<br>}, error => {<br>  return Promise.reject(error);<br>});<br>``` |
+
+<br>
+
+#### 5-12-2-1. axios.get()
+
+- 지정된 URL로 GET 요청을 보냅니다.
+
+**문법**
+
+```javascript
+axios.get(url[, config])
+```
+
+<br>
+
+**예시 코드**
+
+```javascript
+axios.get('/user?ID=12345')
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+<br>
+
+#### 5-12-2-2. axios.post()
+
+- 지정된 URL로 POST 요청을 보냅니다.
+
+**문법**
+
+```javascript
+axios.post(url[, data[, config]])
+```
+
+<br>
+
+**예시 코드**
+
+```javascript
+axios.post('/user', {
+  firstName: 'Fred',
+  lastName: 'Flintstone'
+})
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+<br>
+
+#### 5-12-2-3. axios.put()
+
+- 지정된 URL로 PUT 요청을 보냅니다.
+
+**문법** 
+
+```
+axios.put(url[, data[, config]])
+```
+
+<br>
+
+**예시 코드**
+
+```javascript
+axios.put('/user/12345', {
+  firstName: 'Fred',
+  lastName: 'Flintstone'
+})
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+<br>
+
+#### 5-12-2-4. axios.delete()
+
+- 지정된 URL로 DELETE 요청을 보냅니다.
+
+**문법**
+
+```javascript
+axios.delete(url[, config])
+```
+
+<br>
+
+**예시 코드**
+
+```javascript
+axios.delete('/user/12345')
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+<br>
+
+#### 5-12-2-5. axios.head()
+
+- 지정된 URL로 HEAD 요청을 보냅니다.
+
+**문법**
+
+```javascript
+axios.head(url[, config])
+```
+
+
+<br>
+
+**예시 코드**
+
+```javascript
+axios.head('/user?ID=12345')
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+<br>
+
+#### 5-12-2-6. axios.patch()
+
+- 지정된 URL로 PATCH 요청을 보냅니다.
+
+**문법**
+
+```javascript
+axios.patch(url[, data[, config]])
+```
+
+<br>
+
+**예시 코드**
+
+```javascript
+axios.patch('/user/12345', {
+  firstName: 'Fred'
+})
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+<br>
+
+#### 5-12-2-7. axios.options()
+
+- 지정된 URL로 OPTIONS 요청을 보냅니다.
+
+**문법**
+
+```javascript
+axios.options(url[, config])
+```
+
+<br>
+
+**예시 코드**
+
+```javascript
+axios.options('/user?ID=12345')
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+<br>
+
+#### 5-12-2-8. axios.request()
+
+- 설정을 바탕으로 요청을 보냅니다.
+
+**문법**
+
+```javascript
+axios.request(config)
+```
+
+<br>
+
+**예시 코드**
+
+```javascript
+axios.request({
+  method: 'get',
+  url: '/user/12345'
+})
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+<br>
+
+#### 5-12-2-9. axios.create()
+
+- 새로운 Axios 인스턴스를 생성합니다.
+
+**문법**
+
+```javascript
+axios.create([config])
+```
+
+<br>
+
+**예시 코드**
+
+```javascript
+const instance = axios.create({
+  baseURL: 'https://api.example.com'
+});
+
+instance.get('/user/12345')
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+<br>
+
+#### 5-12-2-10. axios.all()
+
+- 여러 요청을 병렬로 수행합니다.
+
+**문법**
+
+```javascript
+axios.all(iterable)
+```
+
+<br>
+
+**예시 코드**
+
+```javascript
+axios.all([
+  axios.get('/user/12345'),
+  axios.get('/user/67890')
+])
+  .then(axios.spread((acct, perms) => {
+    console.log(acct);
+    console.log(perms);
+  }));
+```
+
+<br>
+
+#### 5-12-2-11. axios.spread()
+
+- 여러 요청의 응답을 분리된 인수로 전달하는 헬퍼 함수입니다.
+
+**문법**
+
+```javascript
+axios.spread(callback)
+```
+
+<br>
+
+
+**예시 코드**
+
+```javascript
+function getUserAccount() {
+  return axios.get('/user/12345');
+}
+
+function getUserPermissions() {
+  return axios.get('/user/12345/permissions');
+}
+
+axios.all([getUserAccount(), getUserPermissions()])
+  .then(axios.spread((acct, perms) => {
+    console.log(acct);
+    console.log(perms);
+  }));
+```
+
+<br>
+
+#### 5-12-2-12. axios.interceptors
+
+- 요청 및 응답을 가로채고 처리하는 인터셉터를 정의할 수 있습니다.
+
+**문법**
+
+```javascript
+axios.interceptors.request.use(onFulfilled, onRejected) 및 axios.interceptors.response.use(onFulfilled, onRejected)
+```
+
+<br>
+
+**예시 코드**
+
+```javascript
+// 요청 인터셉터
+axios.interceptors.request.use(config => {
+  console.log('Request made with ', config);
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
+
+// 응답 인터셉터
+axios.interceptors.response.use(response => {
+  console.log('Response received', response);
+  return response;
+}, error => {
+  return Promise.reject(error);
+});
+```
+
+<br><br>
+
+### 5-12-3. Axios 를 활용한 애플리케이션 제작 실습
+
+**프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study05>vue create axiosproject
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
+```
+
+<br>
+
+**필요한 라이브러리 및 패키지 설치**
+
+```shell
+npm install axios
 ```
 
 <br><br><br>

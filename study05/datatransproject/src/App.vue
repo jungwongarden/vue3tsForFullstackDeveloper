@@ -1,10 +1,23 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div id="app">
+    <Header />
+    <router-view />
+    <Footer />
+  </div>
 </template>
+
+<script>
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Header,
+    Footer
+  }
+};
+</script>
 
 <style>
 #app {
@@ -13,6 +26,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin-top: 60px;
 }
 
 nav {

@@ -7026,6 +7026,8 @@ app.mount('#app');
 
 # 3. Vuejs의 요소
 
+**프로젝트 생성**
+
 ```shell
 vue create study03
 
@@ -8239,7 +8241,7 @@ export default defineComponent({
 
 ### 3-3-4. 메서드 호출
 
-```html
+```vue
 <!-- components/MethodComponent.vue -->
 <template>
   <div>
@@ -15239,6 +15241,711 @@ Vue CLI v5.0.8
 ? Save this as a preset for future projects? No
 ```
 
+<br>
+
+**프로젝트 구조**
+
+```lua
+datatransproject
+├── babel.config.js
+├── package.json
+├── public
+│   └── index.html
+├── src
+│   ├── components
+│   │   ├── Footer.vue
+│   │   └── Header.vue
+│   ├── main.ts
+│   ├── model
+│   │   └── index.ts
+│   ├── router
+│   │   └── index.ts
+│   ├── shims-vue.d.ts
+│   ├── store
+│   │   ├── actions.ts
+│   │   ├── index.ts
+│   │   ├── mutations.ts
+│   │   └── state.ts
+│   └── views
+│       ├── About.vue
+│       ├── Community.vue
+│       ├── Home.vue
+│       ├── Product.vue
+├── tsconfig.json
+└── vue.config.js
+```
+
+<br>
+
+**01. package.json**
+
+```json
+{
+  "name": "datatransproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "typescript": "~4.5.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**02. babel.config.js**
+
+```js
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+};
+```
+
+<br>
+
+**03. tsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+<br>
+
+**04. vue.config.js**
+
+```js
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  lintOnSave: false,
+  transpileDependencies: true
+});
+```
+
+<br>
+
+**05. public/index.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>datatransproject</title>
+</head>
+<body>
+  <noscript>
+    <strong>We're sorry but datatransproject doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+</body>
+</html>
+```
+
+<br>
+
+**06. src/main.ts**
+
+```typescript
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+
+const app = createApp(App);
+
+app.use(router);
+app.use(store);
+
+app.mount('#app');
+```
+
+<br>
+
+**07. src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+```
+
+<br>
+
+**08. src/components/Header.vue**
+
+```vue
+<template>
+  <div>
+    <router-link to="/">홈</router-link>
+    <router-link to="/about">소개</router-link>
+    <router-link to="/product">상품</router-link>
+    <router-link to="/community">커뮤니티</router-link>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Header'
+};
+</script>
+
+<style scoped>
+div {
+  display: flex;
+  gap: 10px;
+}
+</style>
+```
+
+<br>
+
+**09. src/components/Footer.vue**
+
+```vue
+<template>
+  <div>
+    <p>© 2024 My Company</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Footer'
+};
+</script>
+
+<style scoped>
+div {
+  text-align: center;
+  margin-top: 20px;
+}
+</style>
+```
+
+<br>
+
+**10. src/App.vue**
+
+```vue
+<template>
+  <div id="app">
+    <Header />
+    <router-view />
+    <Footer />
+  </div>
+</template>
+
+<script>
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Header,
+    Footer
+  }
+};
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+<br>
+
+**11. src/views/Home.vue**
+
+```vue
+<template>
+  <div>
+    <h1>홈</h1>
+    <p>환영합니다!</p>
+    <button @click="replaceToPage('home')">홈으로 이동</button>
+    <button @click="goBack">뒤로</button>
+    <button @click="goForward">앞으로</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    replaceToPage(page) {
+      this.$router.replace({ path: `/${page}` });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**12. src/views/About.vue**
+
+```vue
+<template>
+  <div>
+    <h1>소개</h1>
+    <p>이것은 소개 페이지입니다. 이 페이지는 /about 및 /info를 통해 접근할 수 있습니다.</p>
+    <button @click="replaceToPage('home')">홈으로 이동</button>
+    <button @click="goBack">뒤로</button>
+    <button @click="goForward">앞으로</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    replaceToPage(page) {
+      this.$router.replace({ path: `/${page}` });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**13. src/views/Product.vue**
+
+```vue
+<template>
+  <div>
+    <h1>상품</h1>
+    <div>
+      <h2>제품 등록</h2>
+      <input v-model="newProduct.name" placeholder="제품명"/>
+      <input v-model="newProduct.description" placeholder="설명"/>
+      <button @click="addProduct">추가</button>
+    </div>
+    <div>
+      <h2>제품 목록</h2>
+      <ul>
+        <li v-for="product in products" :key="product.id">
+          <router-link :to="{ name: 'product-detail', params: { id: product.id }}">{{ product.name }}</router-link>
+          <button @click="editProduct(product)">수정</button>
+          <button @click="deleteProduct(product.id)">삭제</button>
+        </li>
+      </ul>
+    </div>
+    <router-view></router-view>
+    <button @click="replaceToPage('home')">홈으로 이동</button>
+    <button @click="goBack">뒤로</button>
+    <button @click="goForward">앞으로</button>
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex';
+
+export default {
+  data() {
+    return {
+      newProduct: {
+        id: null,
+        name: '',
+        description: ''
+      }
+    };
+  },
+  computed: {
+    ...mapState(['products'])
+  },
+  methods: {
+    addProduct() {
+      if (this.newProduct.name && this.newProduct.description) {
+        const id = this.products.length + 1;
+        this.$store.dispatch('addProduct', { ...this.newProduct, id });
+        this.newProduct.name = '';
+        this.newProduct.description = '';
+      }
+    },
+    editProduct(product) {
+      this.$router.push({ name: 'product-edit', params: { id: product.id } });
+    },
+    deleteProduct(id) {
+      this.$store.commit('DELETE_PRODUCT', id);
+    },
+    replaceToPage(page) {
+      this.$router.replace({ path: `/${page}` });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**14. src/views/Community.vue**
+
+```vue
+<template>
+  <div>
+    <h1>커뮤니티</h1>
+    <div>
+      <h2>게시글 등록</h2>
+      <input v-model="newPost.title" placeholder="제목"/>
+      <input v-model="newPost.content" placeholder="내용"/>
+      <button @click="addPost">추가</button>
+    </div>
+    <div>
+      <h2>게시글 목록</h2>
+      <ul>
+        <li v-for="post in posts" :key="post.id">
+          <router-link :to="{ name: 'post-detail', params: { id: post.id }}">{{ post.title }}</router-link>
+          <button @click="editPost(post)">수정</button>
+          <button @click="deletePost(post.id)">삭제</button>
+        </li>
+      </ul>
+    </div>
+    <router-view></router-view>
+    <button @click="replaceToPage('home')">홈으로 이동</button>
+    <button @click="goBack">뒤로</button>
+    <button @click="goForward">앞으로</button>
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex';
+
+export default {
+  data() {
+    return {
+      newPost: {
+        id: null,
+        title: '',
+        content: ''
+      }
+    };
+  },
+  computed: {
+    ...mapState(['posts'])
+  },
+  methods: {
+    addPost() {
+      if (this.newPost.title && this.newPost.content) {
+        const id = this.posts.length + 1;
+        this.$store.dispatch('addPost', { ...this.newPost, id });
+        this.newPost.title = '';
+        this.newPost.content = '';
+      }
+    },
+    editPost(post) {
+      this.$router.push({ name: 'post-edit', params: { id: post.id } });
+    },
+    deletePost(id) {
+      this.$store.commit('DELETE_POST', id);
+    },
+    replaceToPage(page) {
+      this.$router.replace({ path: `/${page}` });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
+```
+
+<br>
+
+**15. src/router/index.ts**
+
+```typescript
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
+import Product from '@/views/Product.vue';
+import Community from '@/views/Community.vue';
+
+const routes = [
+  { path: '/', component: Home },
+  { path: '/home', redirect: '/' },
+  { path: '/about', alias: '/info', component: About },
+  { path: '/product', alias: ['/goods', '/event'], component: Product, 
+    children: [
+      { path: 'detail/:id', name: 'product-detail', component: Product },
+      { path: 'edit/:id', name: 'product-edit', component: Product }
+    ] 
+  },
+  { path: '/community', alias: ['/board', '/notice'], component: Community, 
+    children: [
+      { path: 'detail/:id', name: 'post-detail', component: Community },
+      { path: 'edit/:id', name: 'post-edit', component: Community }
+    ] 
+  }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**16. src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex';
+import state from './state';
+import actions from './actions';
+import mutations from './mutations';
+
+export default createStore({
+  state,
+  actions,
+  mutations,
+  modules: {}
+});
+```
+
+<br>
+
+**17. src/store/state.ts**
+
+```typescript
+import { Product, Post } from '@/model';
+
+export interface State {
+  products: Product[];
+  posts: Post[];
+}
+
+const state: State = {
+  products: [],
+  posts: []
+};
+
+export default state;
+```
+
+<br>
+
+**18. src/store/actions.ts**
+
+```typescript
+import { ActionContext } from 'vuex';
+import { Product, Post } from '@/model';
+import { State } from './state';
+
+export default {
+  addProduct({ commit }: ActionContext<State, any>, product: Product) {
+    commit('ADD_PRODUCT', product);
+  },
+  addPost({ commit }: ActionContext<State, any>, post: Post) {
+    commit('ADD_POST', post);
+  }
+};
+```
+
+<br>
+
+**19. src/store/mutations.ts**
+
+```typescript
+import { Product, Post } from '@/model';
+import { State } from './state';
+
+export default {
+  ADD_PRODUCT(state: State, product: Product) {
+    state.products.push(product);
+  },
+  ADD_POST(state: State, post: Post) {
+    state.posts.push(post);
+  },
+  DELETE_PRODUCT(state: State, id: number) {
+    state.products = state.products.filter(product => product.id !== id);
+  },
+  DELETE_POST(state: State, id: number) {
+    state.posts = state.posts.filter(post => post.id !== id);
+  }
+};
+```
+
+<br>
+
+**20. src/model/index.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface Post {
+  id: number;
+  title: string;
+  content: string;
+}
+```
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05>cd datatransproject
+
+D:\gitRepository\vuejs\study05\datatransproject>npm run serve
+
+> dynamicproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1838ms                                                                      오후 7:04:28
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+3. 각 페이지에서 Replace to Home / Back / Forward 버튼 링크를 클릭해본다. 
+4. Product 페이지에서 상품 추가, 상품 목록, 상품 상세보기, 상품 수정, 상품 제거를 진행해본다.
+5. Community 페이지에서 글 추가, 글 목록, 글 상세보기, 글 수정, 글 제거를 진행해본다.
+
+![DATATRANSPROJECT Home](./images/datatransproject01.png)
+
+![DATATRANSPROJECT About](./images/datatransproject02.png)
+
+![DATATRANSPROJECT Product](./images/datatransproject03.png)
+
+![DATATRANSPROJECT Community](./images/datatransproject04.png)
+
+
 <br><br><br>
 
 
@@ -15461,6 +16168,679 @@ Vue CLI v5.0.8
 ? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
 ? Save this as a preset for future projects? No
 ```
+
+<br>
+
+**프로젝트 구조**
+
+```lua
+datatransproject
+├── babel.config.js
+├── package.json
+├── public
+│   ├── favicon.ico
+│   └── index.html
+├── src
+│   ├── App.vue
+│   ├── components
+│   │   ├── Footer.vue
+│   │   └── Header.vue
+│   ├── main.ts
+│   ├── model
+│   │   ├── index.ts
+│   │   ├── Post.ts
+│   │   └── Product.ts
+│   ├── router
+│   │   ├── hash.ts
+│   │   └── history.ts
+│   ├── shims-vue.d.ts
+│   ├── store
+│   │   ├── actions.ts
+│   │   ├── index.ts
+│   │   ├── mutations.ts
+│   │   └── state.ts
+│   ├── views
+│   │   ├── About.vue
+│   │   ├── Community.vue
+│   │   ├── Home.vue
+│   │   └── Product.vue
+├── tsconfig.json
+└── vue.config.js
+```
+
+<br>
+
+**01. package.json**
+
+```json
+{
+  "name": "routemodeproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "typescript": "~4.5.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**02. babel.config.js**
+
+```javascript
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+};
+```
+
+<br>
+
+**03. tsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+<br>
+
+**04. vue.config.js**
+
+```javascript
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  lintOnSave: false,
+  transpileDependencies: true
+})
+```
+
+<br>
+
+**05. public/index.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>datatransproject</title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but datatransproject doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+  </body>
+</html>
+```
+
+<br>
+
+**06. src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+```
+
+<br>
+
+**07. src/main.ts**
+
+```typescript
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router/history'; // Use 'hash' for hash mode
+import store from './store';
+
+createApp(App)
+  .use(router)
+  .use(store)
+  .mount('#app');
+```
+
+<br>
+
+**08. src/App.vue**
+
+```vue
+<template>
+  <div id="app">
+    <Header />
+    <router-view />
+    <Footer />
+  </div>
+</template>
+
+<script>
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+
+export default {
+  components: {
+    Header,
+    Footer
+  }
+};
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+<br>
+
+**09. src/components/Header.vue**
+
+```vue
+<template>
+  <div>
+    <router-link to="/">Home</router-link>
+    <router-link to="/about">About</router-link>
+    <router-link to="/product">Product</router-link>
+    <router-link to="/community">Community</router-link>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+```
+
+<br>
+
+**10. src/components/Footer.vue**
+
+```vue
+<template>
+  <footer>
+    <p>&copy; 2024 My Company</p>
+  </footer>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style>
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+</style>
+```
+
+<br>
+
+**11. src/model/Product.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+}
+```
+
+<br>
+
+**12. src/model/Post.ts**
+
+```typescript
+export interface Post {
+  id: number;
+  title: string;
+  content: string;
+}
+```
+
+<br>
+
+**13. src/model/index.ts**
+
+```typescript
+export * from './Product';
+export * from './Post';
+```
+
+<br>
+
+**14. src/store/state.ts**
+
+```typescript
+import { Product, Post } from '@/model';
+
+export interface State {
+  products: Product[];
+  posts: Post[];
+}
+
+const state: State = {
+  products: [],
+  posts: []
+};
+
+export default state;
+```
+
+<br>
+
+**15. src/store/actions.ts**
+
+```typescript
+import { ActionContext } from 'vuex';
+import { Product, Post } from '@/model';
+import { State } from './state';
+
+export default {
+  addProduct({ commit }: ActionContext<State, any>, product: Product) {
+    commit('ADD_PRODUCT', product);
+  },
+  addPost({ commit }: ActionContext<State, any>, post: Post) {
+    commit('ADD_POST', post);
+  }
+};
+```
+
+<br>
+
+**16. src/store/mutations.ts**
+
+```typescript
+import { Product, Post } from '@/model';
+import { State } from './state';
+
+export default {
+  ADD_PRODUCT(state: State, product: Product) {
+    state.products.push(product);
+  },
+  ADD_POST(state: State, post: Post) {
+    state.posts.push(post);
+  },
+  DELETE_PRODUCT(state: State, id: number) {
+    state.products = state.products.filter(product => product.id !== id);
+  },
+  DELETE_POST(state: State, id: number) {
+    state.posts = state.posts.filter(post => post.id !== id);
+  }
+};
+```
+
+<br>
+
+**17. src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex';
+import state from './state';
+import actions from './actions';
+import mutations from './mutations';
+
+export default createStore({
+  state,
+  actions,
+  mutations
+});
+```
+
+<br>
+
+**18. src/router/history.ts**
+
+```typescript
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
+import Product from '@/views/Product.vue';
+import Community from '@/views/Community.vue';
+
+const routes = [
+  { path: '/', component: Home },
+  { path: '/home', redirect: '/' },
+  { path: '/about', alias: '/info', component: About },
+  { path: '/product', alias: ['/goods', '/event'], component: Product },
+  { path: '/community', alias: ['/board', '/notice'], component: Community }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**19. src/router/hash.ts**
+
+```typescript
+import { createRouter, createWebHashHistory } from 'vue-router';
+import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
+import Product from '@/views/Product.vue';
+import Community from '@/views/Community.vue';
+
+const routes = [
+  { path: '/', component: Home },
+  { path: '/home', redirect: '/' },
+  { path: '/about', alias: '/info', component: About },
+  { path: '/product', alias: ['/goods', '/event'], component: Product },
+  { path: '/community', alias: ['/board', '/notice'], component: Community }
+];
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**20. src/views/Home.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Home Page</h1>
+    <p>Welcome to the Home page!</p>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+```
+
+<br>
+
+**21. src/views/About.vue**
+
+```vue
+<template>
+  <div>
+    <h1>About Page</h1>
+    <p>Learn more about us on this page.</p>
+    <button @click="replaceToPage('home')">Replace to Home</button>
+    <button @click="goBack">Back</button>
+    <button @click="goForward">Forward</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    replaceToPage(page) {
+      this.$router.replace({ name: page });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+```
+
+<br>
+
+**22. src/views/Product.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Product Page</h1>
+    <p>Manage your products here.</p>
+    <div>
+      <h2>Product List</h2>
+      <ul>
+        <li v-for="product in products" :key="product.id">
+          {{ product.name }} - {{ product.description }} - ${{ product.price }}
+          <button @click="deleteProduct(product.id)">Delete</button>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2>Add Product</h2>
+      <form @submit.prevent="addProduct">
+        <input v-model="newProduct.name" placeholder="Name" />
+        <input v-model="newProduct.description" placeholder="Description" />
+        <input v-model.number="newProduct.price" placeholder="Price" />
+        <button type="submit">Add</button>
+      </form>
+    </div>
+    <button @click="replaceToPage('home')">Replace to Home</button>
+    <button @click="goBack">Back</button>
+    <button @click="goForward">Forward</button>
+  </div>
+</template>
+
+<script>
+import { mapState, mapActions } from 'vuex';
+
+export default {
+  data() {
+    return {
+      newProduct: {
+        id: 0,
+        name: '',
+        description: '',
+        price: 0
+      }
+    };
+  },
+  computed: {
+    ...mapState(['products'])
+  },
+  methods: {
+    ...mapActions(['addProduct', 'deleteProduct']),
+    addProduct() {
+      this.addProduct({ ...this.newProduct, id: Date.now() });
+      this.newProduct = { id: 0, name: '', description: '', price: 0 };
+    },
+    replaceToPage(page) {
+      this.$router.replace({ name: page });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+```
+
+<br>
+
+**23. src/views/Community.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Community Page</h1>
+    <p>Manage your community posts here.</p>
+    <div>
+      <h2>Post List</h2>
+      <ul>
+        <li v-for="post in posts" :key="post.id">
+          {{ post.title }} - {{ post.content }}
+          <button @click="deletePost(post.id)">Delete</button>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2>Add Post</h2>
+      <form @submit.prevent="addPost">
+        <input v-model="newPost.title" placeholder="Title" />
+        <input v-model="newPost.content" placeholder="Content" />
+        <button type="submit">Add</button>
+      </form>
+    </div>
+    <button @click="replaceToPage('home')">Replace to Home</button>
+    <button @click="goBack">Back</button>
+    <button @click="goForward">Forward</button>
+  </div>
+</template>
+
+<script>
+import { mapState, mapActions } from 'vuex';
+
+export default {
+  data() {
+    return {
+      newPost: {
+        id: 0,
+        title: '',
+        content: ''
+      }
+    };
+  },
+  computed: {
+    ...mapState(['posts'])
+  },
+  methods: {
+    ...mapActions(['addPost', 'deletePost']),
+    addPost() {
+      this.addPost({ ...this.newPost, id: Date.now() });
+      this.newPost = { id: 0, title: '', content: '' };
+    },
+    replaceToPage(page) {
+      this.$router.replace({ name: page });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    goForward() {
+      this.$router.go(1);
+    }
+  }
+};
+</script>
+```
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05>cd routemodeproject
+
+D:\gitRepository\vuejs\study05\routemodeproject>npm run serve
+
+> dynamicproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1838ms                                                                      오후 7:04:28
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+3. 각 페이지에서 Replace to Home / Back / Forward 버튼 링크를 클릭해본다. 
+4. Product 페이지에서 상품 추가, 상품 목록, 상품 상세보기, 상품 수정, 상품 제거를 진행해본다.
+5. Community 페이지에서 글 추가, 글 목록, 글 상세보기, 글 수정, 글 제거를 진행해본다.
+
+![ROUTMODEPROJECT Home](./images/routemodeproject01.png)
+
+![ROUTMODEPROJECT About](./images/routemodeproject02.png)
+
+![ROUTMODEPROJECT Product](./images/routemodeproject03.png)
+
+![ROUTMODEPROJECT Community](./images/routemodeproject04.png)
 
 <br><br><br>
 
@@ -15688,6 +17068,714 @@ Vue CLI v5.0.8
 ? Save this as a preset for future projects? No
 ```
 
+<br>
+
+**프로젝트 구조**
+
+```lua
+navigardproject/
+├── babel.config.js
+├── package.json
+├── tsconfig.json
+├── vue.config.js
+├── public/
+│   └── index.html
+├── src/
+│   ├── App.vue
+│   ├── main.ts
+│   ├── shims-vue.d.ts
+│   ├── components/
+│   │   ├── Header.vue
+│   │   └── Footer.vue
+│   ├── model/
+│   │   └── index.ts
+│   ├── router/
+│   │   └── index.ts
+│   ├── store/
+│   │   ├── index.ts
+│   │   ├── state.ts
+│   │   ├── actions.ts
+│   │   └── mutations.ts
+│   └── views/
+│       ├── Home.vue
+│       ├── About.vue
+│       ├── Product.vue
+│       └── Community.vue
+```
+
+<br>
+
+**01. package.json**
+
+```json
+{
+  "name": "navigardproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "typescript": "~4.5.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**02. babel.config.js**
+
+```js
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+}
+```
+
+<br>
+
+**03. tsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "lib": ["esnext", "dom"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+```
+
+<br>
+
+**04. vue.config.js**
+
+```js
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  lintOnSave: false,
+  transpileDependencies: true
+})
+```
+
+<br>
+
+**05. src/main.ts**
+
+```typescript
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+
+createApp(App).use(router).use(store).mount('#app');
+```
+
+<br>
+
+**06. src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+```
+
+<br>
+
+**07. src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex';
+import state from './state';
+import actions from './actions';
+import mutations from './mutations';
+
+export default createStore({
+  state,
+  actions,
+  mutations
+});
+```
+
+<br>
+
+**08. src/store/state.ts**
+
+```typescript
+import { Product, Post } from '@/model';
+
+interface State {
+  products: Product[];
+  posts: Post[];
+}
+
+const state: State = {
+  products: [],
+  posts: []
+};
+
+export default state;
+```
+
+<br>
+
+**09. src/store/actions.ts**
+
+```typescript
+import { ActionContext } from 'vuex';
+import { Product, Post } from '@/model';
+import state from './state';
+
+export default {
+  addProduct({ commit }: ActionContext<typeof state, any>, product: Product) {
+    commit('ADD_PRODUCT', product);
+  },
+  deleteProduct({ commit }: ActionContext<typeof state, any>, id: number) {
+    commit('DELETE_PRODUCT', id);
+  },
+  addPost({ commit }: ActionContext<typeof state, any>, post: Post) {
+    commit('ADD_POST', post);
+  },
+  deletePost({ commit }: ActionContext<typeof state, any>, id: number) {
+    commit('DELETE_POST', id);
+  }
+};
+```
+
+<br>
+
+**10. src/store/mutations.ts**
+
+```typescript
+import { MutationTree } from 'vuex';
+import { State } from './state';
+import { Product, Post } from '@/model';
+
+const mutations: MutationTree<State> = {
+  ADD_PRODUCT(state, product: Product) {
+    state.products.push(product);
+  },
+  DELETE_PRODUCT(state, id: number) {
+    state.products = state.products.filter(product => product.id !== id);
+  },
+  ADD_POST(state, post: Post) {
+    state.posts.push(post);
+  },
+  DELETE_POST(state, id: number) {
+    state.posts = state.posts.filter(post => post.id !== id);
+  }
+};
+
+export default mutations;
+```
+
+<br>
+
+**11. src/model/index.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+
+export interface Post {
+  id: number;
+  title: string;
+  content: string;
+}
+```
+
+<br>
+
+**12. src/components/Header.vue**
+
+```vue
+<template>
+  <div>
+    <router-link to="/">Home</router-link>
+    <router-link to="/about">About</router-link>
+    <router-link to="/product">Product</router-link>
+    <router-link to="/community">Community</router-link>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Header'
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**13. src/components/Footer.vue**
+
+```vue
+<template>
+  <footer>
+    <p>&copy; 2024 My Company</p>
+  </footer>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Footer'
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**14. public/index.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>navigardproject</title>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+</html>
+```
+
+<br>
+
+**15. src/App.vue**
+
+```vue
+<template>
+  <div id="app">
+    <Header />
+    <router-view />
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    Header,
+    Footer
+  }
+});
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+  padding: 1.2em;
+  text-decoration: none;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+form {
+  margin-top: 2em;
+  margin-bottom: 3em;
+}
+
+button { 
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: #333;
+  padding: 0.7em 1.5em;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+form button {
+  color: #fff;
+  background-color: #333;
+}
+
+form input {
+  padding: 0.5em;
+  margin-right: 1em;
+}
+</style>
+```
+
+<br>
+
+**16. src/router/index.ts**
+
+```typescript
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
+import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
+import Product from '@/views/Product.vue';
+import Community from '@/views/Community.vue';
+
+// Global guard example
+const globalGuard = (to: any, from: any, next: any) => {
+  console.log('Global Guard:', to, from);
+  next();
+};
+
+const routes = [
+  { path: '/', component: Home },
+  { path: '/home', redirect: '/' },
+  { path: '/about', alias: '/info', component: About },
+  { path: '/product', alias: ['/goods', '/event'], component: Product },
+  { path: '/community', alias: ['/board', '/notice'], component: Community }
+];
+
+const router = createRouter({
+  // Use either createWebHistory() or createWebHashHistory()
+  history: createWebHistory(),
+  // history: createWebHashHistory(),
+  routes
+});
+
+router.beforeEach(globalGuard);
+
+export default router;
+```
+
+<br>
+
+**17. src/views/Home.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Home</h1>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Home'
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**18. src/views/About.vue**
+
+```vue
+<template>
+  <div>
+    <h1>About</h1>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'About',
+  beforeRouteEnter(to, from, next) {
+    console.log('Component Guard: About - beforeRouteEnter');
+    next();
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('Component Guard: About - beforeRouteUpdate');
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log('Component Guard: About - beforeRouteLeave');
+    next();
+  }
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**19. src/views/Product.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Product</h1>
+    <div>
+      <input v-model="newProduct.name" placeholder="Product Name" />
+      <input v-model.number="newProduct.price" placeholder="Product Price" />
+      <button @click="addProduct">Add Product</button>
+    </div>
+    <ul>
+      <li v-for="product in products" :key="product.id">
+        <router-link :to="{ name: 'ProductDetail', params: { id: product.id } }">{{ product.name }}</router-link>
+        <button @click="deleteProduct(product.id)">Delete</button>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive, computed } from 'vue';
+import { useStore } from 'vuex';
+import { Product } from '@/model';
+
+export default defineComponent({
+  name: 'Product',
+  setup() {
+    const store = useStore();
+
+    const newProduct = reactive({
+      name: '',
+      price: 0
+    });
+
+    const products = computed(() => store.state.products);
+
+    const addProduct = () => {
+      const product: Product = {
+        id: Math.floor(Math.random() * 1000), // 임의의 ID 생성 (실제로는 서버에서 생성)
+        name: newProduct.name,
+        price: newProduct.price
+      };
+      store.dispatch('addProduct', product);
+      newProduct.name = '';
+      newProduct.price = 0;
+    };
+
+    const deleteProduct = (id: number) => {
+      store.dispatch('deleteProduct', id);
+    };
+
+    return {
+      newProduct,
+      products,
+      addProduct,
+      deleteProduct
+    };
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log('Route Guard: Product - beforeRouteEnter');
+    next();
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('Route Guard: Product - beforeRouteUpdate');
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log('Route Guard: Product - beforeRouteLeave');
+    next();
+  }
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**20. src/views/Community.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Community</h1>
+    <div>
+      <input v-model="newPost.title" placeholder="Post Title" />
+      <textarea v-model="newPost.content" placeholder="Post Content"></textarea>
+      <button @click="addPost">Add Post</button>
+    </div>
+    <ul>
+      <li v-for="post in posts" :key="post.id">
+        <router-link :to="{ name: 'PostDetail', params: { id: post.id } }">{{ post.title }}</router-link>
+        <button @click="deletePost(post.id)">Delete</button>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive, computed } from 'vue';
+import { useStore } from 'vuex';
+import { Post } from '@/model';
+
+export default defineComponent({
+  name: 'Community',
+  setup() {
+    const store = useStore();
+
+    const newPost = reactive({
+      title: '',
+      content: ''
+    });
+
+    const posts = computed(() => store.state.posts);
+
+    const addPost = () => {
+      const post: Post = {
+        id: Math.floor(Math.random() * 1000), // 임의의 ID 생성 (실제로는 서버에서 생성)
+        title: newPost.title,
+        content: newPost.content
+      };
+      store.dispatch('addPost', post);
+      newPost.title = '';
+      newPost.content = '';
+    };
+
+    const deletePost = (id: number) => {
+      store.dispatch('deletePost', id);
+    };
+
+    return {
+      newPost,
+      posts,
+      addPost,
+      deletePost
+    };
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log('Route Guard: Community - beforeRouteEnter');
+    next();
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('Route Guard: Community - beforeRouteUpdate');
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log('Route Guard: Community - beforeRouteLeave');
+    next();
+  }
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05>cd navigardproject
+
+D:\gitRepository\vuejs\study05\navigardproject>npm run serve
+
+> dynamicproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1838ms                                                                      오후 7:04:28
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+3. 각 페이지에서 Replace to Home / Back / Forward 버튼 링크를 클릭해본다. 
+4. Product 페이지에서 상품 추가, 상품 목록, 상품 상세보기, 상품 수정, 상품 제거를 진행해본다.
+5. Community 페이지에서 글 추가, 글 목록, 글 상세보기, 글 수정, 글 제거를 진행해본다.
+
+![NAVIGARDPROJECT Home](./images/navigardproject01.png)
+
+![NAVIGARDPROJECT About](./images/navigardproject02.png)
+
+![NAVIGARDPROJECT Product](./images/navigardproject03.png)
+
+![NAVIGARDPROJECT Community](./images/navigardproject04.png)
+
+
 <br><br><br>
 
 ## 5-11. Route 를 활용한 메뉴 구성
@@ -15736,7 +17824,7 @@ Vue CLI v5.0.8
     </nav>
 ```
 
-<div style="font-size:32px;color:red;">위와 같은 html에서 작성된 메뉴를 Vue 에서의 코드로 변환하도록 하겠습니다.</div>
+<div style="font-size:32px;color:red;"> 위와 같은 html에서 작성된 메뉴를 Vue 에서의 코드로 변환하도록 하겠습니다.</div>
 
 ### 5-11-1. 프로젝트 생성
 
@@ -15790,18 +17878,18 @@ src/
 |   |-- Service.vue
 |   |-- Community.vue
 |-- App.vue
-|-- main.js
+|-- main.ts
 |-- router/
-|   |-- index.js
+|   |-- index.ts
 ```
 
 <br><br>
 
 ### 5-11-2. 라우트 설정
 
-- 라우트 설정을 위해 src/router/index.js 파일을 생성하고, 다음과 같이 라우트를 설정합니다.
+- 라우트 설정을 위해 src/router/index.ts 파일을 생성하고, 다음과 같이 라우트를 설정합니다.
 
-```javascript
+```typescript
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import Company from '../views/Company.vue';
@@ -15942,7 +18030,7 @@ export default {
 
 - 각 라우트에 대한 컴포넌트를 작성합니다.
 
-**views/Home.vue**
+**01. views/Home.vue**
 
 ```html
 <template>
@@ -15960,7 +18048,7 @@ export default {
 
 <br>
 
-**views/Company.vue**
+**02. views/Company.vue**
 
 ```html
 <template>
@@ -15979,7 +18067,7 @@ export default {
 
 <br>
 
-**views/company/Intro.vue**
+**03. views/company/Intro.vue**
 
 ```html
 <template>
@@ -15997,7 +18085,7 @@ export default {
 
 <br>
 
-**views/company/History.vue**
+**04. views/company/History.vue**
 
 ```html
 <template>
@@ -16015,7 +18103,7 @@ export default {
 
 <br>
 
-**views/company/Greetings.vue**
+**05. views/company/Greetings.vue**
 
 ```html
 <template>
@@ -16033,7 +18121,7 @@ export default {
 
 <br>
 
-**views/company/Organization.vue**
+**06. views/company/Organization.vue**
 
 ```html
 <template>
@@ -16051,7 +18139,7 @@ export default {
 
 <br>
 
-**views/Product.vue**
+**07. views/Product.vue**
 
 ```html
 <template>
@@ -16070,7 +18158,7 @@ export default {
 
 <br>
 
-**views/product/A01.vue**
+**08. views/product/A01.vue**
 
 ```html
 <template>
@@ -16088,7 +18176,7 @@ export default {
 
 <br>
 
-**views/product/B01.vue**
+**09. views/product/B01.vue**
 
 ```html
 <template>
@@ -16106,7 +18194,7 @@ export default {
 
 <br>
 
-**views/product/C01.vue**
+**10. views/product/C01.vue**
 
 ```html
 <template>
@@ -16124,7 +18212,7 @@ export default {
 
 <br>
 
-**views/product/D01.vue**
+**11. views/product/D01.vue**
 
 ```html
 <template>
@@ -16142,7 +18230,7 @@ export default {
 
 <br>
 
-**views/Service.vue**
+**12. views/Service.vue**
 
 ```html
 <template>
@@ -16161,7 +18249,7 @@ export default {
 
 <br>
 
-**views/service/Online.vue**
+**13. views/service/Online.vue**
 
 ```html
 <template>
@@ -16179,7 +18267,7 @@ export default {
 
 <br>
 
-**views/service/Visit.vue**
+**14. views/service/Visit.vue**
 
 ```html
 <template>
@@ -16197,7 +18285,7 @@ export default {
 
 <br>
 
-**views/service/Delivery.vue**
+**15. views/service/Delivery.vue**
 
 ```html
 <template>
@@ -16215,7 +18303,7 @@ export default {
 
 <br>
 
-**views/service/Reservation.vue**
+**16. views/service/Reservation.vue**
 
 ```html
 <template>
@@ -16233,7 +18321,7 @@ export default {
 
 <br>
 
-**views/Community.vue**
+**17. views/Community.vue**
 
 ```html
 <template>
@@ -16252,7 +18340,7 @@ export default {
 
 <br>
 
-**views/community/Notice.vue**
+**18. views/community/Notice.vue**
 
 ```html
 <template>
@@ -16270,7 +18358,7 @@ export default {
 
 <br>
 
-**views/community/QnA.vue**
+**19. views/community/QnA.vue**
 
 ```html
 <template>
@@ -16288,7 +18376,7 @@ export default {
 
 <br>
 
-**views/community/FAQ.vue**
+**20. views/community/FAQ.vue**
 
 ```html
 <template>
@@ -16306,7 +18394,7 @@ export default {
 
 <br>
 
-**views/community/Online.vue**
+**21. views/community/Online.vue**
 
 ```html
 <template>
@@ -16324,7 +18412,7 @@ export default {
 
 <br>
 
-**views/community/Chatbot.vue**
+**22. views/community/Chatbot.vue**
 
 ```html
 <template>
@@ -16339,6 +18427,52 @@ export default {
 };
 </script>
 ```
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05>cd routemenuproject
+
+D:\gitRepository\vuejs\study05\routemenuproject>npm run serve
+
+> dynamicproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1838ms                                                                      오후 7:04:28
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Company / Product / Service / Community 를 각 각 클릭해본다.
+3. 각 페이지에서 서브 메뉴를 클릭한다.
+
+![ROUTEMENUPROJECT Home](./images/routemenuproject01.png)
+
+![ROUTEMENUPROJECT Company](./images/routemenuproject02.png)
+
+![ROUTEMENUPROJECT Product](./images/routemenuproject03.png)
+
+![ROUTEMENUPROJECT Service](./images/routemenuproject04.png)
+
+![ROUTEMENUPROJECT Community](./images/routemenuproject05.png)
+
 
 <br><br><br>
 
@@ -16810,11 +18944,654 @@ Vue CLI v5.0.8
 npm install axios
 ```
 
+<br>
+
+**프로젝트 구조**
+
+```lua
+axiosproject
+├── babel.config.js
+├── package.json
+├── public
+│   └── index.html
+├── src
+│   ├── components
+│   │   ├── Footer.vue
+│   │   └── Header.vue
+│   ├── main.ts
+│   ├── model
+│   │   └── index.ts
+│   ├── router
+│   │   └── index.ts
+│   ├── shims-vue.d.ts
+│   ├── store
+│   │   ├── actions.ts
+│   │   ├── index.ts
+│   │   ├── mutations.ts
+│   │   └── state.ts
+│   ├── views
+│   │   ├── About.vue
+│   │   ├── Community.vue
+│   │   ├── Home.vue
+│   │   └── Product.vue
+│   └── App.vue
+├── tsconfig.json
+└── vue.config.js
+```
+
+<br>
+
+**package.json**
+
+```json
+{
+  "name": "axiosproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "axios": "^1.7.2",
+    "typescript": "~4.5.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br>
+
+**babel.config.js**
+
+```javascript
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+};
+```
+
+<br>
+
+**tsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "lib": ["esnext", "dom"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+}
+```
+
+<br>
+
+**vue.config.js**
+
+```javascript
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  lintOnSave: false,
+  transpileDependencies: true
+})
+```
+
+<br>
+
+**public/index.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>axiosproject</title>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+</html>
+```
+
+<br>
+
+**src/main.ts**
+
+```typescript
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import axios from 'axios';
+
+const app = createApp(App);
+
+app.config.globalProperties.$axios = axios;
+
+app.use(router);
+app.use(store);
+app.mount('#app');
+```
+
+<br>
+
+**src/shims-vue.d.ts**
+
+```typescript
+declare module '*.vue' {
+  import { DefineComponent } from 'vue';
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+```
+
+<br>
+
+**src/components/Header.vue**
+
+```vue
+<template>
+  <header>
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+      <router-link to="/product">Product</router-link>
+      <router-link to="/community">Community</router-link>
+    </nav>
+  </header>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Header'
+});
+</script>
+
+<style scoped>
+nav {
+  display: flex;
+  gap: 10px;
+}
+</style>
+```
+
+<br>
+
+**src/components/Footer.vue**
+
+```vue
+<template>
+  <footer>
+    <p>&copy; 2024 axiosproject</p>
+  </footer>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Footer'
+});
+</script>
+
+<style scoped>
+footer {
+  text-align: center;
+  margin-top: 20px;
+}
+</style>
+```
+
+<br>
+
+**src/App.vue**
+
+```vue
+<template>
+  <div id="app">
+    <Header />
+    <router-view />
+    <Footer />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    Header,
+    Footer
+  }
+});
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+<br>
+
+**src/model/index.ts**
+
+```typescript
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+
+export interface Post {
+  id: number;
+  title: string;
+  content: string;
+}
+```
+
+<br>
+
+**src/router/index.ts**
+
+```typescript
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
+import Product from '@/views/Product.vue';
+import Community from '@/views/Community.vue';
+
+const routes = [
+  { path: '/', component: Home },
+  { path: '/about', component: About },
+  { path: '/product', component: Product },
+  { path: '/community', component: Community }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+```
+
+<br>
+
+**src/store/index.ts**
+
+```typescript
+import { createStore } from 'vuex';
+import state from './state';
+import actions from './actions';
+import mutations from './mutations';
+
+export default createStore({
+  state,
+  actions,
+  mutations
+});
+```
+
+<br>
+
+**src/store/state.ts**
+
+```typescript
+import { Product, Post } from '@/model';
+
+export interface State {
+  products: Product[];
+  posts: Post[];
+}
+
+const state: State = {
+  products: [],
+  posts: []
+};
+
+export default state;
+```
+
+<br>
+
+**src/store/actions.ts**
+
+```typescript
+import { ActionTree } from 'vuex';
+import { State } from './state';
+import axios from 'axios';
+import { Product, Post } from '@/model';
+
+const actions: ActionTree<State, State> = {
+  async addProduct({ commit }, product: Product) {
+    // 임의의 API 호출
+    const response = await axios.post('/api/products', product);
+    commit('ADD_PRODUCT', response.data);
+  },
+  async deleteProduct({ commit }, id: number) {
+    // 임의의 API 호출
+    await axios.delete(`/api/products/${id}`);
+    commit('DELETE_PRODUCT', id);
+  },
+  async addPost({ commit }, post: Post) {
+    // 임의의 API 호출
+    const response = await axios.post('/api/posts', post);
+    commit('ADD_POST', response.data);
+  },
+  async deletePost({ commit }, id: number) {
+    // 임의의 API 호출
+    await axios.delete(`/api/posts/${id}`);
+    commit('DELETE_POST', id);
+  }
+};
+
+export default actions;
+```
+
+<br>
+
+**src/store/mutations.ts**
+
+```typescript
+import { MutationTree } from 'vuex';
+import { State } from './state';
+import { Product, Post } from '@/model';
+
+const mutations: MutationTree<State> = {
+  ADD_PRODUCT(state, product: Product) {
+    state.products.push(product);
+  },
+  DELETE_PRODUCT(state, id: number) {
+    state.products = state.products.filter((product) => product.id !== id);
+  },
+  ADD_POST(state, post: Post) {
+    state.posts.push(post);
+  },
+  DELETE_POST(state, id: number) {
+    state.posts = state.posts.filter((post) => post.id !== id);
+  }
+};
+
+export default mutations;
+```
+
+<br>
+
+**src/views/Home.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Home</h1>
+    <p>Welcome to axiosproject!</p>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Home'
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**src/views/About.vue**
+
+```vue
+<template>
+  <div>
+    <h1>About</h1>
+    <p>This is an about page.</p>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'About'
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**src/views/Product.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Product</h1>
+    <div>
+      <input v-model="newProduct.name" placeholder="Product Name" />
+      <input v-model.number="newProduct.price" placeholder="Product Price" />
+      <button @click="addProduct">Add Product</button>
+    </div>
+    <ul>
+      <li v-for="product in products" :key="product.id">
+        <router-link :to="{ name: 'ProductDetail', params: { id: product.id } }">{{ product.name }}</router-link>
+        <button @click="deleteProduct(product.id)">Delete</button>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { useStore } from 'vuex';
+import { Product } from '@/model';
+
+export default defineComponent({
+  name: 'Product',
+  data() {
+    return {
+      newProduct: {
+        name: '',
+        price: 0
+      }
+    };
+  },
+  computed: {
+    products(): Product[] {
+      return this.$store.state.products;
+    }
+  },
+  methods: {
+    async addProduct() {
+      const product: Product = {
+        id: Math.floor(Math.random() * 1000), // 임의의 ID 생성 (실제로는 서버에서 생성)
+        name: this.newProduct.name,
+        price: this.newProduct.price
+      };
+      await this.$store.dispatch('addProduct', product);
+      this.newProduct.name = '';
+      this.newProduct.price = 0;
+    },
+    async deleteProduct(id: number) {
+      await this.$store.dispatch('deleteProduct', id);
+    }
+  }
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**src/views/Community.vue**
+
+```vue
+<template>
+  <div>
+    <h1>Community</h1>
+    <div>
+      <input v-model="newPost.title" placeholder="Post Title" />
+      <textarea v-model="newPost.content" placeholder="Post Content"></textarea>
+      <button @click="addPost">Add Post</button>
+    </div>
+    <ul>
+      <li v-for="post in posts" :key="post.id">
+        <router-link :to="{ name: 'PostDetail', params: { id: post.id } }">{{ post.title }}</router-link>
+        <button @click="deletePost(post.id)">Delete</button>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { useStore } from 'vuex';
+import { Post } from '@/model';
+
+export default defineComponent({
+  name: 'Community',
+  data() {
+    return {
+      newPost: {
+        title: '',
+        content: ''
+      }
+    };
+  },
+  computed: {
+    posts(): Post[] {
+      return this.$store.state.posts;
+    }
+  },
+  methods: {
+    async addPost() {
+      const post: Post = {
+        id: Math.floor(Math.random() * 1000), // 임의의 ID 생성 (실제로는 서버에서 생성)
+        title: this.newPost.title,
+        content: this.newPost.content
+      };
+      await this.$store.dispatch('addPost', post);
+      this.newPost.title = '';
+      this.newPost.content = '';
+    },
+    async deletePost(id: number) {
+      await this.$store.dispatch('deletePost', id);
+    }
+  }
+});
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+```
+
+<br>
+
+**애플리케이션 실행**
+
+```shell
+D:\gitRepository\vuejs\study05>cd axiosproject
+
+D:\gitRepository\vuejs\study05\axiosproject>npm run serve
+
+> dynamicproject@0.1.0 serve
+> vue-cli-service serve
+
+ INFO  Starting development server...
+
+ DONE  Compiled successfully in 1838ms                                                                      오후 7:04:28
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.0.9:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run npm run build.
+
+Issues checking in progress...
+No issues found.
+```
+
+<br>
+
+**프로젝트 브라우저에서 열기**
+
+1. 브라우저의 주소 입력줄에 `http://localhost:8080/` 을 입력한다.
+2. 나타난 화면에서 Home / About / Product / Community 를 각 각 클릭해본다.
+3. 각 페이지에서 Replace to Home / Back / Forward 버튼 링크를 클릭해본다. 
+4. Product 페이지에서 상품 추가, 상품 목록, 상품 상세보기, 상품 수정, 상품 제거를 진행해본다.
+5. Community 페이지에서 글 추가, 글 목록, 글 상세보기, 글 수정, 글 제거를 진행해본다.
+
+![AXIOSPROJECT Home](./images/axiosproject01.png)
+
+![AXIOSPROJECT About](./images/axiosproject02.png)
+
+![AXIOSPROJECT Product](./images/axiosproject03.png)
+
+![AXIOSPROJECT Community](./images/axiosproject04.png)
+
 <br><br><br>
 
 # 6. Vuejs에 CSS Framework 적용
 
 ## 6-1. Bootstrap 적용
+
+### 6-1-1. Bootstrap 특징
 
 - Bootstrap은 가장 인기 있는 오픈 소스 CSS 프레임워크 중 하나로, 다양한 웹 애플리케이션과 웹사이트의 프론트엔드를 쉽게 구축할 수 있도록 돕습니다. 
 - Bootstrap은 빠르고 일관성 있는 UI 개발을 가능하게 하는 강력한 CSS 프레임워크입니다. 반응형 디자인, 다양한 컴포넌트, 풍부한 유틸리티 클래스 등을 통해 웹 개발의 생산성을 높여줍니다. 그러나 파일 크기, 디자인 유연성 제한, 오버라이딩 필요성 등의 단점도 고려해야 합니다. Bootstrap은 빠른 프로토타이핑과 일관된 디자인이 중요한 프로젝트에 특히 유용합니다.
@@ -16852,39 +19629,3161 @@ npm install axios
 4. 오버라이딩 필요성: 기본 스타일이 강력해서 프로젝트의 특정 요구사항에 맞추기 위해 CSS를 많이 오버라이딩해야 할 수 있습니다.
 5. 비슷한 디자인: 많은 웹사이트가 Bootstrap을 사용하기 때문에, 기본 테마를 사용하는 경우 다른 사이트와 비슷한 디자인이 될 수 있습니다.
 
+<br><br>
+
+### 6-1-2. Bootstrap 의 설치와 도입
+
+#### 6-1-2-1. Bootstap 설치
+
+```bash
+npm install bootstrap --save-dev
+```
+
+<br>
+
+#### 6-1-2-2. Bootstrap 연결
+
+**src/main.ts에서 연결**
+
+```typescript
+// Bootstrap의 JavaScript 파일 임포트
+import 'bootstrap/dist/js/bootstrap.js';
+// Bootstrap의 CSS 파일 임포트
+import 'bootstrap/dist/css/bootstrap.css';
+```
+
+<br><br>
+
+### 6-1-3. Bootstrap 레이아웃 요소
+
+#### 6-1-3-1. Breakpoint
+
+- 중단점(Breakpoint)은 반응형 디자인의 구성 요소입니다. 이를 사용하여 레이아웃을 특정 뷰포트나 장치 크기에 맞게 조정할 수 있는 시기를 제어합니다.
+
+- 미디어 쿼리(Media queries)를 사용하여 중단점별로 CSS를 설계하시고, 미디어 쿼리(Media queries)는 일련의 브라우저 및 운영 체제 매개변수를 기반으로 스타일을 조건부로 적용할 수 있는 CSS 기능입니다. 우리는 미디어 쿼리(Media queries)에서 가장 일반적으로 최소 너비(min-width)를 사용합니다.
+
+- 모바일 우선, 반응형 디자인이 목표입니다. Bootstrap의 CSS는 최소한의 스타일을 적용하여 레이아웃이 가장 작은 중단점에서 작동하도록 한 다음 스타일을 계층화하여 더 큰 장치에 맞게 해당 디자인을 조정하는 것을 목표로 합니다. 이를 통해 CSS가 최적화되고, 렌더링 시간이 향상되며, 방문자에게 훌륭한 경험이 제공됩니다.
+
+| Breakpoint             | Class infix | Dimensions  |
+|------------------------|-------------|-------------|
+| X-Small                | None        | <576px      |
+| Small                  | sm          | ≥576px      |
+| Medium                 | md          | ≥768px      |
+| Large                  | lg          | ≥992px      |
+| Extra large            | xl          | ≥1200px     |
+| Extra extra large      | xxl         | ≥1400px     |
+
+- Breakpoint: 미디어 쿼리 브레이크포인트 이름
+- Class infix: Bootstrap의 클래스 접두사 또는 접미사
+- Dimensions: 해당 브레이크포인트의 최소 너비
+
+- xs 는 논리적 해상도(화면너비)가 576px 미만의 기기를 의미합니다.
+- sm 은 논리적 해상도(화면너비)가 576px 이상 ~ 767px 이하 범위의 기기를 의미합니다.
+- md 는 논리적 해상도(화면너비)가 768px 이상 ~ 991px 이하 범위의 기기를 의미합니다.
+- lg 는 논리적 해상도(화면너비)가 992px 이상 ~ 1199px 이하 범위의 기기를 의미합니다.
+- xl 는 논리적 해상도(화면너비)가 1200px 이상 ~ 1399px 이하 범위의 기기를 의미합니다.
+- xxl 는 논리적 해상도(화면너비)가 1400px 이상 범위의 기기를 의미합니다.
+
+<br>
+
+#### 6-1-3-2. Container
+
+- 컨테이너(Container)는 하나의 영역으로 화면에 나타나는 콘텐츠들을 하나로 묶어 담는 박스나 그릇의 개념입니다.
+- 컨테이너(Container)는 Bootstrap의 가장 기본적인 레이아웃 요소이며 기본 그리드 시스템(Basic Grid System)을 사용할 때 필요합니다. 컨테이너(Container)는 콘텐츠를 포함하고, 채우고, 중앙에 배치하는 데 사용됩니다. 컨테이너는 중첩될 수 있지만, 대부분의 레이아웃에는 중첩된 컨테이너가 필요하지 않습니다.
+
+| Breakpoint       | .container      | .container-sm   | .container-md   | .container-lg   | .container-xl   | .container-xxl  | .container-fluid  |
+|------------------|-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|-------------------|
+| Extra small      | 100% / 540px    | 100% / 540px    | 100% / 540px    | 100% / 540px    | 100% / 540px    | 100% / 540px    | 100%              |
+| Small            | 100% / 540px    | 100% / 540px    | 100% / 540px    | 100% / 720px    | 100% / 960px    | 100% / 1140px   | 100%              |
+| Medium           | 100% / 720px    | 100% / 720px    | 100% / 720px    | 100% / 960px    | 100% / 1140px   | 100% / 1320px   | 100%              |
+| Large            | 100% / 960px    | 100% / 960px    | 100% / 960px    | 100% / 960px    | 100% / 1140px   | 100% / 1320px   | 100%              |
+| X-Large          | 100% / 1140px   | 100% / 1140px   | 100% / 1140px   | 100% / 1140px   | 100% / 1140px   | 100% / 1320px   | 100%              |
+| XX-Large         | 100% / 1320px   | 100% / 1320px   | 100% / 1320px   | 100% / 1320px   | 100% / 1320px   | 100% / 1320px   | 100%              |
+
+- Breakpoint: 브레이크포인트 범위
+- `.container` : 각 브레이크포인트에서 `.container` 클래스의 너비
+- `.container-sm`, `.container-md` : 각 브레이크포인트에서 해당 클래스의 너비
+- `.container-fluid` : `.container-fluid` 클래스의 너비는 모든 브레이크포인트에서 항상 100%입니다.
+
+<br>
+
+**기본 컨테이너(Basic Container)**
+
+```html
+<div class="container">
+  <!-- 기본 ".container" 클래스는 반응형 고정 너비 컨테이너입니다. 즉, 각 중단점에서 최대 너비가 변경됩니다. -->
+  <!-- Content here -->
+</div>
+```
+
+<br>
+
+**반응형 컨테이너(Responsive containers)**
+
+```html
+<div class="container-sm">100% wide until small breakpoint</div>
+<div class="container-md">100% wide until medium breakpoint</div>
+<div class="container-lg">100% wide until large breakpoint</div>
+<div class="container-xl">100% wide until extra large breakpoint</div>
+<div class="container-xxl">100% wide until extra extra large breakpoint</div>
+```
+
+<br>
+
+**전체 너비 컨테이너(Fluid containers)**
+
+```html
+<div class="container-fluid">
+  <!-- 뷰포트의 전체 너비에 걸쳐 있는 전체 너비 컨테이너의 경우 ".container-fluid"를 사용합니다. -->
+  <!-- Content here -->
+</div>
+```
+
+<br>
+
+#### 6-1-3-3. Grid
+
+| Breakpoint       | Container max-width | Class 접두사  | # of columns | Gutter width   | Custom gutters | Nestable | Column ordering |
+|------------------|---------------------|---------------|--------------|----------------|----------------|----------|-----------------|
+| xs               | None (auto)         | .col-         | 12           | 1.5rem         | Yes            | Yes      | Yes             |
+| sm               | 540px               | .col-sm-      | 12           | 1.5rem         | Yes            | Yes      | Yes             |
+| md               | 720px               | .col-md-      | 12           | 1.5rem         | Yes            | Yes      | Yes             |
+| lg               | 960px               | .col-lg-      | 12           | 1.5rem         | Yes            | Yes      | Yes             |
+| xl               | 1140px              | .col-xl-      | 12           | 1.5rem         | Yes            | Yes      | Yes             |
+| xxl              | 1320px              | .col-xxl-     | 12           | 1.5rem         | Yes            | Yes      | Yes             |
+
+- Breakpoint: 브레이크포인트 범위
+- Container max-width: .container 클래스의 최대 너비
+- Class prefix: 각 브레이크포인트에서 사용되는 컬럼 클래스의 접두사
+- of columns: 컬럼 수
+- Gutter width: 거터(여백) 너비
+- Custom gutters: 사용자 정의 거터가 가능한지 여부
+- Nestable: 중첩 가능 여부
+- Column ordering: 컬럼의 순서를 조정할 수 있는지 여부
+
+- xs 는 논리적 해상도(화면너비)가 576px 미만의 기기로 저해상도 또는 화면 크기가 작은 스마트 기기를 의미합니다.
+- sm 은 논리적 해상도(화면너비)가 576px 이상 ~ 767px 이하 범위의 기기를 의미하므로 보통은 스마트폰 화면의 크기를 갖는 기기를 의미합니다.
+- md 는 논리적 해상도(화면너비)가 768px 이상 ~ 991px 이하 범위의 기기를 의미하므로 보통은 화면이 큰 스마트폰이나 스마트 노트 또는 일반적인 태블릿 정도 화면의 기기를 의미합니다.
+- lg 는 논리적 해상도(화면너비)가 992px 이상 ~ 1199px 이하 범위의 기기를 의미하므로 보통은 태블릿 기기 중에서 화면이 큰 기기를 의미합니다.
+- xl 는 논리적 해상도(화면너비)가 1200px 이상 ~ 1399px 이하 범위의 기기를 의미하므로 보통은 일반적인 데스크탑 정도의 모니터를 의미합니다.
+- xxl 는 논리적 해상도(화면너비)가 1400px 이상 범위의 기기를 의미하므로 보통은 화면이 큰 데스크탑 모니터를 의미합니다.
+
+<br>
+
+**.col 클래스 활용**
+
+```html
+<div class="container">
+  <div class="row">
+    <div class="col">
+      1 of 2
+    </div>
+    <div class="col">
+      2 of 2
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col">
+      2 of 3
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div>
+</div>
+```
+
+![grid .col class](./images/bootstrap_grid01.png)
+
+<br>
+
+**.col 클래스와 .col-n 클래스의 혼용**
+
+```html
+<div class="container">
+  <div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col-6">
+      2 of 3 (wider)
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col-5">
+      2 of 3 (wider)
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div>
+</div>
+```
+
+![grid .col & .col-n class](./images/bootstrap_grid02.png)
+
+<br>
+
+**.col, .col-x-n, .col-x-auto 클래스의 혼용**
+
+```html
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col col-lg-2">
+      1 of 3
+    </div>
+    <div class="col-md-auto">
+      Variable width content
+    </div>
+    <div class="col col-lg-2">
+      3 of 3
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col-md-auto">
+      Variable width content
+    </div>
+    <div class="col col-lg-2">
+      3 of 3
+    </div>
+  </div>
+</div>
+```
+
+![grid .col, .col-x-n, .col-x-auto](./images/bootstrap_grid03.png)
+
+<br>
+
+**.col-n, .col-x-n 의 혼용**
+
+```html
+<div class="container">
+  <!-- 하나는 전폭, 다른 하나는 반폭으로 만들어 모바일에서 열을 쌓습니다. -->
+  <div class="row">
+    <div class="col-md-8">.col-md-8</div>
+    <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  </div>
+
+  <!-- 열 너비는 모바일에서 50%에서 시작하고 데스크톱에서는 너비가 최대 33.3%까지 늘어납니다. -->
+  <div class="row">
+    <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+    <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+    <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  </div>
+
+  <!-- 모바일 및 데스크톱에서 열 너비는 항상 50%입니다. -->
+  <div class="row">
+    <div class="col-6">.col-6</div>
+    <div class="col-6">.col-6</div>
+  </div>
+</div>
+```
+
+![grid .col-n, .col-x-n class](./images/bootstrap_grid04.png)
+
+<br>
+
+**컬럼의 수직 정렬1**
+
+```html
+<div class="container">
+  <div class="row align-items-start">
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+  </div>
+  <div class="row align-items-end">
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+  </div>
+</div>
+```
+
+![grid 컬럼의 수직정렬](./images/bootstrap_column01.png)
+
+<br>
+
+**컬럼의 수직 정렬2**
+
+```html
+<div class="container">
+  <div class="row">
+    <div class="col align-self-start">
+      One of three columns
+    </div>
+    <div class="col align-self-center">
+      One of three columns
+    </div>
+    <div class="col align-self-end">
+      One of three columns
+    </div>
+  </div>
+</div>
+```
+
+![grid 컬럼의 수직정렬](./images/bootstrap_column02.png)
+
+<br>
+
+**수평 거터 적용**
+
+```html
+<div class="container overflow-hidden">
+  <div class="row gx-5">
+    <div class="col">
+     <div class="p-3 border bg-light">Custom column padding</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Custom column padding</div>
+    </div>
+  </div>
+</div>
+```
+
+![Horizontal Gutter](./images/bootstrap_gutter01.png)
+
+<br>
+
+**수직 거터 적용**
+
+```html
+<div class="container overflow-hidden">
+  <div class="row gy-5">
+    <div class="col-6">
+      <div class="p-3 border bg-light">Custom column padding</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">Custom column padding</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">Custom column padding</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">Custom column padding</div>
+    </div>
+  </div>
+</div>
+```
+
+![Vertical Gutter](./images/bootstrap_gutter02.png)
+
+<br>
+
+**수평/수직 거터 혼용**
+
+```html
+<div class="container">
+  <div class="row g-2">
+    <div class="col-6">
+      <div class="p-3 border bg-light">Custom column padding</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">Custom column padding</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">Custom column padding</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">Custom column padding</div>
+    </div>
+  </div>
+</div>
+```
+
+![Horizontal/Vertical Mix Gutter](./images/bootstrap_gutter03.png)
+
+<br>
+
+**화면 너비 기준의 거터 적용**
+
+```html
+<div class="container">
+  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+  </div>
+</div>
+```
+
+![Device Gutter](./images/bootstrap_gutter04.png)
+
+<br><br>
+
+### 6-1-4. Bootstrap 콘텐츠 요소
+
+#### 6-1-4-1. Typograph
+
+**고정 크기 제목**
+
+```html
+<p class="h1">h1. Bootstrap heading</p>
+<p class="h2">h2. Bootstrap heading</p>
+<p class="h3">h3. Bootstrap heading</p>
+<p class="h4">h4. Bootstrap heading</p>
+<p class="h5">h5. Bootstrap heading</p>
+<p class="h6">h6. Bootstrap heading</p>
+```
+
+```html
+<h1>h1. Bootstrap heading</h1>
+<h2>h2. Bootstrap heading</h2>
+<h3>h3. Bootstrap heading</h3>
+<h4>h4. Bootstrap heading</h4>
+<h5>h5. Bootstrap heading</h5>
+<h6>h6. Bootstrap heading</h6>
+```
+
+![Typograph](./images/bootstrap_heading01.png)
+
+<br>
+
+**Display 크기 제목**
+
+```html
+<h1 class="display-1">Display 1</h1>
+<h1 class="display-2">Display 2</h1>
+<h1 class="display-3">Display 3</h1>
+<h1 class="display-4">Display 4</h1>
+<h1 class="display-5">Display 5</h1>
+<h1 class="display-6">Display 6</h1>
+```
+
+![Typograph](./images/bootstrap_heading02.png)
+
+<br>
+
+**문장(Paragraph)의 강조**
+
+```html
+<p>You can use the mark tag to <mark>highlight</mark> text.</p>
+<p><del>This line of text is meant to be treated as deleted text.</del></p>
+<p><s>This line of text is meant to be treated as no longer accurate.</s></p>
+<p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
+<p><u>This line of text will render as underlined.</u></p>
+<p><small>This line of text is meant to be treated as fine print.</small></p>
+<p><strong>This line rendered as bold text.</strong></p>
+<p><em>This line rendered as italicized text.</em></p>
+```
+
+![Typograph](./images/bootstrap_paragraph01.png)
+
+<br>
+
+**약어(Abbreviation)과 툴팁(풍선도움말)의 활용**
+
+```html
+<p><abbr title="attribute">attr</abbr></p>
+<p><abbr title="HyperText Markup Language" class="initialism">HTML</abbr></p>
+```
+
+![Typograph](./images/bootstrap_abbreviation01.png)
+
+<br>
+
+**Blockquote(인용문) 왼쪽 정렬의 활용**
+
+```html
+<figure>
+  <blockquote class="blockquote">
+    <p>A well-known quote, contained in a blockquote element.</p>
+  </blockquote>
+  <figcaption class="blockquote-footer">
+    Someone famous in <cite title="Source Title">Source Title</cite>
+  </figcaption>
+</figure>
+```
+
+![Typograph](./images/bootstrap_blockquote01.png)
+
+<br>
+
+**Blockquote(인용문) 가운데 정렬의 활용**
+
+```html
+<figure class="text-center">
+  <blockquote class="blockquote">
+    <p>A well-known quote, contained in a blockquote element.</p>
+  </blockquote>
+  <figcaption class="blockquote-footer">
+    Someone famous in <cite title="Source Title">Source Title</cite>
+  </figcaption>
+</figure>
+```
+
+![Typograph](./images/bootstrap_blockquote02.png)
+
+<br>
+
+**Blockquote(인용문) 오른쪽 정렬의 활용**
+
+```html
+<figure class="text-end">
+  <blockquote class="blockquote">
+    <p>A well-known quote, contained in a blockquote element.</p>
+  </blockquote>
+  <figcaption class="blockquote-footer">
+    Someone famous in <cite title="Source Title">Source Title</cite>
+  </figcaption>
+</figure>
+```
+
+![Typograph](./images/bootstrap_blockquote03.png)
+
+<br>
+
+**List(목록) 크기 제목**
+
+```html
+<ul class="list-unstyled">
+  <li>This is a list.</li>
+  <li>It appears completely unstyled.</li>
+  <li>Structurally, it's still a list.</li>
+  <li>However, this style only applies to immediate child elements.</li>
+  <li>Nested lists:
+    <ul>
+      <li>are unaffected by this style</li>
+      <li>will still show a bullet</li>
+      <li>and have appropriate left margin</li>
+    </ul>
+  </li>
+  <li>This may still come in handy in some situations.</li>
+</ul>
+```
+
+![Typograph](./images/bootstrap_list01.png)
+
+<br>
+
+#### 6-1-4-2. Image 
+
+<br>
+
+**반응형 이미지**
+
+```html
+<img src="..." class="img-fluid" alt="...">
+```
+
+```html
+<figure class="figure">
+  <img src="..." class="figure-img img-fluid rounded" alt="...">
+  <figcaption class="figure-caption">A caption for the above image.</figcaption>
+</figure>
+```
+
+![Image](./images/bootstrap_image01.png)
+
+<br>
+
+**썸네일 이미지**
+
+```html
+<img src="..." class="img-thumbnail" alt="...">
+```
+
+![Image](./images/bootstrap_image02.png)
+
+<br>
+
+**이미지의 정렬**
+
+```html
+<img src="..." class="rounded float-start" alt="...">
+<img src="..." class="rounded float-end" alt="...">
+```
+
+![Image](./images/bootstrap_image03.png)
+
+<br>
+
+**이미지 가운데 정렬**
+
+```html
+<img src="..." class="rounded mx-auto d-block" alt="...">
+```
+
+```html
+<div class="text-center">
+  <img src="..." class="rounded" alt="...">
+</div>
+```
+
+![Image](./images/bootstrap_image04.png)
+
+<br>
+
+#### 6-1-4-3. Table
+
+**기본 테이블**
+
+```html
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+![Table](./images/bootstrap_table01.png)
+
+<br>
+
+**컬러 테이블**
+
+```html
+<table class="table">
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Heading</th>
+      <th>Heading</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Default</td>
+      <td class="cell">Cell</td>
+      <td class="cell">Cell</td>
+    </tr>
+    <tr class="table-primary">
+      <td>Primary</td>
+      <td class="cell">Cell</td>
+      <td class="cell">Cell</td>
+    </tr>
+    <tr class="table-secondary">
+      <td>Secondary</td>
+      <td class="cell">Cell</td>
+      <td class="cell">Cell</td>
+    </tr>
+    <tr class="table-success">
+      <td>Success</td>
+      <td class="cell">Cell</td>
+      <td class="cell">Cell</td>
+    </tr>
+    <tr class="table-danger">
+      <td>Danger</td>
+      <td class="cell">Cell</td>
+      <td class="cell">Cell</td>
+    </tr>
+    <tr class="table-warning">
+      <td>Warning</td>
+      <td class="cell">Cell</td>
+      <td class="cell">Cell</td>
+    </tr>
+    <tr class="table-info">
+      <td>Info</td>
+      <td class="cell">Cell</td>
+      <td class="cell">Cell</td>
+    </tr>
+    <tr class="table-light">
+      <td>Light</td>
+      <td class="cell">Cell</td>
+      <td class="cell">Cell</td>
+    </tr>
+    <tr class="table-dark">
+      <td>Dark</td>
+      <td class="cell">Cell</td>
+      <td class="cell">Cell</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+![Table](./images/bootstrap_table02.png)
+
+<br>
+
+**음영 교대 테이블**
+
+```html
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+![Table](./images/bootstrap_table03.png)
+
+<br>
+
+**어두운 음영 교대 테이블**
+
+```html
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+![Table](./images/bootstrap_table04.png)
+
+<br>
+
+**초록 음영 교대 테이블**
+
+```html
+<table class="table table-success table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+![Table](./images/bootstrap_table05.png)
+
+<br>
+
+**셀 호버시 인터랙션 테이블**
+
+```html
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+![Table](./images/bootstrap_table06.png)
+
+<br><br>
+
+### 6-1-5. Bootstrap 폼 요소
+
+#### 6-1-5-1. 폼 컨트롤 요소
+
+**기본 입력 컨트롤**
+
+```html
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Email address</label>
+  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_controll01.png)
+
+<br>
+
+**폼 컨트롤의 크기조절**
+
+```html
+<input class="form-control form-control-lg" type="text" placeholder=".form-control-lg" aria-label=".form-control-lg example">
+<input class="form-control" type="text" placeholder="Default input" aria-label="default input example">
+<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" aria-label=".form-control-sm example">
+```
+
+![Form Control](./images/bootstrap_form_controll02.png)
+
+<br>
+
+**비활성화된 폼 컨트롤**
+
+```html
+<input class="form-control" type="text" placeholder="Disabled input" aria-label="Disabled input example" disabled>
+<input class="form-control" type="text" value="Disabled readonly input" aria-label="Disabled input example" disabled readonly>
+```
+
+![Form Control](./images/bootstrap_form_controll03.png)
+
+<br>
+
+**읽기 전용 폼 컨트롤**
+
+```html
+<input class="form-control" type="text" value="Readonly input here..." aria-label="readonly input example" readonly>
+```
+
+![Form Control](./images/bootstrap_form_controll04.png)
+
+<br>
+
+**텍스트 읽기 전용 폼 컨트롤**
+
+```html
+  <div class="mb-3 row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword">
+    </div>
+  </div>
+```
+
+![Form Control](./images/bootstrap_form_controll05.png)
+
+<br>
+
+**값 읽기 전용 폼 컨트롤**
+
+```html
+<form class="row g-3">
+  <div class="col-auto">
+    <label for="staticEmail2" class="visually-hidden">Email</label>
+    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">
+  </div>
+  <div class="col-auto">
+    <label for="inputPassword2" class="visually-hidden">Password</label>
+    <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+  </div>
+</form>
+```
+
+![Form Control](./images/bootstrap_form_controll06.png)
+
+<br>
+
+**파일 입력 폼 컨트롤**
+
+```html
+<div class="mb-3">
+  <label for="formFile" class="form-label">Default file input example</label>
+  <input class="form-control" type="file" id="formFile">
+</div>
+<div class="mb-3">
+  <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+  <input class="form-control" type="file" id="formFileMultiple" multiple>
+</div>
+<div class="mb-3">
+  <label for="formFileDisabled" class="form-label">Disabled file input example</label>
+  <input class="form-control" type="file" id="formFileDisabled" disabled>
+</div>
+<div class="mb-3">
+  <label for="formFileSm" class="form-label">Small file input example</label>
+  <input class="form-control form-control-sm" id="formFileSm" type="file">
+</div>
+<div>
+  <label for="formFileLg" class="form-label">Large file input example</label>
+  <input class="form-control form-control-lg" id="formFileLg" type="file">
+</div>
+```
+
+![Form Control](./images/bootstrap_form_controll07.png)
+
+<br>
+
+**컬러 입력 폼 컨트롤**
+
+```html
+<label for="exampleColorInput" class="form-label">Color picker</label>
+<input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+```
+
+![Form Control](./images/bootstrap_form_controll08.png)
+
+<br>
+
+**데이터리스트 폼 컨트롤**
+
+```html
+<label for="exampleDataList" class="form-label">Datalist example</label>
+<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
+<datalist id="datalistOptions">
+  <option value="San Francisco">
+  <option value="New York">
+  <option value="Seattle">
+  <option value="Los Angeles">
+  <option value="Chicago">
+</datalist>
+```
+
+![Form Control](./images/bootstrap_form_controll09.png)
+
+<br>
+
+**기본 선택(Select) 컨트롤**
+
+```html
+<select class="form-select" aria-label="Default select example">
+  <option selected>Open this select menu</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+```
+
+![Form Control](./images/bootstrap_form_controll10.png)
+
+<br>
+
+**선택(Select) 컨트롤의 크기**
+
+```html
+<select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+  <option selected>Open this select menu</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+
+<select class="form-select form-select-sm" aria-label=".form-select-sm example">
+  <option selected>Open this select menu</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+```
+
+![Form Control](./images/bootstrap_form_controll11.png)
+
+<br>
+
+**다중 선택(Select) 컨트롤**
+
+```html
+<select class="form-select" multiple aria-label="multiple select example">
+  <option selected>Open this select menu</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+```
+
+![Form Control](./images/bootstrap_form_controll12.png)
+
+<br>
+
+**체크박스 컨트롤**
+
+```html
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    Default checkbox
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+  <label class="form-check-label" for="flexCheckChecked">
+    Checked checkbox
+  </label>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_controll13.png)
+
+<br>
+
+**라디오 버튼 컨트롤**
+
+```html
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+  <label class="form-check-label" for="flexRadioDefault1">
+    Default radio
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+  <label class="form-check-label" for="flexRadioDefault2">
+    Default checked radio
+  </label>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_controll14.png)
+
+<br>
+
+**체크박스를 활용한 스위치 컨트롤**
+
+```html
+<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+  <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+</div>
+<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+  <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+</div>
+<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDisabled" disabled>
+  <label class="form-check-label" for="flexSwitchCheckDisabled">Disabled switch checkbox input</label>
+</div>
+<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked disabled>
+  <label class="form-check-label" for="flexSwitchCheckCheckedDisabled">Disabled checked switch checkbox input</label>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_controll15.png)
+
+<br>
+
+**인라인 방식의 체크박스 컨트롤**
+
+```html
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+  <label class="form-check-label" for="inlineCheckbox1">1</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+  <label class="form-check-label" for="inlineCheckbox2">2</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+  <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
+</div>
+```
+
+```html
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+  <label class="form-check-label" for="inlineRadio1">1</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+  <label class="form-check-label" for="inlineRadio2">2</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
+  <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_controll16.png)
+
+<br>
+
+**체크박스를 활용한 스위치 버튼 컨트롤**
+
+```html
+<input type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
+<label class="btn btn-primary" for="btn-check">Single toggle</label>
+```
+
+![Form Control](./images/bootstrap_form_controll17.png)
+
+<br>
+
+**범위(Range) 컨트롤**
+
+```html
+<label for="customRange3" class="form-label">Example range</label>
+<input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3">
+```
+
+![Form Control](./images/bootstrap_form_controll18.png)
+
+<br>
+
+#### 6-1-5-2. 폼 컨트롤 그룹
+
+**레이블 결합 컨트롤**
+
+```html
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">@</span>
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <span class="input-group-text" id="basic-addon2">@example.com</span>
+</div>
+
+<label for="basic-url" class="form-label">Your vanity URL</label>
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
+  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text">$</span>
+  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+  <span class="input-group-text">.00</span>
+</div>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username">
+  <span class="input-group-text">@</span>
+  <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+</div>
+
+<div class="input-group">
+  <span class="input-group-text">With textarea</span>
+  <textarea class="form-control" aria-label="With textarea"></textarea>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_controll19.png)
+
+<br>
+
+**버튼 결합 컨트롤**
+
+```html
+<div class="input-group mb-3">
+  <button class="btn btn-outline-secondary" type="button" id="button-addon1">Button</button>
+  <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+</div>
+
+<div class="input-group mb-3">
+  <button class="btn btn-outline-secondary" type="button">Button</button>
+  <button class="btn btn-outline-secondary" type="button">Button</button>
+  <input type="text" class="form-control" placeholder="" aria-label="Example text with two button addons">
+</div>
+
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons">
+  <button class="btn btn-outline-secondary" type="button">Button</button>
+  <button class="btn btn-outline-secondary" type="button">Button</button>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_controll20.png)
+
+<br>
+
+
+**드롭다운 버튼 결합 컨트롤**
+
+```html
+<div class="input-group mb-3">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Separated link</a></li>
+  </ul>
+  <input type="text" class="form-control" aria-label="Text input with dropdown button">
+</div>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" aria-label="Text input with dropdown button">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Separated link</a></li>
+  </ul>
+</div>
+
+<div class="input-group">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action before</a></li>
+    <li><a class="dropdown-item" href="#">Another action before</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Separated link</a></li>
+  </ul>
+  <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Separated link</a></li>
+  </ul>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_controll21.png)
+
+<br>
+
+
+**버튼과 드롭다운 메뉴 결합 컨트롤**
+
+```html
+<div class="input-group mb-3">
+  <button type="button" class="btn btn-outline-secondary">Action</button>
+  <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="visually-hidden">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Separated link</a></li>
+  </ul>
+  <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+</div>
+
+<div class="input-group">
+  <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+  <button type="button" class="btn btn-outline-secondary">Action</button>
+  <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="visually-hidden">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Separated link</a></li>
+  </ul>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_controll22.png)
+
+<br>
+
+#### 6-1-5-3. 폼 컨트롤 레이아웃
+
+**기본 폼 레이아웃**
+
+```html
+<div class="mb-3">
+  <label for="formGroupExampleInput" class="form-label">Example label</label>
+  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+</div>
+<div class="mb-3">
+  <label for="formGroupExampleInput2" class="form-label">Another label</label>
+  <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+</div>
+```
+
+![Form Control](./images/bootstrap_form_layout01.png)
+
+<br>
+
+**폼 그리드 레이아웃**
+
+```html
+<div class="row">
+  <div class="col">
+    <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+  </div>
+  <div class="col">
+    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+  </div>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_layout02.png)
+
+<br>
+
+**폼 거터**
+
+```html
+<div class="row g-3">
+  <div class="col">
+    <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+  </div>
+  <div class="col">
+    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+  </div>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_layout03.png)
+
+<br>
+
+**컴플렉스 그리드 레이아웃**
+
+```html
+<form class="row g-3">
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">Email</label>
+    <input type="email" class="form-control" id="inputEmail4">
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label">Password</label>
+    <input type="password" class="form-control" id="inputPassword4">
+  </div>
+  <div class="col-12">
+    <label for="inputAddress" class="form-label">Address</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  </div>
+  <div class="col-12">
+    <label for="inputAddress2" class="form-label">Address 2</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  </div>
+  <div class="col-md-6">
+    <label for="inputCity" class="form-label">City</label>
+    <input type="text" class="form-control" id="inputCity">
+  </div>
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">State</label>
+    <select id="inputState" class="form-select">
+      <option selected>Choose...</option>
+      <option>...</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <label for="inputZip" class="form-label">Zip</label>
+    <input type="text" class="form-control" id="inputZip">
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </div>
+</form>
+```
+
+![Form Control](./images/bootstrap_form_layout04.png)
+
+<br>
+
+**가로형 폼 레이아웃**
+
+```html
+<form>
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3">
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword3">
+    </div>
+  </div>
+  <fieldset class="row mb-3">
+    <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+        <label class="form-check-label" for="gridRadios1">
+          First radio
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+        <label class="form-check-label" for="gridRadios2">
+          Second radio
+        </label>
+      </div>
+      <div class="form-check disabled">
+        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
+        <label class="form-check-label" for="gridRadios3">
+          Third disabled radio
+        </label>
+      </div>
+    </div>
+  </fieldset>
+  <div class="row mb-3">
+    <div class="col-sm-10 offset-sm-2">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="gridCheck1">
+        <label class="form-check-label" for="gridCheck1">
+          Example checkbox
+        </label>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Sign in</button>
+</form>
+```
+
+![Form Control](./images/bootstrap_form_layout05.png)
+
+<br>
+
+**가로형 크기 조절 폼 레이아웃**
+
+```html
+<div class="row mb-3">
+  <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
+  <div class="col-sm-10">
+    <input type="email" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm">
+  </div>
+</div>
+<div class="row mb-3">
+  <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
+  <div class="col-sm-10">
+    <input type="email" class="form-control" id="colFormLabel" placeholder="col-form-label">
+  </div>
+</div>
+<div class="row">
+  <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Email</label>
+  <div class="col-sm-10">
+    <input type="email" class="form-control form-control-lg" id="colFormLabelLg" placeholder="col-form-label-lg">
+  </div>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_layout06.png)
+
+<br>
+
+**가로 배치 컬럼 사이징 레이아웃**
+
+```html
+<div class="row g-3">
+  <div class="col-sm-7">
+    <input type="text" class="form-control" placeholder="City" aria-label="City">
+  </div>
+  <div class="col-sm">
+    <input type="text" class="form-control" placeholder="State" aria-label="State">
+  </div>
+  <div class="col-sm">
+    <input type="text" class="form-control" placeholder="Zip" aria-label="Zip">
+  </div>
+</div>
+```
+
+![Form Control](./images/bootstrap_form_layout07.png)
+
+<br>
+
+**자동 크기 조절 폼 레이아웃**
+
+```html
+<form class="row gy-2 gx-3 align-items-center">
+  <div class="col-auto">
+    <label class="visually-hidden" for="autoSizingInput">Name</label>
+    <input type="text" class="form-control" id="autoSizingInput" placeholder="Jane Doe">
+  </div>
+  <div class="col-auto">
+    <label class="visually-hidden" for="autoSizingInputGroup">Username</label>
+    <div class="input-group">
+      <div class="input-group-text">@</div>
+      <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Username">
+    </div>
+  </div>
+  <div class="col-auto">
+    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+    <select class="form-select" id="autoSizingSelect">
+      <option selected>Choose...</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>
+  <div class="col-auto">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="autoSizingCheck">
+      <label class="form-check-label" for="autoSizingCheck">
+        Remember me
+      </label>
+    </div>
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+```
+
+![Form Control](./images/bootstrap_form_layout08.png)
+
+
+<br>
+
+**인라인 폼 레이아웃**
+
+```html
+<form class="row row-cols-lg-auto g-3 align-items-center">
+  <div class="col-12">
+    <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+    <div class="input-group">
+      <div class="input-group-text">@</div>
+      <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username">
+    </div>
+  </div>
+
+  <div class="col-12">
+    <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+    <select class="form-select" id="inlineFormSelectPref">
+      <option selected>Choose...</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>
+
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="inlineFormCheck">
+      <label class="form-check-label" for="inlineFormCheck">
+        Remember me
+      </label>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+```
+
+![Form Control](./images/bootstrap_form_layout09.png)
+
+<br>
+
+#### 6-1-5-4. 폼 검증
+
+**자바스크립트 연동 기본 폼 검증**
+
+```html
+<form class="row g-3 needs-validation" novalidate>
+  <div class="col-md-4">
+    <label for="validationCustom01" class="form-label">First name</label>
+    <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationCustom02" class="form-label">Last name</label>
+    <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationCustomUsername" class="form-label">Username</label>
+    <div class="input-group has-validation">
+      <span class="input-group-text" id="inputGroupPrepend">@</span>
+      <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+      <div class="invalid-feedback">
+        Please choose a username.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="validationCustom03" class="form-label">City</label>
+    <input type="text" class="form-control" id="validationCustom03" required>
+    <div class="invalid-feedback">
+      Please provide a valid city.
+    </div>
+  </div>
+  <div class="col-md-3">
+    <label for="validationCustom04" class="form-label">State</label>
+    <select class="form-select" id="validationCustom04" required>
+      <option selected disabled value="">Choose...</option>
+      <option>...</option>
+    </select>
+    <div class="invalid-feedback">
+      Please select a valid state.
+    </div>
+  </div>
+  <div class="col-md-3">
+    <label for="validationCustom05" class="form-label">Zip</label>
+    <input type="text" class="form-control" id="validationCustom05" required>
+    <div class="invalid-feedback">
+      Please provide a valid zip.
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+      <label class="form-check-label" for="invalidCheck">
+        Agree to terms and conditions
+      </label>
+      <div class="invalid-feedback">
+        You must agree before submitting.
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
+```
+
+![Form Control](./images/bootstrap_form_validation01.png)
+
+<br>
+
+**브라우저 기본 폼 검증**
+
+```html
+<form class="row g-3">
+  <div class="col-md-4">
+    <label for="validationDefault01" class="form-label">First name</label>
+    <input type="text" class="form-control" id="validationDefault01" value="Mark" required>
+  </div>
+  <div class="col-md-4">
+    <label for="validationDefault02" class="form-label">Last name</label>
+    <input type="text" class="form-control" id="validationDefault02" value="Otto" required>
+  </div>
+  <div class="col-md-4">
+    <label for="validationDefaultUsername" class="form-label">Username</label>
+    <div class="input-group">
+      <span class="input-group-text" id="inputGroupPrepend2">@</span>
+      <input type="text" class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" required>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="validationDefault03" class="form-label">City</label>
+    <input type="text" class="form-control" id="validationDefault03" required>
+  </div>
+  <div class="col-md-3">
+    <label for="validationDefault04" class="form-label">State</label>
+    <select class="form-select" id="validationDefault04" required>
+      <option selected disabled value="">Choose...</option>
+      <option>...</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <label for="validationDefault05" class="form-label">Zip</label>
+    <input type="text" class="form-control" id="validationDefault05" required>
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+      <label class="form-check-label" for="invalidCheck2">
+        Agree to terms and conditions
+      </label>
+    </div>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
+```
+
+![Form Control](./images/bootstrap_form_validation02.png)
+
+<br>
+
+**서버사이드 연동 폼 검증**
+
+```html
+<form class="row g-3">
+  <div class="col-md-4">
+    <label for="validationServer01" class="form-label">First name</label>
+    <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationServer02" class="form-label">Last name</label>
+    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationServerUsername" class="form-label">Username</label>
+    <div class="input-group has-validation">
+      <span class="input-group-text" id="inputGroupPrepend3">@</span>
+      <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
+      <div id="validationServerUsernameFeedback" class="invalid-feedback">
+        Please choose a username.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="validationServer03" class="form-label">City</label>
+    <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
+    <div id="validationServer03Feedback" class="invalid-feedback">
+      Please provide a valid city.
+    </div>
+  </div>
+  <div class="col-md-3">
+    <label for="validationServer04" class="form-label">State</label>
+    <select class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
+      <option selected disabled value="">Choose...</option>
+      <option>...</option>
+    </select>
+    <div id="validationServer04Feedback" class="invalid-feedback">
+      Please select a valid state.
+    </div>
+  </div>
+  <div class="col-md-3">
+    <label for="validationServer05" class="form-label">Zip</label>
+    <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+    <div id="validationServer05Feedback" class="invalid-feedback">
+      Please provide a valid zip.
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+      <label class="form-check-label" for="invalidCheck3">
+        Agree to terms and conditions
+      </label>
+      <div id="invalidCheck3Feedback" class="invalid-feedback">
+        You must agree before submitting.
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
+```
+
+![Form Control](./images/bootstrap_form_validation03.png)
+
+<br>
+
+**폼 컨트롤 지원 폼 검증**
+
+```html
+<form class="was-validated">
+  <div class="mb-3">
+    <label for="validationTextarea" class="form-label">Textarea</label>
+    <textarea class="form-control is-invalid" id="validationTextarea" placeholder="Required example textarea" required></textarea>
+    <div class="invalid-feedback">
+      Please enter a message in the textarea.
+    </div>
+  </div>
+
+  <div class="form-check mb-3">
+    <input type="checkbox" class="form-check-input" id="validationFormCheck1" required>
+    <label class="form-check-label" for="validationFormCheck1">Check this checkbox</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+  </div>
+
+  <div class="form-check">
+    <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" required>
+    <label class="form-check-label" for="validationFormCheck2">Toggle this radio</label>
+  </div>
+  <div class="form-check mb-3">
+    <input type="radio" class="form-check-input" id="validationFormCheck3" name="radio-stacked" required>
+    <label class="form-check-label" for="validationFormCheck3">Or toggle this other radio</label>
+    <div class="invalid-feedback">More example invalid feedback text</div>
+  </div>
+
+  <div class="mb-3">
+    <select class="form-select" required aria-label="select example">
+      <option value="">Open this select menu</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+    <div class="invalid-feedback">Example invalid select feedback</div>
+  </div>
+
+  <div class="mb-3">
+    <input type="file" class="form-control" aria-label="file example" required>
+    <div class="invalid-feedback">Example invalid form file feedback</div>
+  </div>
+
+  <div class="mb-3">
+    <button class="btn btn-primary" type="submit" disabled>Submit form</button>
+  </div>
+</form>
+```
+
+![Form Control](./images/bootstrap_form_validation04.png)
+
+<br>
+
+**폼 검증 툴팁**
+
+```html
+<form class="row g-3 needs-validation" novalidate>
+  <div class="col-md-4 position-relative">
+    <label for="validationTooltip01" class="form-label">First name</label>
+    <input type="text" class="form-control" id="validationTooltip01" value="Mark" required>
+    <div class="valid-tooltip">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4 position-relative">
+    <label for="validationTooltip02" class="form-label">Last name</label>
+    <input type="text" class="form-control" id="validationTooltip02" value="Otto" required>
+    <div class="valid-tooltip">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4 position-relative">
+    <label for="validationTooltipUsername" class="form-label">Username</label>
+    <div class="input-group has-validation">
+      <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
+      <input type="text" class="form-control" id="validationTooltipUsername" aria-describedby="validationTooltipUsernamePrepend" required>
+      <div class="invalid-tooltip">
+        Please choose a unique and valid username.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 position-relative">
+    <label for="validationTooltip03" class="form-label">City</label>
+    <input type="text" class="form-control" id="validationTooltip03" required>
+    <div class="invalid-tooltip">
+      Please provide a valid city.
+    </div>
+  </div>
+  <div class="col-md-3 position-relative">
+    <label for="validationTooltip04" class="form-label">State</label>
+    <select class="form-select" id="validationTooltip04" required>
+      <option selected disabled value="">Choose...</option>
+      <option>...</option>
+    </select>
+    <div class="invalid-tooltip">
+      Please select a valid state.
+    </div>
+  </div>
+  <div class="col-md-3 position-relative">
+    <label for="validationTooltip05" class="form-label">Zip</label>
+    <input type="text" class="form-control" id="validationTooltip05" required>
+    <div class="invalid-tooltip">
+      Please provide a valid zip.
+    </div>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
+```
+
+![Form Control](./images/bootstrap_form_validation05.png)
+
+
+<br><br>
+
+### 6-1-6. Bootstrap 컴포넌트 요소
+
+#### 6-1-6-1. Accordion
+
+```html
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Accordion Item #1
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Accordion Item #2
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Accordion Item #3
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+![Component](./images/bootstrap_component_accordion.png)
+
+<br>
+
+#### 6-1-6-2. Alert
+
+```html
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>입력 오류~!</strong> 아래 항목 중 일부를 확인해야 합니다. 입력되지 않은 항목이나 잘못 입력된 내용이 있을 수 있습니다.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+```
+
+![Component](./images/bootstrap_component_alert.png)
+
+<br>
+
+#### 6-1-6-3. Badge
+
+```html
+<button type="button" class="btn btn-primary position-relative">
+  Inbox
+  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    99+
+    <span class="visually-hidden">unread messages</span>
+  </span>
+</button>
+```
+
+![Component](./images/bootstrap_component_badge.png)
+
+<br>
+
+#### 6-1-6-4. Breadcrumb
+
+```html
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Home</li>
+  </ol>
+</nav>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Library</li>
+  </ol>
+</nav>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">Library</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Data</li>
+  </ol>
+</nav>
+```
+
+![Component](./images/bootstrap_component_breadcrumb.png)
+
+<br>
+
+#### 6-1-6-5. Button
+
+**버튼의 종류**
+
+```html
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-light">Light</button>
+<button type="button" class="btn btn-dark">Dark</button>
+<button type="button" class="btn btn-link">Link</button>
+```
+
+![Component](./images/bootstrap_component_button01.png)
+
+<br>
+
+**기능별 버튼**
+
+```html
+<a class="btn btn-primary" href="#" role="button">Link</a>
+<button class="btn btn-primary" type="submit">Button</button>
+<input class="btn btn-primary" type="button" value="Input">
+<input class="btn btn-primary" type="submit" value="Submit">
+<input class="btn btn-primary" type="reset" value="Reset">
+```
+
+![Component](./images/bootstrap_component_button02.png)
+
+
+<br>
+
+**윤곽선 버튼**
+
+```html
+<button type="button" class="btn btn-outline-primary">Primary</button>
+<button type="button" class="btn btn-outline-secondary">Secondary</button>
+<button type="button" class="btn btn-outline-success">Success</button>
+<button type="button" class="btn btn-outline-danger">Danger</button>
+<button type="button" class="btn btn-outline-warning">Warning</button>
+<button type="button" class="btn btn-outline-info">Info</button>
+<button type="button" class="btn btn-outline-light">Light</button>
+<button type="button" class="btn btn-outline-dark">Dark</button>
+```
+
+![Component](./images/bootstrap_component_button03.png)
+
+<br>
+
+**크기별 버튼**
+
+```html
+<button type="button" class="btn btn-primary btn-lg">Large button</button>
+<button type="button" class="btn btn-secondary btn-md">Medium button</button>
+<button type="button" class="btn btn-secondary btn-sm">Small button</button>
+```
+
+![Component](./images/bootstrap_component_button04.png)
+
+<br>
+
+**버튼 위치과 배치**
+
+```html
+<div class="bd-example">
+  <div class="d-grid gap-2">
+    <button class="btn btn-primary" type="button">Button</button>
+    <button class="btn btn-primary" type="button">Button</button>
+  </div>
+</div>
+<div class="bd-example">
+  <div class="d-grid gap-2 d-md-block">
+    <button class="btn btn-primary" type="button">Button</button>
+    <button class="btn btn-primary" type="button">Button</button>
+  </div>
+</div>
+<div class="bd-example">
+  <div class="d-grid gap-2 col-6 mx-auto">
+    <button class="btn btn-primary" type="button">Button</button>
+    <button class="btn btn-primary" type="button">Button</button>
+  </div>
+</div>
+<div class="bd-example">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-primary" type="button">Button</button>
+    <button class="btn btn-primary" type="button">Button</button>
+  </div>
+</div>
+```
+
+![Component](./images/bootstrap_component_button05.png)
+
+<br>
+
+**버튼 그룹**
+
+```html
+<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+  <button type="button" class="btn btn-danger">Left</button>
+  <button type="button" class="btn btn-warning">Middle</button>
+  <button type="button" class="btn btn-success">Right</button>
+</div>
+```
+
+![Component](./images/bootstrap_component_button06.png)
+
+<br>
+
+#### 6-1-6-6. Card
+
+```html
+<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+```
+
+![Component](./images/bootstrap_component_card.png)
+
+<br>
+
+#### 6-1-6-7. Carousel
+
+```html
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>First slide label</h5>
+        <p>Some representative placeholder content for the first slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Second slide label</h5>
+        <p>Some representative placeholder content for the second slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Third slide label</h5>
+        <p>Some representative placeholder content for the third slide.</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+```
+
+![Component](./images/bootstrap_component_carousel.png)
+
+<br>
+
+#### 6-1-6-8. Close Button
+
+```html
+
+```
+
+![Component](./images/bootstrap_component_close.png)
+
+<br>
+
+
+#### 6-1-6-9. Collapse
+
+```html
+<p>
+  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Link with href
+  </a>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Button with data-bs-target
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+  </div>
+</div>
+```
+
+![Component](./images/bootstrap_component_collapse.png)
+
+<br>
+
+
+#### 6-1-6-10. Dropdown
+
+```html
+<!-- Example single danger button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Action
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Separated link</a></li>
+  </ul>
+</div>
+```
+
+![Component](./images/bootstrap_component_dropdown.png)
+
+<br>
+
+#### 6-1-6-11. List Group 
+
+```html
+<div class="list-group">
+  <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+    The current button
+  </button>
+  <button type="button" class="list-group-item list-group-item-action">A second item</button>
+  <button type="button" class="list-group-item list-group-item-action">A third button item</button>
+  <button type="button" class="list-group-item list-group-item-action">A fourth button item</button>
+  <button type="button" class="list-group-item list-group-item-action" disabled>A disabled button item</button>
+</div>
+```
+
+![Component](./images/bootstrap_component_listgroup.png)
+
+<br>
+
+
+#### 6-1-6-12. Modal
+
+```html
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+![Component](./images/bootstrap_component_modal.png)
+
+<br>
+
+#### 6-1-6-13. Tabs 
+
+```html
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+  </li>
+</ul>
+```
+
+![Component](./images/bootstrap_component_tab.png)
+
+<br>
+
+
+#### 6-1-6-14. Navbar
+
+```html
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar scroll</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Link
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+```
+
+![Component](./images/bootstrap_component_navbar.png)
+
+<br>
+
+#### 6-1-6-15. Off Canvas
+
+```html
+<a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+  Link with href
+</a>
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+  Button with data-bs-target
+</button>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+    </div>
+    <div class="dropdown mt-3">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+        Dropdown button
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+```
+
+![Component](./images/bootstrap_component_offcanvas.png)
+
+<br>
+
+
+#### 6-1-6-16. Pagenation
+
+```html
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+```
+
+![Component](./images/bootstrap_component_pagenation.png)
+
+<br>
+
+#### 6-1-6-17. Provers
+
+```html
+<button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+```
+
+![Component](./images/bootstrap_component_provers.png)
+
+<br>
+
+
+#### 6-1-6-18. Progressbar
+
+```html
+<div class="progress">
+  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+```
+
+![Component](./images/bootstrap_component_progress.png)
+
+<br>
+
+#### 6-1-6-19. Scrollspy
+
+```html
+<nav id="navbar-example2" class="navbar navbar-light bg-light px-3">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" href="#scrollspyHeading1">First</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#scrollspyHeading2">Second</a>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#scrollspyHeading3">Third</a></li>
+        <li><a class="dropdown-item" href="#scrollspyHeading4">Fourth</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#scrollspyHeading5">Fifth</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+  <h4 id="scrollspyHeading1">First heading</h4>
+  <p>...</p>
+  <h4 id="scrollspyHeading2">Second heading</h4>
+  <p>...</p>
+  <h4 id="scrollspyHeading3">Third heading</h4>
+  <p>...</p>
+  <h4 id="scrollspyHeading4">Fourth heading</h4>
+  <p>...</p>
+  <h4 id="scrollspyHeading5">Fifth heading</h4>
+  <p>...</p>
+</div>
+```
+
+![Component](./images/bootstrap_component_scrollspy.png)
+
+<br>
+
+#### 6-1-6-20. Spinner
+
+```html
+<div class="spinner-border text-primary" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="spinner-border text-secondary" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="spinner-border text-success" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="spinner-border text-danger" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="spinner-border text-warning" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="spinner-border text-info" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="spinner-border text-light" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="spinner-border text-dark" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+```
+
+![Component](./images/bootstrap_component_spinner.png)
+
+<br>
+
+#### 6-1-6-21. Toasts
+
+```html
+<div class="toast-container">
+  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small class="text-muted">just now</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      See? Just like this.
+    </div>
+  </div>
+
+  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small class="text-muted">2 seconds ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Heads up, toasts will stack automatically
+    </div>
+  </div>
+</div>
+```
+
+![Component](./images/bootstrap_component_toast.png)
+
+<br>
+
+#### 6-1-6-22. Tooltips
+
+```html
+<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+  Tooltip on top
+</button>
+<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Tooltip on right">
+  Tooltip on right
+</button>
+<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
+  Tooltip on bottom
+</button>
+<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on left">
+  Tooltip on left
+</button>
+```
+
+<br><br>
+
+### 6-1-7. Bootstrap 심볼 요소
+
+#### 6-1-7-1. Bootstrap Icon 설치
+
+```shell
+npm install bootstrap-icons --save-dev
+```
+
+<br>
+
+#### 6-1-7-2. Bootstrap Icon 목록
+
+[부트스트랩 아이콘 바로가기](https://icons.getbootstrap.com/)
+
+![부트스트랩 아이콘](./images/bootstrap_icons.png)
+
+<br>
+
+#### 6-1-7-3. Bootstrap Icon 적용
+
+**Embedded Icon**
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-heart-eyes" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M11.315 10.014a.5.5 0 0 1 .548.736A4.498 4.498 0 0 1 7.965 13a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .548-.736h.005l.017.005.067.015.252.055c.215.046.515.108.857.169.693.124 1.522.242 2.152.242.63 0 1.46-.118 2.152-.242a26.58 26.58 0 0 0 1.109-.224l.067-.015.017-.004.005-.002zM4.756 4.566c.763-1.424 4.02-.12.952 3.434-4.496-1.596-2.35-4.298-.952-3.434zm6.488 0c1.398-.864 3.544 1.838-.952 3.434-3.067-3.554.19-4.858.952-3.434z"/></svg>
+```
+
+<br>
+
+**Sprite Icon**
+
+```html
+<svg class="bi" width="32" height="32" fill="currentColor">
+  <use xlink:href="bootstrap-icons.svg#heart-fill"/>
+</svg>
+<svg class="bi" width="32" height="32" fill="currentColor">
+  <use xlink:href="bootstrap-icons.svg#toggles"/>
+</svg>
+<svg class="bi" width="32" height="32" fill="currentColor">
+  <use xlink:href="bootstrap-icons.svg#shop"/>
+</svg>
+```
+
+<br>
+
+**External image**
+
+```html
+<img src="/assets/icons/bootstrap.svg" alt="Bootstrap" width="32" height="32">
+```
+
+<br>
+
+**Icon font Icon**
+
+```html
+<i class="bi-alarm"></i>
+<i class="bi-alarm" style="font-size: 2rem; color: cornflowerblue;"></i>
+```
+
+<br>
+
+**CSS Include**
+
+```css
+.bi::before {
+  display: inline-block;
+  content: "";
+  vertical-align: -.125em;
+  background-image: url("data:image/svg+xml,<svg viewBox='0 0 16 16' fill='%23333' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z' clip-rule='evenodd'/></svg>");
+  background-repeat: no-repeat;
+  background-size: 1rem 1rem;
+}
+```
+
+<br><br>
+
+### 6-1-8. Bootstrap 을 적용한 애플리케이션 제작 실습
+
+#### 6-1-8-1. 애플리케이션 생성 및 구조
+
+**프로젝트 생성**
+
+```shell
+D:\gitRepository\vuejs\study06>vue create bootstrap
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
+```
+
+<br>
+
+**필요한 라이브러리 및 패키지 설치**
+
+```shell
+D:\gitRepository\vuejs\study06>cd bootstrap
+D:\gitRepository\vuejs\study06\bootstrap>npm install bootstrap --save-dev
+D:\gitRepository\vuejs\study06\bootstrap>npm install axios --save-dev
+D:\gitRepository\vuejs\study06\bootstrap>npm install webpack webpack-cli --save-dev
+D:\gitRepository\vuejs\study06\bootstrap>npm install css-loader style-loader file-loader --save-dev
+D:\gitRepository\vuejs\study06\bootstrap>npm install vue-loader vue-template-compiler --save-dev
+D:\gitRepository\vuejs\study06\bootstrap>npm install express multer fs --save-dev
+```
+
 <br>
 
 **프로젝트 구조**
 
 ```lua
-src/
-|-- assets/
-|   |-- styles/
-|       |-- main.css
-|-- components/
-|   |-- NavBar.vue
-|-- views/
-|   |-- Header.vue
-|   |-- Footer.vue
-|   |-- Home.vue
-|   |-- BoardList.vue
-|   |-- BoardDetail.vue
-|   |-- BoardCreate.vue
-|   |-- ProductList.vue
-|   |-- Signup.vue
-|   |-- Login.vue
-|   |-- UserDetail.vue
-|-- App.vue
-|-- main.ts
-|-- router/
-|   |-- index.ts
-|-- store/
-|   |-- index.ts
+bootstrap/
+├── babel.config.js
+├── package.json
+├── public/
+│   └── index.html
+├── server.js
+├── src/
+│   ├── App.vue
+│   ├── assets/
+│   │   ├── product/
+│   │   ├── styles/
+│   │   │   └── main.css
+│   │   ├── upload/
+│   │   ├── bords.json
+│   │   ├── dataroom.json
+│   │   ├── products.json
+│   │   ├── qnas.json
+│   │   └── users.json
+│   ├── components/
+│   │   ├── Breadcrumb.vue
+│   │   ├── Footer.vue
+│   │   ├── Header.vue
+│   │   ├── NavBar.vue
+│   │   └── Visual.vue
+│   ├── main.ts
+│   ├── model/
+│   │   └── index.ts
+│   ├── router/
+│   │   └── index.ts
+│   ├── shims-vue.d.ts
+│   ├── store/
+│   │   └── index.ts
+│   ├── views/
+│   │   ├── AnswerCreate.vue
+│   │   ├── BoardCreate.vue
+│   │   ├── BoardDetail.vue
+│   │   ├── BoardEdit.vue
+│   │   ├── BoardList.vue
+│   │   ├── Chat.vue
+│   │   ├── DataCreate.vue
+│   │   ├── DataDetail.vue
+│   │   ├── DataEdit.vue
+│   │   ├── DataList.vue
+│   │   ├── DeliveryService.vue
+│   │   ├── Faq.vue
+│   │   ├── Greetings.vue
+│   │   ├── History.vue
+│   │   ├── Home.vue
+│   │   ├── Intro.vue
+│   │   ├── Login.vue
+│   │   ├── OnlineService.vue
+│   │   ├── Organization.vue
+│   │   ├── ProductDetail.vue
+│   │   ├── ProductList.vue
+│   │   ├── QnaDetail.vue
+│   │   ├── QnaEdit.vue
+│   │   ├── QnaList.vue
+│   │   ├── QuestionCreate.vue
+│   │   ├── ReservationService.vue
+│   │   ├── SendEmail.vue
+│   │   ├── Signup.vue
+│   │   ├── UserDetail.vue
+│   │   └── VisitService.vue
+├── tsconfig.json
+├── vue.config.js
+└── webpack.config.js
 ```
 
 <br><br>
 
-### 6-1-1. main.ts
+#### 6-1-8-2. 프로젝트 설정
+
+**package.json**
+
+```json
+{
+  "name": "bootstrap",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "bootstrap": "^5.0.2",
+    "css-loader": "^7.1.2",
+    "express": "^4.19.2",
+    "file-loader": "^6.2.0",
+    "fs": "^0.0.1-security",
+    "multer": "^1.4.5-lts.1",
+    "postcss-loader": "^8.1.1",
+    "source-map-loader": "^5.0.0",
+    "style-loader": "^4.0.0",
+    "typescript": "~4.5.5",
+    "url-loader": "^4.1.1",
+    "vue-loader": "^17.4.2",
+    "vue-template-compiler": "^2.7.16",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
+```
+
+<br><br>
+
+**babel.config.js**
+
+```javascript
+module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+  ]
+}
+```
+
+<br><br>
+
+**server.js**
+
+```javascript
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const app = express();
+const upload = multer({ dest: 'uploads/' });
+
+app.use(express.static('public'));
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  const tempPath = req.file.path;
+  const targetPath = path.join(__dirname, 'public/assets/upload', req.file.originalname);
+
+  fs.rename(tempPath, targetPath, err => {
+    if (err) return res.status(500).json({ success: false });
+
+    res.json({ success: true });
+  });
+});
+
+app.post('/update-file/:filename', upload.single('file'), (req, res) => {
+  const tempPath = req.file.path;
+  const targetPath = path.join(__dirname, 'public/assets/upload', req.file.originalname);
+  const oldFilePath = path.join(__dirname, 'public/assets/upload', req.params.filename);
+
+  fs.rename(tempPath, targetPath, err => {
+    if (err) return res.status(500).json({ success: false });
+
+    fs.unlink(oldFilePath, unlinkErr => {
+      if (unlinkErr) return res.status(500).json({ success: false });
+
+      res.json({ success: true });
+    });
+  });
+});
+
+app.delete('/delete-file/:filename', (req, res) => {
+  const filePath = path.join(__dirname, 'public/assets/upload', req.params.filename);
+
+  fs.unlink(filePath, err => {
+    if (err) return res.status(500).json({ success: false });
+
+    res.json({ success: true });
+  });
+});
+
+app.listen(3000, () => {
+  console.log('Server started on http://localhost:3000');
+});
+```
+
+<br><br>
+
+**tsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "useDefineForClassFields": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+<br><br>
+
+**vue.config.js**
+
+```javascript
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true
+})
+```
+
+<br><br>
+
+**webpack.config.js**
+
+```javascript
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js'
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  },
+  module: {
+    rules: [
+      // Bootstrap의 JavaScript 파일을 처리하는 로더
+      {
+        test: /bootstrap\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
+      // Bootstrap의 CSS 파일을 처리하는 로더
+      {
+        test: /bootstrap\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.vue$/,
+        use: 'vue-loader'
+      },
+      {
+        test: /\.js$/,
+        use: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'images/'
+        }
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: 'index.html'
+    }),
+    new VueLoaderPlugin()
+  ]
+};
+```
+
+<br><br>
+
+**src/main.ts**
 
 - 프로젝트의 진입점 파일입니다.
 
@@ -16894,52 +22793,100 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
-// Import Bootstrap CSS
-import 'bootstrap/dist/css/bootstrap.min.css';
-// Import Bootstrap JS (Optional)
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+// Bootstrap의 JavaScript 파일 임포트
+import 'bootstrap/dist/js/bootstrap.js';
+// Bootstrap의 CSS 파일 임포트
+import 'bootstrap/dist/css/bootstrap.css';
 
 createApp(App).use(router).use(store).mount('#app');
 ```
 
 <br><br>
 
-### 6-1-2. router/index.ts
+**src/router/index.ts**
 
 - 라우터 설정 파일입니다.
 
 ```typescript
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
+import Intro from '../views/Intro.vue';
+import History from '../views/History.vue';
+import Greetings from '../views/Greetings.vue';
+import Organization from '../views/Organization.vue';
 import BoardList from '../views/BoardList.vue';
 import BoardDetail from '../views/BoardDetail.vue';
 import BoardCreate from '../views/BoardCreate.vue';
+import BoardEdit from '../views/BoardEdit.vue';
+import OnlineService from '../views/OnlineService.vue';
+import VisitService from '../views/VisitService.vue';
+import DelyveryService from '../views/DelyveryService.vue';
+import ReservationService from '../views/ReservationService.vue';
 import ProductList from '../views/ProductList.vue';
+import ProductDetail from '../views/ProductDetail.vue';
 import Signup from '../views/Signup.vue';
 import Login from '../views/Login.vue';
 import UserDetail from '../views/UserDetail.vue';
+import QnaList from '@/views/QnaList.vue';
+import QnaDetail from '@/views/QnaDetail.vue';
+import QuestionCreate from '@/views/QuestionCreate.vue';
+import AnswerCreate from '@/views/AnswerCreate.vue';
+import QnaEdit from '@/views/QnaEdit.vue';
+import Faq from '@/views/Faq.vue';
+import SendEmail from '@/views/SendEmail.vue';
+import Chat from '@/views/Chat.vue';
+import DataList from '@/views/DataList.vue';
+import DataDetail from '@/views/DataDetail.vue';
+import DataCreate from '@/views/DataCreate.vue';
+import DataEdit from '@/views/DataEdit.vue';
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/board', component: BoardList },
+  { path: '/company/intro', component: Intro },
+  { path: '/company/history', component: History },
+  { path: '/company/greetings', component: Greetings },  
+  { path: '/company/organization', component: Organization },
+  { path: '/community/notice', component: BoardList },  
+  { path: '/board/list', component: BoardList },
   { path: '/board/create', component: BoardCreate },
-  { path: '/board/:id', component: BoardDetail },
+  { path: '/board/:id', name: 'BoardDetail', component: BoardDetail, props: true },
+  { path: '/board/edit/:id', name: 'BoardEdit', component: BoardEdit, props: true },
+  { path: '/service/online', component: OnlineService },
+  { path: '/service/visit', component: VisitService },
+  { path: '/service/delivery', component: DelyveryService },
+  { path: '/service/reservation', component: ReservationService },
   { path: '/products', component: ProductList },
+  { path: '/product/list', component: ProductList },
+  { path: '/product/:id', name: 'ProductDetail', component: ProductDetail, props: true},
   { path: '/signup', component: Signup },
   { path: '/login', component: Login },
-  { path: '/user/:id', component: UserDetail }
+  { path: '/user/:id', component: UserDetail, props: true },
+  { path: '/qna/list', component: QnaList },
+  { path: '/qna/:id', component: QnaDetail, props: true },
+  { path: '/qna/create', component: QuestionCreate },
+  { path: '/qna/answer/:id', component: AnswerCreate, props: true },
+  { path: '/qna/edit/:id', component: QnaEdit, props: true },
+  { path: '/qnas', redirect: '/qna/list' },
+  { path: '/data/list', name: 'DataList', component: DataList },
+  { path: '/data/:id', name: 'DataDetail', component: DataDetail, props: true },
+  { path: '/data/create', name: 'DataCreate', component: DataCreate },
+  { path: '/data/edit/:id', name: 'DataEdit', component: DataEdit, props: true },
+  { path: '/community/faq', component: Faq },
+  { path: '/send-email', component: SendEmail },
+  { path: '/chat', component: Chat }
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
 });
 
 export default router;
 ```
+
 <br><br>
 
-### 6-1-3. store/index.ts
+**store/index.ts**
 
 - Vuex 스토어 설정 파일입니다.
 
@@ -16956,7 +22903,9 @@ export default createStore({
 
 <br><br>
 
-### 6-1-4. App.vue
+#### 6-1-8-3. 컴포넌트 작성
+
+**src/App.vue**
 
 - 최상위 Vue 컴포넌트입니다.
 
@@ -16987,31 +22936,27 @@ export default defineComponent({
 
 <br><br>
 
-### 6-1-5. components/NavBar.vue
+**src/components/NavBar.vue**
 
 - 네비게이션 바 컴포넌트입니다.
 
 ```vue
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <router-link class="navbar-brand" to="/">MyApp</router-link>
+    <div class="container-fluid" style="width: 900px; margin: 0 auto;">
+      <router-link class="navbar-brand" to="/">Morning</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="justify-content: flex-end;">
           <li class="nav-item">
-            <router-link class="nav-link" to="/board">Board</router-link>
+            <router-link v-if="isLoggedIn" :to="getUserDetailPath()" class="nav-link">My Page</router-link>
+            <router-link v-else to="/signup" class="nav-link">SignUp</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/products">Products</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/signup">Signup</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/login">Login</router-link>
+            <a v-if="isLoggedIn" @click.prevent="logout" href="#" class="nav-link">Logout</a>
+            <router-link v-else to="/login" class="nav-link">Login</router-link>
           </li>
         </ul>
       </div>
@@ -17020,188 +22965,439 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, watch, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
-  name: 'NavBar'
+  name: 'NavBar',
+  setup() {
+    const router = useRouter();
+    const isLoggedIn = ref(false); // 반응성 변수로 로그인 상태 관리
+
+    const getUserDetailPath = () => {
+      const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+      return `/user/${currentUser.id}`;
+    };
+
+    const logout = () => {
+      // 세션 스토리지에서 사용자 정보 삭제
+      sessionStorage.removeItem('currentUser');
+      isLoggedIn.value = false; // 로그아웃 상태로 변경
+
+      // 로그아웃 후 메인 페이지로 이동
+      router.push('/');
+    };
+
+    const checkSession = () => {
+      const currentUser = sessionStorage.getItem('currentUser');
+      isLoggedIn.value = currentUser !== null;
+    };
+
+    // 페이지 로드 시 세션 체크
+    onMounted(checkSession);
+
+    // 세션 변경 감지
+    watch(() => sessionStorage.getItem('currentUser'), (newValue, oldValue) => {
+      if (newValue !== oldValue) {
+        isLoggedIn.value = newValue !== null;
+        window.location.reload();
+      }
+      router.push('/');
+    });
+
+    return {
+      isLoggedIn,
+      getUserDetailPath,
+      logout
+    };
+  }
 });
 </script>
 ```
 
 <br><br>
 
-### 6-1-6. header.vue
+**src/components/Breadcrumb.vue**
+
+```vue
+<template>
+    <div class="full-screen">
+        <nav aria-label="breadcrumb" class="container" >
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a :href="href" id="group">{{ group }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page" id="current">{{ current }}</li>
+            </ol>
+        </nav>
+    </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Breadcrumb',
+  props: {
+    group: {
+      type: String,
+      required: true
+    },
+    current: {
+      type: String,
+      required: true
+    },
+    href: {
+      type: String,
+      required: true
+    }
+  }
+});
+</script>
+
+<style>
+.full-screen {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    padding-top: 0.8em;
+    background-color: #ececec;
+}
+
+.breadcrumb {
+    height: 40px;
+    line-height: 40px;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+}
+</style>
+```
+
+<br><br>
+
+**src/components/footer.vue**
+
+```vue
+<template>
+    <footer class="bg-light">
+      <div class="container">
+        <!-- Add your footer content here -->
+        <p>&copy; 2024 MyApp. All Rights Reserved.</p>
+      </div>
+    </footer>
+  </template>
+  
+  <script>
+  export default {
+    name: 'Footer'
+  };
+  </script>
+  
+  <style scoped>
+  /* Your footer styles here */
+  </style>
+```
+
+<br><br>
+
+**src/components/header.vue**
 
 ```vue
 <template>
   <header>
-    <div class="container">
-      <!-- Logo -->
-      <div class="logo">
-        <img src="logo.png" alt="MyApp Logo">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid" style="width:900px; margin:0 auto;">
+        <!-- Logo -->
+        <a href="/" class="navbar-brand logo">
+          <img src="@/assets/logo.png" alt="MyApp Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Main Menu -->
+        <nav class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left:60px;">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a href="/company" class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">Company</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                <li><a href="/company/intro" class="dropdown-item" >회사소개</a></li>
+                <li><a href="/company/history" class="dropdown-item" >회사연혁</a></li>
+                <li><a href="/company/greetings" class="dropdown-item" >인사말</a></li>
+                <li><a href="/company/organization" class="dropdown-item" >조직</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="/product" class="nav-link dropdown-toggle" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">Product</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                <li><a href="/products" class="dropdown-item" >비스켓</a></li>
+                <li><a href="/products" class="dropdown-item" >스낵</a></li>
+                <li><a href="/products" class="dropdown-item" >기타</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="/service" class="nav-link dropdown-toggle" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">Service</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                <li><a href="/service/online" class="dropdown-item" >온라인 서비스</a></li>
+                <li><a href="/service/visit" class="dropdown-item" >방문 서비스</a></li>
+                <li><a href="/service/delivery" class="dropdown-item" >택배 서비스</a></li>
+                <li><a href="/service/reservation" class="dropdown-item" >시설 이용 예약 서비스</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="/community" class="nav-link dropdown-toggle" id="navbarDropdown4" role="button" data-bs-toggle="dropdown" aria-expanded="false">Community</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
+                <li><a href="/community/notice" class="dropdown-item" >공지사항</a></li>
+                <li><a href="/qna/list" class="dropdown-item" >질문 및 답변</a></li>
+                <li><a href="/data/list" class="dropdown-item" >자료실</a></li>
+                <li><a href="/community/faq" class="dropdown-item" >자주하는 질문</a></li>
+                <li><a href="/send-email" class="dropdown-item" >온라인 상담</a></li>
+                <li><a href="/chat" class="dropdown-item" >챗봇 상담</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+ 
       </div>
-      <!-- Main Menu -->
-      <nav id="gnb">
-        <ul class="menu">
-          <li>
-            <a href="/company" class="dp1">Company</a>
-            <ul class="sub">
-              <li><a href="/company/intro">회사소개</a></li>
-              <li><a href="/company/history">회사연혁</a></li>
-              <li><a href="/company/greetings">인사말</a></li>
-              <li><a href="/company/organization">조직</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="/product" class="dp1">Product</a>
-            <ul class="sub">
-              <li><a href="/product/a01">도서</a></li>
-              <li><a href="/product/b01">문구</a></li>
-              <li><a href="/product/c01">학습</a></li>
-              <li><a href="/product/d01">액세사리</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="/service" class="dp1">Service</a>
-            <ul class="sub">
-              <li><a href="/service/online">온라인 서비스</a></li>
-              <li><a href="/service/visit">방문 서비스</a></li>
-              <li><a href="/service/delivery">택배 서비스</a></li>
-              <li><a href="/service/reservation">시설 이용 예약 서비스</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="/community" class="dp1">Community</a>
-            <ul class="sub">
-              <li><a href="/community/notice">공지사항</a></li>
-              <li><a href="/community/qna">질문 및 답변</a></li>
-              <li><a href="/community/faq">자주하는 질문</a></li>
-              <li><a href="/community/online">온라인 상담</a></li>
-              <li><a href="/community/chatbot">챗봇 상담</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      <!-- Top Menu -->
-      <div class="top-menu">
-        <ul v-if="isAuthenticated">
-          <li><a href="#">My Account</a></li>
-          <li><a href="#">Logout</a></li>
-        </ul>
-        <ul v-else>
-          <li><a href="/login">Login</a></li>
-          <li><a href="/signup">Signup</a></li>
-        </ul>
-      </div>
-    </div>
+    </nav>
   </header>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   name: 'Header',
   data() {
     return {
       isAuthenticated: false // 이 값은 실제 로그인 여부에 따라 변경되어야 합니다.
     };
   }
-};
+});
 </script>
 
 <style scoped>
-/* Your header styles here */
-.menu {
-  list-style: none;
-}
-.menu li {
-  display: inline-block;
-  position: relative;
-}
-.menu li ul {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #fff;
-  padding: 10px;
-}
-.menu li:hover ul {
+/* Add custom CSS for hover dropdown */
+.nav-item.dropdown:hover .dropdown-menu {
   display: block;
 }
-.menu li ul li {
+
+.dropdown-menu {
+  margin-top: 0; /* Adjust margin if needed */
+}
+.logo {
   display: block;
+  width: 90px;
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.dropdown-toggle::after {
+  border: none;
+}
+
+.nav-link {
+  min-width: 180px; 
+  font-size: 1.4em;
 }
 </style>
 ```
 
 <br><br>
 
-### 6-1-7. footer.vue
+**src/components/Visual.vue**
 
 ```vue
 <template>
-  <footer>
-    <div class="container">
-      <!-- Add your footer content here -->
-      <p>&copy; 2024 MyApp. All Rights Reserved.</p>
-    </div>
-  </footer>
+    <figure class="full-screen">
+      <img :src="src" class="img" :alt="alt">
+    </figure>
 </template>
 
-<script>
-export default {
-  name: 'Footer'
-};
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'Visual',
+  props: {
+    src: {
+      type: String,
+      required: true
+    },
+    alt: {
+      type: String,
+      required: true
+    }
+  }
+});
 </script>
 
-<style scoped>
-/* Your footer styles here */
+<style>
+.full-screen {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.full-screen .img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 </style>
 ```
 
 <br><br>
 
-### 6-1-8. views/Home.vue
+### 6-1-8-4. View 작성
+
+**views/Home.vue**
 
 - 메인 페이지입니다.
 
 ```vue
 <template>
   <div>
-    <Header/>
-    <div class="container mt-5">
-      <h1>Welcome to MyApp</h1>
-      <p>This is the main page.</p>
+    <div class="container-fluid mt-5">
+      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item item1 active">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>First slide label</h5>
+              <p>Some representative placeholder content for the first slide.</p>
+            </div>
+          </div>
+          <div class="carousel-item item2">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Second slide label</h5>
+              <p>Some representative placeholder content for the second slide.</p>
+            </div>
+          </div>
+          <div class="carousel-item item3">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Third slide label</h5>
+              <p>Some representative placeholder content for the third slide.</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
-    <Footer/>
+
+    <!-- 제품 목록 카드 -->
+    <div class="container my-5">
+      <h2 class="mb-4">Hot Item</h2>
+      <div class="row">
+        <div v-for="product in products" :key="product.id" class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img :src="product.image" :alt="product.name" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <!-- 수정된 부분: v-html을 이용하여 제품 설명 HTML을 출력 -->
+              <div v-html="product.description"></div>
+              <p class="card-text"><strong>Price:</strong> {{ product.price }}원</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>  
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Header from './header.vue';
-import Footer from './footer.vue';
+import products from '@/assets/products.json';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  description: string; // HTML 형식의 제품 설명
+  image: string;
+}
 
 export default defineComponent({
-  name: 'Home'
-  components: {
-    Header,
-    Footer
-  }
+  name: 'Home',
+  data() {
+    return {
+      products: [] as Product[],
+      loading: false,
+      error: null,
+    };
+  },
+  methods: {
+    reloadPage() {
+      window.location.reload();
+    }
+  },
+  created() {
+    this.products = products.slice(0, 3).map(product => ({
+      ...product,
+      image: require(`@/assets/product/${product.image.split('/').pop()}`),
+    })); 
+  },
 });
 </script>
+
+<style>
+body {  -ms-overflow-style: none;  }
+::-webkit-scrollbar {   display: none;  }
+.container-fluid { margin: 0; padding: 0; width: 100vw; box-sizing: border-box; }
+#carouselExampleCaptions { width: 100%; margin: 0; padding: 0; }
+.carousel-item { 
+  height: 400px;
+  background-repeat: no-repeat; 
+  background-size:100% auto; 
+  background-position:center center; 
+}
+.carousel-item.item1 { 
+  background-image: url("../assets/vs001.jpg");
+}
+.carousel-item.item2 { 
+  background-image: url("../assets/vs005.jpg");
+}
+.carousel-item.item3 { 
+  background-image: url("../assets/vs004.jpg");
+}
+</style>
 ```
 
 <br><br>
 
-### 6-1-7. BoardList.vue
+**BoardList.vue**
 
 ```vue
 <template>
   <div>
-    <Header/>
+    <Visual :src="src" alt="Board" />
+    <Breadcrumb group="Board" current="List" :href="href" />
     <div class="container mt-5">
       <h1>Board List</h1>
+      <hr />
+      <!-- 검색 입력 폼 -->
+      <div class="mb-3">
+        <label for="searchText" class="form-label">검색</label>
+        <input type="text" class="form-control" id="searchText" v-model="searchText" @input="filterPosts" />
+      </div>
+      <!-- 글 목록 테이블 -->
       <table class="table table-striped">
         <thead>
           <tr>
@@ -17212,55 +23408,133 @@ export default defineComponent({
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(post, index) in posts" :key="index">
-            <td>{{ index + 1 }}</td>
+          <tr v-for="(post, index) in paginatedPosts" :key="post.id">
+            <td>{{ index + 1 + (currentPage - 1) * postsPerPage }}</td>
             <td><router-link :to="`/board/${post.id}`">{{ post.title }}</router-link></td>
             <td>{{ post.author }}</td>
             <td>{{ post.date }}</td>
           </tr>
         </tbody>
       </table>
+      <!-- 페이지네이션 -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+            <button class="page-link" @click="prevPage">&laquo;</button>
+          </li>
+          <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber" :class="{ 'active': pageNumber === currentPage }">
+            <button class="page-link" @click="goToPage(pageNumber)">{{ pageNumber }}</button>
+          </li>
+          <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+            <button class="page-link" @click="nextPage">&raquo;</button>
+          </li>
+        </ul>
+      </nav>
+      <!-- 글쓰기 버튼 -->
+      <div class="btn-group">
+        <router-link to="/board/create" class="btn btn-primary">글쓰기</router-link>
+      </div>
     </div>
-    <Footer/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Header from './header.vue';
-import Footer from './footer.vue';
+import Breadcrumb from '@/components/Breadcrumb.vue';
+import Visual from '@/components/Visual.vue';
+import boards from '@/assets/boards.json'; // boards.json 파일 import
+
+interface Post {
+  id: number;
+  title: string;
+  author: string;
+  date: string;
+  content: string;
+}
 
 export default defineComponent({
   name: 'BoardList',
   components: {
-    Header,
-    Footer
+    Breadcrumb,
+    Visual
   },
   data() {
     return {
-      posts: [
-        { id: 1, title: 'First Post', author: 'John Doe', date: '2023-06-01' },
-        { id: 2, title: 'Second Post', author: 'Jane Doe', date: '2023-06-02' }
-      ]
+      posts: [] as Post[], // 타입 정의 추가
+      filteredPosts: [] as Post[], // 타입 정의 추가
+      searchText: '',
+      src: new URL('@/assets/vs029.jpg', import.meta.url).href,
+      href: "/board/list",
+      currentPage: 1,
+      postsPerPage: 5 // 페이지당 글 개수
     };
+  },
+  computed: {
+    // 필터된 포스트를 현재 페이지에 맞게 슬라이스하여 보여줍니다.
+    paginatedPosts(): Post[] {
+      const startIndex = (this.currentPage - 1) * this.postsPerPage;
+      return this.filteredPosts.slice(startIndex, startIndex + this.postsPerPage);
+    },
+    // 전체 페이지 수 계산
+    totalPages(): number {
+      return Math.ceil(this.filteredPosts.length / this.postsPerPage);
+    }
+  },
+  mounted() {
+    this.posts = boards as Post[]; // boards.json에서 데이터 가져오기
+    this.filterPosts(); // 초기 필터링 적용
+  },
+  methods: {
+    // 검색어에 따라 글 목록 필터링
+    filterPosts(): void {
+      if (this.searchText.trim() === '') {
+        this.filteredPosts = this.posts;
+      } else {
+        this.filteredPosts = this.posts.filter(post =>
+          post.title.toLowerCase().includes(this.searchText.toLowerCase())
+        );
+      }
+      this.currentPage = 1; // 필터링 후 첫 페이지로 이동
+    },
+    // 페이지 이동
+    goToPage(pageNumber: number): void {
+      this.currentPage = pageNumber;
+    },
+    // 이전 페이지로 이동
+    prevPage(): void {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    // 다음 페이지로 이동
+    nextPage(): void {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    }
   }
 });
 </script>
+
+<style scoped>
+/* 추가적인 스타일링 필요 시 여기에 작성 */
+</style>
 ```
 
 <br><br>
 
-### 6-1-8. views/BoardDetail.vue
+**views/BoardDetail.vue**
 
 - 게시판 글 상세보기 페이지입니다.
 
 ```vue
 <template>
-  <div>
-    <Header/>
-    <div class="container mt-5">
-      <h1>Board Detail</h1>
-      <table class="table table-bordered">
+    <div>
+      <Visual :src="src" alt="Board" />
+      <Breadcrumb group="Board" current="Detail" :href="href" />
+      <div class="container mt-5">
+        <h1>Board Detail</h1>
+        <table v-if="post" class="table table-bordered">
         <tr>
           <th>Title</th>
           <td>{{ post.title }}</td>
@@ -17278,49 +23552,89 @@ export default defineComponent({
           <td>{{ post.content }}</td>
         </tr>
       </table>
+      <div v-else>
+        <p>Post not found.</p>
+      </div>      
+      <div class="btn-group">
+        <a :href="`/board/edit/${id}`" class="btn btn-warning">글 수정</a>
+        <a @click="deletePost(post.id)" class="btn btn-danger">글 삭제</a>
+        <a href="/board/create" class="btn btn-info">글 쓰기</a>
+        <a href="/board/list" class="btn btn-primary" aria-current="page">글 목록</a>
+      </div>
     </div>
-    <Footer/>
-  </div>
-</template>
+    </div>
+  </template>
+  
+  <script lang="ts">
+  import { defineComponent } from 'vue';
+  import Breadcrumb from '@/components/Breadcrumb.vue';
+  import Visual from '@/components/Visual.vue';
+  import boards from '@/assets/boards.json'; // Import boards.json file
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import Header from './header.vue';
-import Footer from './footer.vue';
+  interface Post {
+    id: number;
+    title: string;
+    author: string;
+    date: string;
+    content: string;
+  }
 
 export default defineComponent({
   name: 'BoardDetail',
   components: {
-    Header,
-    Footer
+    Visual,
+    Breadcrumb
+  },
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
   },
   data() {
     return {
-      post: {
-        id: 1,
-        title: 'First Post',
-        author: 'John Doe',
-        date: '2023-06-01',
-        content: 'This is the content of the first post.'
-      }
+      src: new URL('@/assets/vs028.jpg', import.meta.url).href,
+      post: {} as Post,
+      href: "/board/list"
     };
+  },
+  mounted() {
+    this.fetchPost();
+  },
+  methods: {
+    fetchPost() {
+      const route = this.$route;
+      const postId = Number(route.params.id);
+      this.post = boards.find(post => post.id === postId) || {} as Post;
+    },
+    deletePost(id: number) {
+      // Filter out the post with the given id and update boards.json
+      const updatedPosts = boards.filter(post => post.id !== id);
+      // Replace the original boards.json (simulated action, replace with actual logic)
+      console.log(updatedPosts);
+      alert('게시글이 삭제되었습니다.');
+      // Redirect to the list page
+      this.$router.push('/board/list');
+    }
   }
 });
-</script>
+  </script>
 ```
 
 <br><br>
 
-### 6-1-9. views/BoardCreate.vue
+**views/BoardCreate.vue**
 
 - 게시판 글 등록 페이지입니다.
 
 ```vue
 <template>
   <div>
-    <Header/>
+    <Visual :src="src" alt="Board" />
+    <Breadcrumb group="Board" current="Create" :href="href"/>
     <div class="container mt-5">
       <h1>Create New Post</h1>
+      <hr>
       <form @submit.prevent="createPost">
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
@@ -17334,35 +23648,584 @@ export default defineComponent({
           <label for="content" class="form-label">Content</label>
           <textarea class="form-control" id="content" v-model="content" rows="3" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-danger">글 쓰기</button>
+          <router-link to="/board/list" class="btn btn-primary" aria-current="page">글 목록</router-link>
+        </div>
       </form>
     </div>
-    <Footer/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Header from './header.vue';
-import Footer from './footer.vue';
+import Breadcrumb from '@/components/Breadcrumb.vue';
+import Visual from '@/components/Visual.vue';
+import boards from '@/assets/boards.json'; // Import boards.json file
+
+interface Post {
+  id: number;
+  title: string;
+  author: string;
+  date: string; // Optional if you want to track creation date
+  content: string;
+}
 
 export default defineComponent({
   name: 'BoardCreate',
   components: {
-    Header,
-    Footer
+    Breadcrumb,
+    Visual
   },
   data() {
     return {
       title: '',
-      author: '',
-      content: ''
+      author: 'Admin', // Default author is 'Admin'
+      content: '',
+      src: new URL('@/assets/vs029.jpg', import.meta.url).href,
+      href: "/board/list"
     };
   },
   methods: {
     createPost() {
-      // Logic to create a new post
-      alert('Post created!');
+      const newPost: Post = {
+        id: boards.length > 0 ? boards[boards.length - 1].id + 1 : 1, // Generate new ID
+        title: this.title,
+        author: this.author,
+        content: this.content,
+        date: new Date().toISOString() // Optional: Set current date/time
+      };
+
+      boards.push(newPost); // Add new post to the boards array
+
+      // Optional: Save to localStorage or perform backend API call to persist data
+
+      alert('Post created!'); // Inform user about successful creation
+
+      // Redirect to board list view
+      this.$router.push('/board/list');
+    }
+  }
+});
+</script>
+
+<style scoped>
+/* Your scoped styles here */
+</style>
+```
+
+<br><br>
+
+**views/BoardEdit.vue**
+
+```vue
+<template>
+    <div>
+      <Visual :src="src" alt="Board" />
+      <Breadcrumb group="Board" current="Edit" :href="href"/>
+      <div class="container mt-5">
+        <h1>Edit Post</h1>
+        <hr>
+        <form @submit.prevent="editPost">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" v-model="post.title" required>
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" class="form-control" id="author" v-model="post.author" required>
+          </div>
+          <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea class="form-control" id="content" v-model="post.content" rows="3" required></textarea>
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="btn btn-success">Save Changes</button>
+            <router-link to="/board/list" class="btn btn-primary" aria-current="page">Cancel</router-link>
+          </div>
+        </form>
+      </div>
+    </div>
+  </template>
+  
+  <script lang="ts">
+  import { defineComponent } from 'vue';
+  import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
+  import Breadcrumb from '@/components/Breadcrumb.vue';
+  import Visual from '@/components/Visual.vue';
+  import boards from '@/assets/boards.json';
+  
+  interface Post {
+    id: number;
+    title: string;
+    author: string;
+    date: string;
+    content: string;
+  }
+  
+  export default defineComponent({
+    name: 'BoardEdit',
+    components: {
+      Breadcrumb,
+      Visual
+    },
+    data() {
+      return {
+        src: new URL('@/assets/vs029.jpg', import.meta.url).href,
+        post: {} as Post,
+        href: "/board/list"
+      };
+    },
+    mounted() {
+      this.fetchPost();
+    },
+    methods: {
+      fetchPost() {
+        const route = useRoute();
+        const postId = Number(route.params.id);
+        this.post = boards.find(post => post.id === postId) || {} as Post;
+      },
+      editPost() {
+        // Find index of the post in the array
+        const index = boards.findIndex(post => post.id === this.post.id);
+        if (index !== -1) {
+          // Update post in the array
+          boards[index] = { ...this.post };
+          // Optional: Save to localStorage or perform backend API call to persist data
+          alert('Post updated successfully!');
+          // Redirect to board list view
+          this.$router.push('/board/list');
+        } else {
+          alert('Post not found!');
+        }
+      }
+    }
+  });
+  </script>
+  
+  <style scoped>
+  /* Your scoped styles here */
+  </style>
+```
+
+<br><br>
+
+**views/ProductList.vue**
+
+- 제품 목록 페이지입니다.
+
+```vue
+<template>
+  <div>
+    <Visual :src="src" alt="Product" />
+    <Breadcrumb group="Product" current="List" :href="href" />
+    <div class="container my-5">
+      <h1>Product List</h1>
+      <hr>
+      <div v-if="loading" class="text-center">Loading...</div>
+      <div v-if="error" class="alert alert-danger">{{ error }}</div>
+      <div v-if="products.length" class="row">
+        <div v-for="product in products" :key="product.id" class="col-md-4 mb-4">
+          <router-link :to="`/product/${product.id}`">
+            <div class="card h-100">
+              <img :src="product.imageUrl" :alt="product.name" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title" style="font-weight:800;">{{ product.name }}</h5>
+                <p class="card-text" v-html="product.description"></p>
+                <p class="card-text"><strong>Price:</strong> {{ product.price }}원</p>
+              </div>
+            </div>
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue';
+import Breadcrumb from '@/components/Breadcrumb.vue';
+import Visual from '@/components/Visual.vue';
+import products from '@/assets/products.json';
+
+export default {
+  name: 'ProductList',
+  components: {
+    Breadcrumb,
+    Visual
+  },
+  data() {
+    return {
+      products: [],
+      loading: false,
+      error: null,
+      src: new URL('@/assets/vs013.jpg', import.meta.url).href,
+      href: "/products"
+    };
+  },
+  created() {
+    this.fetchProducts();
+  },
+  methods: {
+    fetchProducts() {
+      this.loading = true;
+      try {
+        this.products = products.map(product => ({
+          ...product,
+          imageUrl: require(`../assets/product/${product.image.split('/').pop()}`),
+          image2: require(`../assets/product/${product.image2.split('/').pop()}`)
+        }));
+      } catch (error) {
+        this.error = 'Failed to load products.';
+      } finally {
+        this.loading = false;
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+.card {
+  text-align: center;
+}
+.card-img-top {
+  width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+}
+</style>
+```
+
+<br><br>
+
+**views/ProductDetail.vue**
+
+```vue
+<template>
+    <div>
+        <Visual :src="src" alt="Product" />
+        <Breadcrumb group="Product" current="Detail" :href="href" />
+        <div class="container mt-5">
+        <h1>제품 상세 정보</h1>
+        <hr />
+        <table class="table" style="width:900px; margin:0 auto;">
+            <tbody v-if="product">
+                <tr>
+                    <td style="background-color: #fff;">
+                        <div class="product-images">
+                            <img :src="productImage" alt="제품 이미지" class="img-fluid" />
+                        </div>
+                    </td>
+                    <td style="background-color: #fff;">
+                        <br><br>
+                        <h2>{{ product.name }}</h2>
+                        <p><strong>가격:</strong> {{ product.price }} 원</p>
+                        <div v-html="product.description"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <br><br><br>        
+                        <div class="product-images" style="text-align: center;">   
+                            <img :src="productImage2" alt="제품 추가 이미지" class="img-fluid" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody v-else>
+                <tr>
+                    <td colspan="2"><p>제품 정보를 불러오는 중 오류가 발생했습니다.</p></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="btn-group mt-3">
+            <router-link to="/product/list" class="btn btn-primary">제품 목록</router-link>
+        </div>
+    </div>
+    </div>
+  </template>
+  
+  <script lang="ts">
+  import { defineComponent } from 'vue';
+  import { RouteLocationNormalizedLoaded } from 'vue-router';
+  import products from '@/assets/products.json';
+  
+  interface Product {
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+    image: string;
+    image2: string;
+  }
+  
+  export default defineComponent({
+    name: 'ProductDetail',
+    data() {
+      return {
+        product: null as Product | null,
+        productImage: '',
+        productImage2: '',
+        src: new URL('@/assets/vs013.jpg', import.meta.url).href,
+        href: "/products"
+      };
+    },
+    mounted() {
+      this.fetchProduct();
+    },
+    methods: {
+      fetchProduct() {
+        const route = this.$route as RouteLocationNormalizedLoaded;
+        const productId = Number(route.params.id);
+        const product = products.find(product => product.id === productId) || null;
+        if(product) {
+            this.product = product;
+            this.productImage = require(`../assets/product/${product.image.split('/').pop()}`);
+            this.productImage2 = require(`../assets/product/${product.image2.split('/').pop()}`);
+        }
+      }
+    }
+  });
+  </script>
+  
+  <style scoped>
+  .product-images img {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  </style>
+```
+
+<br><br>
+
+**views/QnaList.vue**
+
+```vue
+<template>
+  <div>
+    <Visual :src="src" alt="QnA" />
+    <Breadcrumb group="QnA" current="List" :href="href" />
+    <div class="container mt-5">
+      <h1>QnA 목록</h1>
+      <!-- 검색 입력 폼 -->
+      <div class="mb-3">
+        <label for="searchText" class="form-label">검색</label>
+        <input type="text" class="form-control" id="searchText" v-model="searchText" @input="filterPosts" />
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item" v-for="post in paginatedPosts" :key="post.id">
+          <router-link :to="`/qna/${post.id}`">
+            <strong>{{ post.title }}</strong> - {{ post.author }} ({{ post.date }})
+          </router-link>
+        </li>
+      </ul>
+      <!-- 페이지네이션 -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+            <button class="page-link" @click="prevPage">&laquo;</button>
+          </li>
+          <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber" :class="{ 'active': pageNumber === currentPage }">
+            <button class="page-link" @click="goToPage(pageNumber)">{{ pageNumber }}</button>
+          </li>
+          <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+            <button class="page-link" @click="nextPage">&raquo;</button>
+          </li>
+        </ul>
+      </nav>
+      <!-- 글쓰기 버튼 -->
+      <div class="btn-group">
+        <router-link to="/qna/create" class="btn btn-secondary">글쓰기</router-link>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Breadcrumb from '@/components/Breadcrumb.vue';
+import Visual from '@/components/Visual.vue';
+import qnas from '@/assets/qnas.json';
+
+interface Post {
+  id: number;
+  lev: number;
+  parno: number;
+  title: string;
+  author: string;
+  date: string;
+  content: string;
+}
+
+export default defineComponent({
+  name: 'QnaList',
+  components: {
+    Breadcrumb,
+    Visual
+  },
+  data() {
+    return {
+      posts: [] as Post[], // 타입 정의 추가
+      filteredPosts: [] as Post[], // 타입 정의 추가
+      searchText: '',
+      src: new URL('@/assets/vs025.jpg', import.meta.url).href,
+      href: "/qna/list",
+      currentPage: 1,
+      postsPerPage: 5 // 페이지당 글 개수
+    };
+  },
+  computed: {
+    // 필터된 포스트를 현재 페이지에 맞게 슬라이스하여 보여줍니다.
+    paginatedPosts(): Post[] {
+      const startIndex = (this.currentPage - 1) * this.postsPerPage;
+      return this.filteredPosts.slice(startIndex, startIndex + this.postsPerPage);
+    },
+    // 전체 페이지 수 계산
+    totalPages(): number {
+      return Math.ceil(this.filteredPosts.length / this.postsPerPage);
+    }
+  },
+  mounted() {
+    this.posts = qnas as Post[]; // qnas.json에서 데이터 가져오기
+    this.filterPosts(); // 초기 필터링 적용
+  },
+  methods: {
+    // 검색어에 따라 글 목록 필터링
+    filterPosts(): void {
+      if (this.searchText.trim() === '') {
+        this.filteredPosts = this.posts;
+      } else {
+        this.filteredPosts = this.posts.filter(post =>
+          post.title.toLowerCase().includes(this.searchText.toLowerCase())
+        );
+      }
+      this.currentPage = 1; // 필터링 후 첫 페이지로 이동
+    },
+    // 페이지 이동
+    goToPage(pageNumber: number): void {
+      this.currentPage = pageNumber;
+    },
+    // 이전 페이지로 이동
+    prevPage(): void {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    // 다음 페이지로 이동
+    nextPage(): void {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    }
+  }
+});
+</script>
+
+<style scoped>
+/* 추가적인 스타일링 필요 시 여기에 작성 */
+</style>
+```
+
+<br><br>
+
+**views/QnaDetail.vue**
+
+```vue
+<template>
+  <div>
+    <Visual :src="src" alt="QnA" />
+    <Breadcrumb group="QnA" current="Detail" :href="href" />
+    <div class="container mt-5">
+      <h1>QnA 상세 정보</h1>
+      <hr />
+      <div v-if="post">
+        <table class="table table-bordered">
+          <tr>
+            <th>제목</th>
+            <td>{{ post.title }}</td>
+          </tr>
+          <tr>
+            <th>작성자</th>
+            <td>{{ post.author }}</td>
+          </tr>
+          <tr>
+            <th>작성일</th>
+            <td>{{ post.date }}</td>
+          </tr>
+          <tr>
+            <th>내용</th>
+            <td>{{ post.content }}</td>
+          </tr>
+        </table>
+        <div class="btn-group" v-if="post.lev === 0">
+          <router-link :to="`/qna/answer/${post.id}`" class="btn btn-info">답변하기</router-link>
+          <router-link :to="`/qna/edit/${post.id}`" class="btn btn-warning">글 수정</router-link>
+          <button @click="deletePost(post.id)" class="btn btn-danger">글 삭제</button>
+          <router-link to="/qna/list" class="btn btn-primary" aria-current="page">글 목록</router-link>
+        </div>
+        <div class="btn-group" v-else>
+          <router-link :to="`/qna/edit/${post.id}`" class="btn btn-warning">글 수정</router-link>
+          <button @click="deletePost(post.id)" class="btn btn-danger">글 삭제</button>
+          <router-link to="/qna/list" class="btn btn-primary" aria-current="page">글 목록</router-link>
+        </div>
+      </div>
+      <div v-else>
+        <p>해당 글을 찾을 수 없습니다.</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { useRoute } from 'vue-router';
+import Breadcrumb from '@/components/Breadcrumb.vue';
+import Visual from '@/components/Visual.vue';
+import qnas from '@/assets/qnas.json';
+
+interface Post {
+  id: number;
+  lev: number;
+  parno: number;
+  title: string;
+  author: string;
+  date: string;
+  content: string;
+}
+
+export default defineComponent({
+  name: 'QnaDetail',
+  components: {
+    Breadcrumb,
+    Visual
+  },
+  data() {
+    return {
+      post: null as Post | null,
+      src: new URL('@/assets/vs025.jpg', import.meta.url).href,
+      href: "/qna/list"
+    };
+  },
+  created() {
+    this.fetchPost();
+  },
+  methods: {
+    fetchPost() {
+      const route = useRoute();
+      const id = parseInt(route.params.id as string, 10);
+      const posts: Post[] = qnas;
+      this.post = posts.find(post => post.id === id) || null;
+    },
+    deletePost(id: number) {
+      const posts: Post[] = qnas;
+      const updatedPosts = posts.filter(post => post.id !== id);
+      console.log('Updated posts:', updatedPosts);
+      alert('글이 삭제되었습니다.');
+      this.$router.push('/qna/list');
     }
   }
 });
@@ -17371,52 +24234,58 @@ export default defineComponent({
 
 <br><br>
 
-### 6-1-10. views/ProductList.vue
-
-- 제품 목록 페이지입니다.
+**views/QuestionCreate.vue**
 
 ```vue
 <template>
   <div>
-    <Header/>
+    <Visual :src="src" alt="QnA" />
+    <Breadcrumb group="QnA" current="Question Create" :href="href" />
     <div class="container mt-5">
-      <h1>Product List</h1>
-      <div class="row">
-        <div class="col-md-4 mb-4" v-for="(product, index) in products" :key="index">
-          <div class="card">
-            <img :src="product.image" class="card-img-top" alt="Product Image">
-            <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <p class="card-text">{{ product.description }}</p>
-              <router-link :to="`/products/${product.id}`" class="btn btn-primary">View Details</router-link>
-            </div>
-          </div>
+      <h1>질문 작성</h1>
+      <form @submit.prevent="createPost">
+        <div class="mb-3">
+          <label for="title" class="form-label">제목</label>
+          <input type="text" class="form-control" id="title" v-model="title" required />
         </div>
-      </div>
+        <div class="mb-3">
+          <label for="content" class="form-label">내용</label>
+          <textarea class="form-control" id="content" v-model="content" rows="3" required></textarea>
+        </div>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">제출하기</button>
+          <router-link to="/qna/list" class="btn btn-secondary">취소</router-link>
+        </div>
+      </form>
     </div>
-    <Footer/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Header from './header.vue';
-import Footer from './footer.vue';
+import Breadcrumb from '@/components/Breadcrumb.vue';
+import Visual from '@/components/Visual.vue';
 
 export default defineComponent({
-  name: 'ProductList',
+  name: 'QuestionCreate',
   components: {
-    Header,
-    Footer
+    Breadcrumb,
+    Visual
   },
   data() {
     return {
-      products: [
-        { id: 1, name: 'Product 1', description: 'Description of Product 1', image: 'product1.jpg' },
-        { id: 2, name: 'Product 2', description: 'Description of Product 2', image: 'product2.jpg' },
-        { id: 3, name: 'Product 3', description: 'Description of Product 3', image: 'product3.jpg' }
-      ]
+      title: '',
+      content: '',
+      src: require('@/assets/vs025.jpg'),
+      href: "/qna/list"
     };
+  },
+  methods: {
+    createPost() {
+      // 새 질문을 추가하는 로직
+      alert('질문이 작성되었습니다.');
+      this.$router.push('/qna/list');
+    }
   }
 });
 </script>
@@ -17424,7 +24293,91 @@ export default defineComponent({
 
 <br><br>
 
-### 6-1-11. views/Signup.vue
+**views/AnswerCreate.vue**
+
+```vue
+<template>
+  <div>
+    <Visual :src="src" alt="QnA" />
+    <Breadcrumb group="QnA" current="Answer Create" :href="href" />
+    <div class="container mt-5">
+      <h1>답변 작성</h1>
+      <form @submit.prevent="createAnswer">
+        <div class="mb-3">
+          <label for="content" class="form-label">답변 내용</label>
+          <textarea class="form-control" id="content" v-model="content" rows="3" required></textarea>
+        </div>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">제출하기</button>
+          <router-link to="/qna/list" class="btn btn-secondary">취소</router-link>
+      </div>  
+      </form>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Breadcrumb from '@/components/Breadcrumb.vue';
+import Visual from '@/components/Visual.vue';
+
+export default defineComponent({
+  name: 'AnswerCreate',
+  components: {
+    Breadcrumb,
+    Visual
+  },
+  data() {
+    return {
+      content: '',
+      src: require('@/assets/vs025.jpg'),
+      href: "/qna/list"
+    };
+  },
+  methods: {
+    createAnswer() {
+      // 새 답변을 추가하는 로직
+      alert('답변이 작성되었습니다.');
+      this.$router.push('/qna/list');
+    }
+  }
+});
+</script>
+```
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+<br><br>
+
+**views/Signup.vue**
 
 - 회원가입 페이지입니다.
 
@@ -17484,7 +24437,7 @@ export default defineComponent({
 
 <br><br>
 
-### 6-1-12. views/Login.vue
+**views/Login.vue**
 
 - 로그인 페이지입니다.
 
@@ -17539,7 +24492,7 @@ export default defineComponent({
 
 <br><br>
 
-### 6-1-13. UserDetail.vue
+**UserDetail.vue**
 
 ```vue
 <template>

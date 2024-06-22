@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.nbsp {
+    display: inline-block;
+    width: 24px;
+}
+
+footer {
+    min-height: 150px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.btn-group {
+    margin-bottom: 30px;
+}

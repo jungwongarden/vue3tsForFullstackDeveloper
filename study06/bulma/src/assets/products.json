@@ -1,0 +1,162 @@
+[
+    {
+      "id": 1,
+      "name": "홈런볼 소금우유",
+      "price": 1800,
+      "description": "단짠고소한 우유풍미가 한입가득,<br>소금우유크림 홈런볼!<br>분 류 : 비스켓<br>용 량 : 49g<br>열 량 : 270Kcal<br>보 관 : 실온보관<br>다른 맛 : 제품초코",
+      "image": "@/assets/product/product01.png",
+      "image2": "@/assets/product/product01_1.png"
+    },
+    {
+      "id": 2,
+      "name": "에이스 씬 에스프레소맛",
+      "price": 1800,
+      "description": "겹겹이 바삭한 크래서 속 크래커!<br>얇은 오리지널 에이스 크래커 사이에 깊고 진한 에스프레소 커피 크래커가 쏘옥<br>분 류 : 비스켓<br>용 량 : 291g<br>열 량 : 1552Kcal<br>보 관 : 실온보관<br>다른 맛 : 제품오리지널",
+      "image": "@/assets/product/product02.png",
+      "image2": "@/assets/product/product02_1.png"
+    },
+    {
+      "id": 3,
+      "name": "후렌치파이 감귤마멀레이드",
+      "price": 2400,
+      "description": "64겹의 바삭한 페스츄리 위!<br>감귤 마멀레이드잼이 듬뿍~ 올라간<br>새콤달콤한 후렌치파이<br>분 류 : 비스켓<br>용 량 : 192g<br>열 량 : 855Kcal<br>보 관 : 실온보관<br>다른 맛 : 제품후렌치파이 사과, 후렌치파이 딸기",
+      "image": "@/assets/product/product03.png",
+      "image2": "@/assets/product/product03_1.png"
+    },
+    {
+      "id": 4,
+      "name": "샌드에이스 찐초코",
+      "price": 2500,
+      "description": "찐~한 초코맛과 바삭한 에이스 크래커의 조화!<br>찐 초코맛이 샌딩된 달콤바삭 샌드<br>분 류 : 비스켓<br>용 량 : 204g<br>열 량 : 1055Kcal<br>보 관 : 실온보관",
+      "image": "@/assets/product/product04.png",
+      "image2": "@/assets/product/product04_1.png"
+    },
+    {
+      "id": 5,
+      "name": "계란과자 코코아",
+      "price": 2300,
+      "description": "대체 불가능!<br>남녀노소 온세상 모든 아이들의 원픽 플레이버<br>초코맛을 계란과자에 달달하게 녹여냈어요!<br>계란과자 두번째 맛, 코코아 ♬<br>분 류 : 비스켓<br>용 량 : 70g<br>열 량 : 320Kcal<br>보 관 : 실온보관<br>다른 맛 : 제품계란과자 오리지널",
+      "image": "@/assets/product/product05.png",
+      "image2": "@/assets/product/product05_1.png"
+    },
+    {
+      "id": 6,
+      "name": "계란과자",
+      "price": 2000,
+      "description": "계란과자의 새로운 친구, 베베핀~과 함께하는<br>우리아이 영양간식!<br>분 류 : 비스켓<br>용 량 : 70g<br>열 량 : 320Kcal<br>보 관 : 실온보관<br>다른 맛 제품 : 코코아",
+      "image": "@/assets/product/product06.png",
+      "image2": "@/assets/product/product06_1.png"
+    },
+    {
+      "id": 7,
+      "name": "에이스 바스크치즈케이크맛",
+      "price": 1800,
+      "description": "아이스아메리카노와 함께하는 달콤한 즐거움<br>분 류 : 비스켓<br>용 량 : 364g<br>열 량 : 1940Kcal<br>보 관 : 실온보관<br>다른 맛 제품 : 오리지널",
+      "image": "@/assets/product/product07.png",
+      "image2": "@/assets/product/product07_1.png"
+    },
+    {
+      "id": 8,
+      "name": "아이비 모어딥치즈 크래커",
+      "price": 1500,
+      "description": "세 가지 치즈가 들어가 더욱 풍미 가득해진. 아이비 모어딥치즈 크래커!<br>분 류 : 비스켓<br>용 량 : 270g<br>열 량 : 1190Kcal<br>보 관 : 기타",
+      "image": "@/assets/product/product08.png",
+      "image2": "@/assets/product/product08_1.png"
+    },
+    {
+      "id": 9,
+      "name": "THE 빠새 청양마요맛",
+      "price": 1900,
+      "description": "알싸하게 터지는 매운맛!<br>부드럽고 가벼운 새우맛이 풍부한 빠삭한 새우칩,<br>2.4mm의 얇은 두께로 부드러움이 극대화<br>#한입가득 #가볍고바삭하게 #빠새<br>분 류 : 스낵<br>용 량 : 55g<br>열 량 : 310Kcal<br>보 관 : 실온보관",
+      "image": "@/assets/product/product09.png",
+      "image2": "@/assets/product/product09_1.png"
+    },
+    {
+      "id": 10,
+      "name": "구운양파",
+      "price": 2000,
+      "description": "열풍으로 구운 우리 스낵, 구운양파의 새로운 변신!<br>분 류 : 스낵<br>용 량 : 60g<br>열 량 : 330Kcal<br>보 관 : 실온보관",
+      "image": "@/assets/product/product10.png",
+      "image2": "@/assets/product/product10_1.png"
+    },
+    {
+      "id": 11,
+      "name": "허니버터칩 콰트로치즈맛",
+      "price": 2500,
+      "description": "4가지 치즈의 풍미와 오리지널 허니버터칩의 만남!<br>분 류 : 스낵<br>용 량 : 55g<br>열 량 : 305Kcal<br>보 관 : 실온보관<br>다른 맛 제품 : 허니버터칩",
+      "image": "@/assets/product/product11.png",
+      "image2": "@/assets/product/product11_1.png"
+    },
+    {
+      "id": 12,
+      "name": "넷플릭스 참기름 감자칩",
+      "price": 2200,
+      "description": "100% 생감자로 만든 참기름 감자칩<br>분 류 : 스낵<br>용 량 : 60g<br>열 량 : 180Kcal<br>보 관 : 실온보관<br>다른 맛 제품 : 넷플릭스 트러플 감자칩",
+      "image": "@/assets/product/product12.png",
+      "image2": "@/assets/product/product12_1.png"
+    },
+    {
+      "id": 13,
+      "name": "스내피크리스프 사워크림맛",
+      "price": 2300,
+      "description": "완두콩 모양 그대로~ 튀기지 않고 구운 스낵<br>분 류 : 스낵<br>용 량 : 53g<br>열 량 : 255Kcal<br>보 관 : 실온보관",
+      "image": "@/assets/product/product13.png",
+      "image2": "@/assets/product/product13_1.png"
+    },
+    {
+      "id": 14,
+      "name": "자가비",
+      "price": 2000,
+      "description": "겉은 바삭! 속은 부드러운~ 감자의 맛을 그대로 살린~<br>분 류 : 스낵<br>용 량 : 45g<br>열 량 : 270Kcal<br>보 관 : 실온보관<br>다른 맛 제품 : 자가비 케첩맛",
+      "image": "@/assets/product/product14.png",
+      "image2": "@/assets/product/product14_1.png"
+    },
+    {
+      "id": 15,
+      "name": "辛당동 떡볶이",
+      "price": 2200,
+      "description": "辛당동 헐머니의 비법 가득 담은 장독대 셰프의 떡볶이!<br>장독대 셰프(장또기)와 새로워진 신당동떡볶이!<br>분 류 : 스낵<br>용 량 : 110g<br>열 량 : 565Kcal<br>보 관 : 실온보관",
+      "image": "@/assets/product/product15.png",
+      "image2": "@/assets/product/product15_1.png"
+    },
+    {
+      "id": 16,
+      "name": "허니버터칩",
+      "price": 2500,
+      "description": "달콤~한 벌꿀이 들어갔어요!<br>분 류 : 스낵<br>용 량 : 60g<br>열 량 : 345Kcal<br>보 관 : 실온보관",
+      "image": "@/assets/product/product16.png",
+      "image2": "@/assets/product/product16_1.png"
+    },
+    {
+      "id": 17,
+      "name": "맛동산",
+      "price": 2800,
+      "description": "맛동산 먹고 즐거운 파티!<br>분 류 : 스낵<br>용 량 : 180g<br>열 량 : 870Kcal<br>보 관 : 실온보관<br>다른 맛 제품 : 플나망고",
+      "image": "@/assets/product/product17.png",
+      "image2": "@/assets/product/product17_1.png"
+    },
+    {
+      "id": 18,
+      "name": "오사쯔",
+      "price": 2200,
+      "description": "구름처름 부드럽고 고구마의 달콤한 오사쯔<br>분 류 : 스낵<br>용 량 : 65g<br>열 량 : 365Kcal<br>보 관 : 실온보관",
+      "image": "@/assets/product/product18.png",
+      "image2": "@/assets/product/product18_1.png"
+    },
+    {
+      "id": 19,
+      "name": "칸츄리콘",
+      "price": 2500,
+      "description": "반갑다 칸츄리콘 콘버터맛<br>분 류 : 스낵<br>용 량 : 90g<br>열 량 : 555Kcal<br>보 관 : 실온보관",
+      "image": "@/assets/product/product19.png",
+      "image2": "@/assets/product/product19_1.png"
+    },
+    {
+      "id": 20,
+      "name": "얼초 바람개비만들기",
+      "price": 2000,
+      "description": "얼초와 바람개비를 좋아하는 얼초 Lover!<br>바람개비 완구에 초코를 짜서 얼초 바람개비를 만들어 돌려 보자!!<br>분 류 : 초코<br>용 량 : 32g<br>열 량 : 180Kcal<br>보 관 : 실온보관",
+      "image": "@/assets/product/product20.png",
+      "image2": "@/assets/product/product20_1.png"
+    }
+  ]

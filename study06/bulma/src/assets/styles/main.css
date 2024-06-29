@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+@import 'bulma/css/bulma.css';
+@import 'bulma-carousel/dist/css/bulma-carousel.min.css';
+
+.nbsp {
+    display: inline-block;
+    width: 24px;
+}
+
+footer {
+    min-height: 150px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.btn-group {
+    margin-bottom: 30px;
+}

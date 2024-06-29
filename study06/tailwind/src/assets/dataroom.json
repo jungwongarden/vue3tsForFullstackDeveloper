@@ -1,0 +1,18 @@
+[
+    {
+      "id": 1,
+      "title": "샘플 데이터 1",
+      "content": "이것은 샘플 데이터 룸 내용입니다.",
+      "author": "작성자 1",
+      "resdate": "2024-01-01",
+      "dataurl": "@/assets/upload/sample1.pdf"
+    },
+    {
+      "id": 2,
+      "title": "샘플 데이터 2",
+      "content": "이것은 또 다른 샘플 데이터 룸 내용입니다.",
+      "author": "작성자 2",
+      "resdate": "2024-01-02",
+      "dataurl": "@/assets/upload/sample2.pdf"
+    }
+  ]

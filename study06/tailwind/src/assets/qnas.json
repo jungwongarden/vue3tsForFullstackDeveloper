@@ -1,0 +1,47 @@
+[
+    {
+      "id": 1,
+      "lev": 0,
+      "parno": 1,
+      "title": "첫 번째 질문",
+      "author": "user1",
+      "date": "2024-06-20",
+      "content": "이것은 첫 번째 질문의 내용입니다."
+    },
+    {
+      "id": 2,
+      "lev": 1,
+      "parno": 1,
+      "title": "[Re] 첫 번째 질문",
+      "author": "admin",
+      "date": "2024-06-21",
+      "content": "이것은 첫 번째 질문에 대한 답변입니다."
+    },
+    {
+      "id": 3,
+      "lev": 0,
+      "parno": 3,
+      "title": "두 번째 질문",
+      "author": "user2",
+      "date": "2024-06-22",
+      "content": "이것은 두 번째 질문의 내용입니다."
+    },
+    {
+      "id": 4,
+      "lev": 1,
+      "parno": 3,
+      "title": "[Re] 두 번째 질문",
+      "author": "admin",
+      "date": "2024-06-23",
+      "content": "이것은 두 번째 질문에 대한 답변입니다."
+    },
+    {
+      "id": 5,
+      "lev": 0,
+      "parno": 5,
+      "title": "세 번째 질문",
+      "author": "user3",
+      "date": "2024-06-24",
+      "content": "이것은 세 번째 질문의 내용입니다."
+    }
+  ]

@@ -1,0 +1,44 @@
+[
+    {
+      "id": "admin",
+      "pw": "1234",
+      "name": "관리자",
+      "email": "admin@example.com",
+      "regdate": "2024-06-21T08:00:00Z"
+    },
+    {
+      "id": "kim",
+      "pw": "1111",
+      "name": "Jane Kim",
+      "email": "kim@example.com",
+      "regdate": "2024-06-20T10:30:00Z"
+    },
+    {
+      "id": "lee",
+      "pw": "2222",
+      "name": "Michael Lee",
+      "email": "lee@example.com",
+      "regdate": "2024-06-19T15:45:00Z"
+    },
+    {
+      "id": "park",
+      "pw": "3333",
+      "name": "Emily Park",
+      "email": "park@example.com",
+      "regdate": "2024-06-18T12:20:00Z"
+    },
+    {
+      "id": "choi",
+      "pw": "4444",
+      "name": "William Choi",
+      "email": "choi@example.com",
+      "regdate": "2024-06-17T09:10:00Z"
+    },
+    {
+      "id": "jeong",
+      "pw": "5555",
+      "name": "Sophia Jeong",
+      "email": "jeong@example.com",
+      "regdate": "2024-06-16T14:00:00Z"
+    }
+  ]

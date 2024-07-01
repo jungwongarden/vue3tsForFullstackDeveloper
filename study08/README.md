@@ -85,7 +85,7 @@ CREATE TABLE product (
 #### 8-2-1-1. 프로젝트 구조
 
 ```lua
-project/
+node/
 ├── app.js                // Express 애플리케이션 진입점
 ├── controllers/
 │   ├── memberController.js   // 회원 관련 컨트롤러

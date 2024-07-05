@@ -1,0 +1,8 @@
+{
+    "email": "your-email@gmail.com",
+    "password": "your-password",
+    "recipient": "recipient-email@gmail.com",
+    "subject": "Email Subject",
+    "message": "Email Message"
+  }
+  

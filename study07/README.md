@@ -265,9 +265,110 @@ export default {
 - Vue 3 프로젝트를 생성하려면 Vue CLI를 사용하여 프로젝트를 생성합니다:
 
 ```bash
-vue create study082
-cd study082
-npm install axios
+vue create study072
+
+Vue CLI v5.0.8
+? Please pick a preset:
+  project02 ([Vue 3] dart-sass, babel, typescript, pwa, router, vuex, eslint, unit-jest)
+  project03 ([Vue 3] dart-sass, babel, typescript, router, vuex, eslint, unit-jest)
+  project04 ([Vue 3] dart-sass, babel, typescript, router, vuex, eslint, unit-jest)
+  spaproject ([Vue 3] babel, typescript, pwa, router, vuex, eslint)
+  Default ([Vue 3] babel, eslint)
+  Default ([Vue 2] babel, eslint)
+> Manually select features
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: (Press <space> to select, <a> to toggle all, <i> to invert selection, and
+<enter> to proceed)
+ (*) Babel
+ (*) TypeScript
+ ( ) Progressive Web App (PWA) Support
+>(*) Router
+ (*) Vuex
+ ( ) CSS Pre-processors
+ ( ) Linter / Formatter
+ ( ) Unit Testing
+ ( ) E2E Testing
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with (Use arrow keys)
+> 3.x
+  2.x
+
+Vue CLI v5.0.8
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, TS, Router, Vuex
+? Choose a version of Vue.js that you want to start the project with 3.x
+? Use class-style component syntax? No
+? Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)? Yes
+? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+? Save this as a preset for future projects? No
+
+Vue CLI v5.0.8
+✨  Creating project in D:\gitRepository\sunglee0517\vuejs\study07\study072.
+⚙️  Installing CLI plugins. This might take a while...
+
+
+added 879 packages, and audited 880 packages in 56s
+
+100 packages are looking for funding
+  run `npm fund` for details
+
+4 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+🚀  Invoking generators...
+📦  Installing additional dependencies...
+
+
+added 10 packages, and audited 890 packages in 6s
+
+101 packages are looking for funding
+  run `npm fund` for details
+
+4 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+⚓  Running completion hooks...
+
+📄  Generating README.md...
+
+🎉  Successfully created project study072.
+👉  Get started with the following commands:
+
+ $ cd study072
+ $ npm run serve
+
+cd study072
+
+npm install axios --save-dev
+
+added 6 packages, and audited 896 packages in 2s
+
+101 packages are looking for funding
+  run `npm fund` for details
+
+4 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+npm install bootstrap --save-dev
 ```
 
 <br>
@@ -275,7 +376,7 @@ npm install axios
 **프로젝트 구조도**
 
 ```lua
-study082/
+study072/
 ├── src/
 │   ├── api/
 │   │   └── index.js          # Axios를 이용한 API 호출 관련 설정 및 함수

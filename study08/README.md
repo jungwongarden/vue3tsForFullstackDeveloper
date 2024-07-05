@@ -70,6 +70,8 @@ CREATE TABLE product (
 
 ### 8-1-2. 더미 데이터 추가
 
+
+
 <br><br><br>
 
 ## 8-2. Vue 3 + Tailwind + Node + Express + MariaDB 프로젝트
@@ -82,11 +84,108 @@ CREATE TABLE product (
 
 <br>
 
+```shell
+D:\gitRepository\sunglee0517\vuejs\study07\backend>md node
+
+D:\gitRepository\sunglee0517\vuejs\study07\backend>cd node
+
+D:\gitRepository\sunglee0517\vuejs\study07\backend\node>npm init -y
+Wrote to D:\gitRepository\sunglee0517\vuejs\study07\backend\node\package.json:
+
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+
+
+D:\gitRepository\sunglee0517\vuejs\study07\backend\node>npm install express
+
+added 64 packages, and audited 65 packages in 3s
+
+12 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+D:\gitRepository\sunglee0517\vuejs\study07\backend\node>npm install jsonwebtoken --save-dev
+npm WARN idealTree Removing dependencies.jsonwebtoken in favor of devDependencies.jsonwebtoken
+
+up to date, audited 79 packages in 579ms
+
+12 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+D:\gitRepository\sunglee0517\vuejs\study07\backend\node>npm install express-session --save-dev
+
+added 5 packages, and audited 84 packages in 1s
+
+12 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+D:\gitRepository\sunglee0517\vuejs\study07\backend\node>npm install sequelize --save-dev
+
+added 20 packages, and audited 104 packages in 2s
+
+13 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+D:\gitRepository\sunglee0517\vuejs\study07\backend\node>npm install mariadb --save-dev
+
+added 5 packages, and audited 109 packages in 1s
+
+13 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+D:\gitRepository\sunglee0517\vuejs\study07\backend\node>npm install bcrypt --save-dev
+npm WARN deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm WARN deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm WARN deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm WARN deprecated npmlog@5.0.1: This package is no longer supported.
+npm WARN deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+npm WARN deprecated gauge@3.0.2: This package is no longer supported.
+
+added 58 packages, and audited 167 packages in 7s
+
+16 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+D:\gitRepository\sunglee0517\vuejs\study07\backend\node>npm install multer --save-dev
+
+added 16 packages, and audited 183 packages in 2s
+
+17 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+```
+
+<br>
+
 #### 8-2-1-1. 프로젝트 구조
 
 ```lua
 node/
 ├── app.js                // Express 애플리케이션 진입점
+├── database.js                // 데이터베이스 연결
 ├── controllers/
 │   ├── memberController.js   // 회원 관련 컨트롤러
 │   ├── boardController.js    // 게시판 관련 컨트롤러
@@ -107,7 +206,8 @@ node/
 │   └── productRoutes.js  // 제품 관련 라우팅
 └── utils/
     ├── auth.js           // 인증 관련 유틸리티 (세션, 인증 검사)
-    └── bcrypt.js         // 비밀번호 암호화 유틸리티
+    ├── bcrypt.js         // 비밀번호 암호화 유틸리티
+    └── database.js                // 데이터베이스 연결
 ```
 
 <br>
@@ -135,6 +235,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+app.use(express.json()); // JSON 파싱 미들웨어
 
 // Routes
 app.use('/member', memberRoutes);
@@ -158,7 +259,7 @@ app.listen(PORT, () => {
 
 <br>
 
-**db.js (데이터베이스 연결 설정)**
+**database.js (데이터베이스 연결 설정)**
 
 ```javascript
 const { Sequelize } = require('sequelize');
@@ -166,10 +267,11 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('company', 'root', '1234', {
   host: 'localhost',
   dialect: 'mariadb',
-  port: 3308, // MariaDB 포트번호
+  port: 3307, // MariaDB 포트번호
   define: {
     timestamps: false // 자동 생성되는 createdAt, updatedAt 필드 비활성화
-  }
+  },
+  logging: msg => console.log(msg) // SQL 쿼리 로깅을 console.log로 설정
 });
 
 // 데이터베이스 연결 테스트
@@ -230,6 +332,57 @@ module.exports = { hashPassword, comparePassword };
 - bcrypt.js: 비밀번호 해싱과 비교를 위한 함수들을 정의한 파일입니다. 
 - bcrypt 패키지를 사용하여 비밀번호를 해싱하고, 해싱된 비밀번호와 사용자가 입력한 비밀번호를 비교하는 기능을 구현하였습니다. 
 - saltRounds 변수를 통해 해싱에 사용되는 솔트의 강도를 설정하였습니다.
+
+<br>
+
+**auth.js (인증 설정)**
+
+```javascript
+const jwt = require('jsonwebtoken');
+
+// 비밀 키는 환경 변수에 저장하는 것이 좋습니다.
+const SECRET_KEY = process.env.JWT_SECRET_KEY || 'your_secret_key';
+
+// 토큰 생성 함수
+const generateToken = (user) => {
+  // 사용자 정보를 바탕으로 JWT 생성
+  const payload = {
+    id: user.id,
+    username: user.username,
+    // 필요한 사용자 정보를 추가할 수 있습니다.
+  };
+
+  // 토큰 생성
+  return jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+};
+
+// 토큰 검증 미들웨어
+const authenticateToken = (req, res, next) => {
+  // Authorization 헤더에서 토큰을 가져옵니다.
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: '토큰이 없습니다.' });
+  }
+
+  // 토큰 검증
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: '유효하지 않은 토큰입니다.' });
+    }
+    
+    // 사용자 정보를 요청 객체에 추가
+    req.user = user;
+    next();
+  });
+};
+
+module.exports = {
+  generateToken,
+  authenticateToken,
+};
+```
 
 <br><br>
 
@@ -355,6 +508,8 @@ const Member = db.define('member', {
   postcode: {
     type: DataTypes.STRING(10)
   }
+}, {
+  tableName: 'member' // 실제 데이터베이스 테이블 이름
 });
 
 module.exports = Member;
@@ -477,17 +632,19 @@ module.exports = router;
 **Board 모델 (Board.js)**
 
 ```javascript
-const { DataTypes } = require('sequelize');
-const db = require('../utils/database');
+// models/Board.js
 
-const Board = db.define('board', {
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = require('../database');
+
+const Board = sequelize.define('Board', {
   no: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
   title: {
-    type: DataTypes.STRING(255),
+    type: DataTypes.STRING,
     allowNull: false
   },
   content: {
@@ -495,17 +652,20 @@ const Board = db.define('board', {
     allowNull: false
   },
   author: {
-    type: DataTypes.STRING(100),
+    type: DataTypes.STRING,
     allowNull: false
   },
   resdate: {
     type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+    defaultValue: Sequelize.NOW
   },
   hits: {
     type: DataTypes.INTEGER,
     defaultValue: 0
   }
+}, {
+  tableName: 'board', // 실제 데이터베이스 테이블 이름
+  timestamps: false // createdAt, updatedAt 필드 사용 안 함
 });
 
 module.exports = Board;
@@ -516,22 +676,21 @@ module.exports = Board;
 **boardController.js**
 
 ```javascript
-const express = require('express');
-const router = express.Router();
 const Board = require('../models/Board');
 
 // 글 목록 조회
-router.get('/', async (req, res, next) => {
+exports.list = async (req, res, next) => {
   try {
     const boards = await Board.findAll();
     res.json(boards);
   } catch (error) {
-    next(error);
+    console.error('Error while fetching boards:', error);
+    next(error); // 에러를 다음 미들웨어로 전달
   }
-});
+};
 
 // 글 상세 조회
-router.get('/:no', async (req, res, next) => {
+exports.detail = async (req, res, next) => {
   try {
     const boardNo = req.params.no;
     const board = await Board.findByPk(boardNo);
@@ -540,12 +699,13 @@ router.get('/:no', async (req, res, next) => {
     }
     res.json(board);
   } catch (error) {
-    next(error);
+    console.error('Error while fetching board detail:', error);
+    next(error); // 에러를 다음 미들웨어로 전달
   }
-});
+};
 
 // 글 작성
-router.post('/', async (req, res, next) => {
+exports.create = async (req, res, next) => {
   try {
     const { title, content, author } = req.body;
     const newBoard = await Board.create({
@@ -555,34 +715,35 @@ router.post('/', async (req, res, next) => {
     });
     res.json(newBoard);
   } catch (error) {
-    next(error);
+    console.error('Error while creating board:', error);
+    next(error); // 에러를 다음 미들웨어로 전달
   }
-});
+};
 
 // 글 수정
-router.put('/:no', async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
     const boardNo = req.params.no;
     const updatedBoard = req.body;
     await Board.update(updatedBoard, { where: { no: boardNo } });
     res.json({ message: 'Board updated successfully' });
   } catch (error) {
-    next(error);
+    console.error('Error while updating board:', error);
+    next(error); // 에러를 다음 미들웨어로 전달
   }
-});
+};
 
 // 글 삭제
-router.delete('/:no', async (req, res, next) => {
+exports.delete = async (req, res, next) => {
   try {
     const boardNo = req.params.no;
     await Board.destroy({ where: { no: boardNo } });
     res.json({ message: 'Board deleted successfully' });
   } catch (error) {
-    next(error);
+    console.error('Error while deleting board:', error);
+    next(error); // 에러를 다음 미들웨어로 전달
   }
-});
-
-module.exports = router;
+};
 ```
 
 <br>
@@ -595,19 +756,19 @@ const router = express.Router();
 const boardController = require('../controllers/boardController');
 
 // 글 목록 조회
-router.get('/', boardController.list);
+router.get('/boards', boardController.list);
 
 // 글 상세 조회
 router.get('/:no', boardController.detail);
 
 // 글 작성
-router.post('/', boardController.create);
+router.post('/write', boardController.create);
 
 // 글 수정
-router.put('/:no', boardController.update);
+router.put('/edit/:no', boardController.update);
 
 // 글 삭제
-router.delete('/:no', boardController.delete);
+router.delete('/delete/:no', boardController.delete);
 
 module.exports = router;
 ```
@@ -661,6 +822,8 @@ const QNA = db.define('qna', {
     type: DataTypes.INTEGER,
     defaultValue: 0
   }
+}, {
+  tableName: 'qna', // 실제 데이터베이스 테이블 이름
 });
 
 module.exports = QNA;
@@ -671,12 +834,10 @@ module.exports = QNA;
 **qnaController.js**
 
 ```javascript
-const express = require('express');
-const router = express.Router();
 const QNA = require('../models/QNA');
 
 // 질문 목록 조회
-exports.list = async (req, res, next) => {
+const list = async (req, res, next) => {
   try {
     const qnas = await QNA.findAll();
     res.json(qnas);
@@ -686,7 +847,7 @@ exports.list = async (req, res, next) => {
 };
 
 // 질문 상세 조회
-exports.detail = async (req, res, next) => {
+const detail = async (req, res, next) => {
   try {
     const qno = req.params.qno;
     const qna = await QNA.findByPk(qno);
@@ -700,7 +861,7 @@ exports.detail = async (req, res, next) => {
 };
 
 // 질문 작성
-exports.create = async (req, res, next) => {
+const create = async (req, res, next) => {
   try {
     const { title, content, author } = req.body;
     const newQNA = await QNA.create({
@@ -715,7 +876,7 @@ exports.create = async (req, res, next) => {
 };
 
 // 답변 조회
-exports.getAnswer = async (req, res, next) => {
+const getAnswer = async (req, res, next) => {
   try {
     const qno = req.params.qno;
     const answer = await QNA.findAll({ where: { parno: qno } });
@@ -729,7 +890,7 @@ exports.getAnswer = async (req, res, next) => {
 };
 
 // 질문 수정
-exports.update = async (req, res, next) => {
+const update = async (req, res, next) => {
   try {
     const qno = req.params.qno;
     const updatedQNA = req.body;
@@ -741,7 +902,7 @@ exports.update = async (req, res, next) => {
 };
 
 // 질문 삭제
-exports.delete = async (req, res, next) => {
+const deleteQna = async (req, res, next) => {
   try {
     const qno = req.params.qno;
     await QNA.destroy({ where: { qno } });
@@ -751,7 +912,14 @@ exports.delete = async (req, res, next) => {
   }
 };
 
-module.exports = router;
+module.exports = {
+  list,
+  detail,
+  create,
+  getAnswer,
+  update,
+  delete: deleteQna
+};
 ```
 
 <br>
@@ -764,22 +932,22 @@ const router = express.Router();
 const qnaController = require('../controllers/qnaController');
 
 // 질문 목록 조회
-router.get('/', qnaController.list);
+router.get('/qnas', qnaController.list);
 
 // 질문 상세 조회
 router.get('/:qno', qnaController.detail);
 
 // 질문 작성
-router.post('/', qnaController.create);
+router.post('/write', qnaController.create);
 
 // 답변 조회
 router.get('/:qno/answer', qnaController.getAnswer);
 
 // 질문 수정
-router.put('/:qno', qnaController.update);
+router.put('/edit/:qno', qnaController.update);
 
 // 질문 삭제
-router.delete('/:qno', qnaController.delete);
+router.delete('/delete/:qno', qnaController.delete);
 
 module.exports = router;
 ```
@@ -829,6 +997,8 @@ const Dataroom = db.define('dataroom', {
     type: DataTypes.INTEGER,
     defaultValue: 0
   }
+}, {
+  tableName: 'dataroom' // 실제 데이터베이스 테이블 이름
 });
 
 module.exports = Dataroom;
@@ -839,26 +1009,11 @@ module.exports = Dataroom;
 **dataroomController.js**
 
 ```javascript
-const express = require('express');
-const multer = require('multer');
-const fs = require('fs');
-const path = require('path');
-const router = express.Router();
 const Dataroom = require('../models/Dataroom');
+const fs = require('fs');
 
-// 파일 업로드 설정
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './uploads'); // 업로드할 디렉토리 설정
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname); // 파일 이름 설정
-  }
-});
-const upload = multer({ storage });
-
-// 파일 업로드 및 글 등록
-router.post('/', upload.single('datafile'), async (req, res, next) => {
+// 글 등록 및 파일 업로드
+const create = async (req, res, next) => {
   try {
     const { title, content, author } = req.body;
     const datafile = req.file ? req.file.path : null; // 업로드된 파일 경로
@@ -872,10 +1027,10 @@ router.post('/', upload.single('datafile'), async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+};
 
 // 글 수정 및 파일 변경
-router.put('/:dno', upload.single('datafile'), async (req, res, next) => {
+const update = async (req, res, next) => {
   try {
     const dno = req.params.dno;
     let updatedDataroom = req.body;
@@ -887,10 +1042,10 @@ router.put('/:dno', upload.single('datafile'), async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+};
 
 // 글 삭제 및 파일 삭제
-router.delete('/:dno', async (req, res, next) => {
+const deleteDataroom = async (req, res, next) => {
   try {
     const dno = req.params.dno;
     const dataroom = await Dataroom.findByPk(dno);
@@ -906,20 +1061,20 @@ router.delete('/:dno', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+};
 
 // 글 목록 조회
-router.get('/', async (req, res, next) => {
+const list = async (req, res, next) => {
   try {
     const datarooms = await Dataroom.findAll();
     res.json(datarooms);
   } catch (error) {
     next(error);
   }
-});
+};
 
 // 글 상세 조회
-router.get('/:dno', async (req, res, next) => {
+const detail = async (req, res, next) => {
   try {
     const dno = req.params.dno;
     const dataroom = await Dataroom.findByPk(dno);
@@ -930,9 +1085,15 @@ router.get('/:dno', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  create,
+  update,
+  delete: deleteDataroom,
+  list,
+  detail
+};
 ```
 
 <br>
@@ -941,20 +1102,32 @@ module.exports = router;
 
 ```javascript
 const express = require('express');
+const multer = require('multer');
 const router = express.Router();
 const dataroomController = require('../controllers/dataroomController');
 
+// 파일 업로드 설정
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads'); // 업로드할 디렉토리 설정
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname); // 파일 이름 설정
+  }
+});
+const upload = multer({ storage });
+
 // 글 등록 및 파일 업로드
-router.post('/', dataroomController.create);
+router.post('/write', upload.single('datafile'), dataroomController.create);
 
 // 글 수정 및 파일 변경
-router.put('/:dno', dataroomController.update);
+router.put('/edit/:dno', upload.single('datafile'), dataroomController.update);
 
 // 글 삭제 및 파일 삭제
-router.delete('/:dno', dataroomController.delete);
+router.delete('/delete/:dno', dataroomController.delete);
 
 // 글 목록 조회
-router.get('/', dataroomController.list);
+router.get('/datas', dataroomController.list);
 
 // 글 상세 조회
 router.get('/:dno', dataroomController.detail);
@@ -1014,6 +1187,8 @@ const Product = db.define('product', {
     type: DataTypes.INTEGER,
     defaultValue: 0
   }
+}, {
+  tableName: 'product' // 실제 데이터베이스 테이블 이름
 });
 
 module.exports = Product;
@@ -1024,26 +1199,11 @@ module.exports = Product;
 **productController.js**
 
 ```javascript
-const express = require('express');
-const multer = require('multer');
-const fs = require('fs');
-const path = require('path');
-const router = express.Router();
 const Product = require('../models/Product');
-
-// 파일 업로드 설정
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './uploads/products'); // 업로드할 디렉토리 설정
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname); // 파일 이름 설정
-  }
-});
-const upload = multer({ storage });
+const fs = require('fs');
 
 // 상품 등록 및 이미지 파일 업로드
-router.post('/', upload.fields([{ name: 'img1', maxCount: 1 }, { name: 'img2', maxCount: 1 }, { name: 'img3', maxCount: 1 }]), async (req, res, next) => {
+const create = async (req, res, next) => {
   try {
     const { cate, pname, pcontent } = req.body;
     const img1 = req.files['img1'] ? req.files['img1'][0].path : null; // 업로드된 파일 경로
@@ -1061,10 +1221,10 @@ router.post('/', upload.fields([{ name: 'img1', maxCount: 1 }, { name: 'img2', m
   } catch (error) {
     next(error);
   }
-});
+};
 
 // 상품 정보 수정 및 이미지 파일 변경
-router.put('/:pno', upload.fields([{ name: 'img1', maxCount: 1 }, { name: 'img2', maxCount: 1 }, { name: 'img3', maxCount: 1 }]), async (req, res, next) => {
+const update = async (req, res, next) => {
   try {
     const pno = req.params.pno;
     let updatedProduct = req.body;
@@ -1082,10 +1242,10 @@ router.put('/:pno', upload.fields([{ name: 'img1', maxCount: 1 }, { name: 'img2'
   } catch (error) {
     next(error);
   }
-});
+};
 
 // 상품 삭제 및 이미지 파일 삭제
-router.delete('/:pno', async (req, res, next) => {
+const deleteProduct = async (req, res, next) => {
   try {
     const pno = req.params.pno;
     const product = await Product.findByPk(pno);
@@ -1106,20 +1266,20 @@ router.delete('/:pno', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+};
 
 // 상품 목록 조회
-router.get('/', async (req, res, next) => {
+const list = async (req, res, next) => {
   try {
     const products = await Product.findAll();
     res.json(products);
   } catch (error) {
     next(error);
   }
-});
+};
 
 // 상품 상세 조회
-router.get('/:pno', async (req, res, next) => {
+const detail = async (req, res, next) => {
   try {
     const pno = req.params.pno;
     const product = await Product.findByPk(pno);
@@ -1130,9 +1290,15 @@ router.get('/:pno', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  create,
+  update,
+  delete: deleteProduct,
+  list,
+  detail
+};
 ```
 
 <br>
@@ -1141,20 +1307,32 @@ module.exports = router;
 
 ```javascript
 const express = require('express');
+const multer = require('multer');
 const router = express.Router();
 const productController = require('../controllers/productController');
 
+// 파일 업로드 설정
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads/products'); // 업로드할 디렉토리 설정
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname); // 파일 이름 설정
+  }
+});
+const upload = multer({ storage });
+
 // 상품 등록 및 이미지 파일 업로드
-router.post('/', productController.create);
+router.post('/write', upload.fields([{ name: 'img1', maxCount: 1 }, { name: 'img2', maxCount: 1 }, { name: 'img3', maxCount: 1 }]), productController.create);
 
 // 상품 정보 수정 및 이미지 파일 변경
-router.put('/:pno', productController.update);
+router.put('/edit/:pno', upload.fields([{ name: 'img1', maxCount: 1 }, { name: 'img2', maxCount: 1 }, { name: 'img3', maxCount: 1 }]), productController.update);
 
 // 상품 삭제 및 이미지 파일 삭제
-router.delete('/:pno', productController.delete);
+router.delete('/delete/:pno', productController.delete);
 
 // 상품 목록 조회
-router.get('/', productController.list);
+router.get('/products', productController.list);
 
 // 상품 상세 조회
 router.get('/:pno', productController.detail);
@@ -1175,7 +1353,14 @@ module.exports = router;
 - Express 애플리케이션에 필요한 패키지들을 설치합니다.
 
 ```bash
-npm install express nodemailer body-parser
+D:\gitRepository\sunglee0517\vuejs\study07\backend\node>npm install nodemailer body-parser --save-dev
+
+added 1 package, and audited 190 packages in 1s
+
+17 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
 ```
 
 <br>
@@ -1246,40 +1431,59 @@ export default {
 - Express 애플리케이션에 nodemailer를 사용하여 이메일 발송 기능을 추가합니다. 아래는 /sendEmail 엔드포인트에 대한 처리 로직입니다.
 
 ```javascript
-// app.js 또는 index.js 등 Express 애플리케이션 진입점 파일
-
+// app.js 이메일 발송 설정 추가
 const express = require('express');
-const nodemailer = require('nodemailer');
+const session = require('express-session');
 const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
 const path = require('path');
+
+const memberRoutes = require('./routes/memberRoutes');
+const boardRoutes = require('./routes/boardRoutes');
+const qnaRoutes = require('./routes/qnaRoutes');
+const dataroomRoutes = require('./routes/dataroomRoutes');
+const productRoutes = require('./routes/productRoutes');
 
 const app = express();
 
-// Body-parser middleware
+// Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(express.json()); // JSON 파싱 미들웨어
 
 // Serve static files (if needed)
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes
+app.use('/member', memberRoutes);
+app.use('/board', boardRoutes);
+app.use('/qna', qnaRoutes);
+app.use('/dataroom', dataroomRoutes);
+app.use('/product', productRoutes);
+
 // POST 요청을 처리하는 라우터 설정
 app.post('/sendEmail', async (req, res) => {
-  const { email, subject, message } = req.body;
+  const { email, password, recipient, subject, message } = req.body;
 
   try {
     // SMTP transporter 설정 (Gmail 예시)
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'your-email@gmail.com', // 발송할 Gmail 계정
-        pass: 'your-password' // Gmail 계정 비밀번호 또는 앱 비밀번호
+        user: email, // 발송할 Gmail 계정
+        pass: password // Gmail 계정 비밀번호 또는 앱 비밀번호
       }
     });
 
     // 발송할 이메일 정보
     const mailOptions = {
-      from: 'your-email@gmail.com',
-      to: 'kkt09072@gmail.com', // 받는 사람 이메일 주소
+      from: email,
+      to: recipient, // 받는 사람 이메일 주소
       subject: subject,
       text: `보낸 사람 이메일 주소: ${email}\n\n${message}`
     };

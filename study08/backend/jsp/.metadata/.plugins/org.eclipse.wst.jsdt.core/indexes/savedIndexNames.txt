@@ -1,0 +1,2 @@
+INDEX VERSION 1.4+D:\gitRepository\sunglee0517\vuejs\study08\backend\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+871710105.index

@@ -1,0 +1,223 @@
+PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> python -m venv venv      
+
+
+PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> $env:FLASK_APP = "app.py"
+
+
+PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> Get-ExecutionPolicy
+Restricted
+
+
+PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+
+
+PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> .\venv\Scripts\Activate
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> $env:FLASK_APP = "app.py"
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> pip show flask
+WARNING: Package(s) not found: flask
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> pip install flask
+Collecting flask
+  Obtaining dependency information for flask from https://files.pythonhosted.org/packages/61/80/ffe1da13ad9300f87c93af113edd0638c75138c42a0994becfacac078c06/flask-3.0.3-py3-none-any.whl.metadata
+  Downloading flask-3.0.3-py3-none-any.whl.metadata (3.2 kB)
+Collecting Werkzeug>=3.0.0 (from flask)
+  Obtaining dependency information for Werkzeug>=3.0.0 from https://files.pythonhosted.org/packages/9d/6e/e792999e816d19d7fcbfa94c730936750036d65656a76a5a688b57a656c4/werkzeug-3.0.3-py3-none-any.whl.metadata
+  Downloading werkzeug-3.0.3-py3-none-any.whl.metadata (3.7 kB)
+Collecting Jinja2>=3.1.2 (from flask)
+  Obtaining dependency information for Jinja2>=3.1.2 from https://files.pythonhosted.org/packages/31/80/3a54838c3fb461f6fec263ebf3a3a41771bd05190238de3486aae8540c36/jinja2-3.1.4-py3-none-any.whl.metadata
+  Using cached jinja2-3.1.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting itsdangerous>=2.1.2 (from flask)
+  Obtaining dependency information for itsdangerous>=2.1.2 from https://files.pythonhosted.org/packages/04/96/92447566d16df59b2a776c0fb82dbc4d9e07cd95062562af01e408583fc4/itsdangerous-2.2.0-py3-none-any.whl.metadata
+  Using cached itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting click>=8.1.3 (from flask)
+  Obtaining dependency information for click>=8.1.3 from https://files.pythonhosted.org/packages/00/2e/d53fa4befbf2cfa713304affc7ca780ce4fc1fd8710527771b58311a3229/click-8.1.7-py3-none-any.whl.metadata
+  Using cached click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+Collecting blinker>=1.6.2 (from flask)
+  Obtaining dependency information for blinker>=1.6.2 from https://files.pythonhosted.org/packages/bb/2a/10164ed1f31196a2f7f3799368a821765c62851ead0e630ab52b8e14b4d0/blinker-1.8.2-py3-none-any.whl.metadata
+  Downloading blinker-1.8.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting colorama (from click>=8.1.3->flask)
+  Obtaining dependency information for colorama from https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl.metadata
+  Using cached colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting MarkupSafe>=2.0 (from Jinja2>=3.1.2->flask)
+  Obtaining dependency information for MarkupSafe>=2.0 from https://files.pythonhosted.org/packages/3f/14/c3554d512d5f9100a95e737502f4a2323a1959f6d0d01e0d0997b35f7b10/MarkupSafe-2.1.5-cp312-cp312-win_amd64.whl.metadata
+  Using cached MarkupSafe-2.1.5-cp312-cp312-win_amd64.whl.metadata (3.1 kB)
+Downloading flask-3.0.3-py3-none-any.whl (101 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 101.7/101.7 kB 3.0 MB/s eta 0:00:00
+Downloading blinker-1.8.2-py3-none-any.whl (9.5 kB)
+Using cached click-8.1.7-py3-none-any.whl (97 kB)
+Using cached itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Using cached jinja2-3.1.4-py3-none-any.whl (133 kB)
+Downloading werkzeug-3.0.3-py3-none-any.whl (227 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 227.3/227.3 kB 1.3 MB/s eta 0:00:00
+Using cached MarkupSafe-2.1.5-cp312-cp312-win_amd64.whl (17 kB)
+Using cached colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Installing collected packages: MarkupSafe, itsdangerous, colorama, blinker, Werkzeug, Jinja2, click, flask
+Successfully installed Jinja2-3.1.4 MarkupSafe-2.1.5 Werkzeug-3.0.3 blinker-1.8.2 click-8.1.7 colorama-0.4.6 flask-3.0.3 itsdangerous-2.2.0
+
+[notice] A new release of pip is available: 23.2.1 -> 24.1.2
+[notice] To update, run: python.exe -m pip install --upgrade pip
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> ls .\venv\Scripts\
+
+
+    디렉터리: D:\gitRepository\sunglee0517\vuejs\study08\backend\flask\venv\Scripts
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----      2024-07-08  오후 12:38           2106 activate
+-a----      2024-07-08  오후 12:38           1030 activate.bat
+-a----      2024-07-08  오후 12:38          26199 Activate.ps1
+-a----      2024-07-08  오후 12:38            393 deactivate.bat
+-a----      2024-07-08  오후 12:44         108426 flask.exe
+-a----      2024-07-08  오후 12:38         108439 pip.exe
+-a----      2024-07-08  오후 12:38         108439 pip3.12.exe
+-a----      2024-07-08  오후 12:38         108439 pip3.exe
+-a----      2024-07-08  오후 12:38         270616 python.exe
+-a----      2024-07-08  오후 12:38         259352 pythonw.exe
+    __import__(module_name)
+  File "D:\gitRepository\sunglee0517\vuejs\study08\backend\flask\app.py", line 2, in <module>
+    from flask_sqlalchemy import SQLAlchemy
+ModuleNotFoundError: No module named 'flask_sqlalchemy'
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> pip install Flask
+Requirement already satisfied: Flask in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask    __import__(module_nam    __import__(module_name)
+  File "D:\gitRepository\sunglee0517\vuejs\study08\backend\flask\app.py", line 2, in <module>
+    from flask_sqlalchemy import SQLAlchemy
+ModuleNotFoundError: No module named 'flask_sqlalchemy'
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> pip install Flask
+Requirement already satisfied: Flask in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (3.0.3)
+Requirement already satisfied: Werkzeug>=3.0.0 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask) (3.0.3)
+Requirement already satisfied: Jinja2>=3.1.2 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask) (3.1.4)
+Requirement already satisfied: itsdangerous>=2.1.2 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask) (2.2.0)
+Requirement already satisfied: click>=8.1.3 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask) (8.1.7)
+Requirement already satisfied: blinker>=1.6.2 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask) (1.8.2)
+Requirement already satisfied: colorama in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from click>=8.1.3->Flask) (0.4.6)
+Requirement already satisfied: MarkupSafe>=2.0 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Jinja2>=3.1.2->Flask) (2.1.5)
+
+[notice] A new release of pip is available: 23.2.1 -> 24.1.2
+[notice] To update, run: python.exe -m pip install --upgrade pip
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> pip install Flask-SQLAlchemy
+Collecting Flask-SQLAlchemy
+  Obtaining dependency information for Flask-SQLAlchemy from https://files.pythonhosted.org/packages/1d/6a/89963a5c6ecf166e8be29e0d1bf6806051ee8fe6c82e232842e3aeac9204/flask_sqlalchemy-3.1.1-py3-none-any.whl.metadata
+  Downloading flask_sqlalchemy-3.1.1-py3-none-any.whl.metadata (3.4 kB)
+Requirement already satisfied: flask>=2.2.5 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask-SQLAlchemy) (3.0.3)
+Collecting sqlalchemy>=2.0.16 (from Flask-SQLAlchemy)
+  Obtaining dependency information for sqlalchemy>=2.0.16 from https://files.pythonhosted.org/packages/d0/ff/5746886a796799d45285573c8a6564b4b84c730142ab974d7a3f7bacee6c/SQLAlchemy-2.0.31-cp312-cp312-win_amd64.whl.metadata
+  Using cached SQLAlchemy-2.0.31-cp312-cp312-win_amd64.whl.metadata (9.9 kB)
+Requirement already satisfied: Werkzeug>=3.0.0 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from flask>=2.2.5->Flask-SQLAlchemy) (3.0.3)
+Requirement already satisfied: Jinja2>=3.1.2 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from flask>=2.2.5->Flask-SQLAlchemy) (3.1.4)
+Requirement already satisfied: itsdangerous>=2.1.2 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from flask>=2.2.5->Flask-SQLAlchemy) (2.2.0)
+Requirement already satisfied: click>=8.1.3 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from flask>=2.2.5->Flask-SQLAlchemy) (8.1.7)
+Requirement already satisfied: blinker>=1.6.2 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from flask>=2.2.5->Flask-SQLAlchemy) (1.8.2)
+Collecting typing-extensions>=4.6.0 (from sqlalchemy>=2.0.16->Flask-SQLAlchemy)
+  Obtaining dependency information for typing-extensions>=4.6.0 from https://files.pythonhosted.org/packages/26/9f/ad63fc0248c5379346306f8668cda6e2e2e9c95e01216d2b8ffd9ff037d0/typing_extensions-4.12.2-py3-none-any.whl.metadata
+  Using cached typing_extensions-4.12.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting greenlet!=0.4.17 (from sqlalchemy>=2.0.16->Flask-SQLAlchemy)
+  Obtaining dependency information for greenlet!=0.4.17 from https://files.pythonhosted.org/packages/53/80/3d94d5999b4179d91bcc93745d1b0815b073d61be79dd546b840d17adb18/greenlet-3.0.3-cp312-cp312-win_amd64.whl.metadata
+  Using cached greenlet-3.0.3-cp312-cp312-win_amd64.whl.metadata (3.9 kB)
+Requirement already satisfied: colorama in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from click>=8.1.3->flask>=2.2.5->Flask-SQLAlchemy) (0.4.6)
+Requirement already satisfied: MarkupSafe>=2.0 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Jinja2>=3.1.2->flask>=2.2.5->Flask-SQLAlchemy) (2.1.5)
+Downloading flask_sqlalchemy-3.1.1-py3-none-any.whl (25 kB)
+Using cached SQLAlchemy-2.0.31-cp312-cp312-win_amd64.whl (2.1 MB)
+Using cached greenlet-3.0.3-cp312-cp312-win_amd64.whl (293 kB)
+Using cached typing_extensions-4.12.2-py3-none-any.whl (37 kB)
+Installing collected packages: typing-extensions, greenlet, sqlalchemy, Flask-SQLAlchemy
+Successfully installed Flask-SQLAlchemy-3.1.1 greenlet-3.0.3 sqlalchemy-2.0.31 typing-extensions-4.12.2
+
+[notice] A new release of pip is available: 23.2.1 -> 24.1.2
+[notice] To update, run: python.exe -m pip install --upgrade pip
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> pip install Flask-Migrate   
+Collecting Flask-Migrate
+  Obtaining dependency information for Flask-Migrate from https://files.pythonhosted.org/packages/93/01/587023575286236f95d2ab8a826c320375ed5ea2102bb103ed89704ffa6b/Flask_Migrate-4.0.7-py3-none-any.whl.metadata
+  Downloading Flask_Migrate-4.0.7-py3-none-any.whl.metadata (3.1 kB)
+Requirement already satisfied: Flask>=0.9 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask-Migrate) (3.0.3)
+Requirement already satisfied: Flask-SQLAlchemy>=1.0 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask-Migrate) (3.1.1)
+Collecting alembic>=1.9.0 (from Flask-Migrate)
+  Obtaining dependency information for alembic>=1.9.0 from https://files.pythonhosted.org/packages/df/ed/c884465c33c25451e4a5cd4acad154c29e5341e3214e220e7f3478aa4b0d/alembic-1.13.2-py3-none-any.whl.metadata
+  Using cached alembic-1.13.2-py3-none-any.whl.metadata (7.4 kB)
+Requirement already satisfied: SQLAlchemy>=1.3.0 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from alembic>=1.9.0->Flask-Migrate) (2.0.31)
+Collecting Mako (from alembic>=1.9.0->Flask-Migrate)
+  Obtaining dependency information for Mako from https://files.pythonhosted.org/packages/03/62/70f5a0c2dd208f9f3f2f9afd103aec42ee4d9ad2401d78342f75e9b8da36/Mako-1.3.5-py3-none-any.whl.metadata
+  Using cached Mako-1.3.5-py3-none-any.whl.metadata (2.9 kB)
+Requirement already satisfied: typing-extensions>=4 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from alembic>=1.9.0->Flask-Migrate) (4.12.2)
+Requirement already satisfied: Werkzeug>=3.0.0 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask>=0.9->Flask-Migrate) (3.0.3)
+Requirement already satisfied: Jinja2>=3.1.2 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask>=0.9->Flask-Migrate) (3.1.4)
+Requirement already satisfied: itsdangerous>=2.1.2 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask>=0.9->Flask-Migrate) (2.2.0)
+Requirement already satisfied: click>=8.1.3 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask>=0.9->Flask-Migrate) (8.1.7)
+Requirement already satisfied: blinker>=1.6.2 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Flask>=0.9->Flask-Migrate) (1.8.2)
+Requirement already satisfied: colorama in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from click>=8.1.3->Flask>=0.9->Flask-Migrate) (0.4.6)
+Requirement already satisfied: MarkupSafe>=2.0 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Jinja2>=3.1.2->Flask>=0.9->Flask-Migrate) (2.1.5)
+Requirement already satisfied: greenlet!=0.4.17 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from SQLAlchemy>=1.3.0->alembic>=1.9.0->Flask-Migrate) (3.0.3)
+Downloading Flask_Migrate-4.0.7-py3-none-any.whl (21 kB)
+Using cached alembic-1.13.2-py3-none-any.whl (232 kB)
+Using cached Mako-1.3.5-py3-none-any.whl (78 kB)
+Installing collected packages: Mako, alembic, Flask-Migrate
+Successfully installed Flask-Migrate-4.0.7 Mako-1.3.5 alembic-1.13.2
+
+[notice] A new release of pip is available: 23.2.1 -> 24.1.2
+[notice] To update, run: python.exe -m pip install --upgrade pip
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> pip install mysqlclient
+Collecting mysqlclient
+  Obtaining dependency information for mysqlclient from https://files.pythonhosted.org/packages/d3/56/1fe1a8aa7ba090576632c16bd43fb0df78747d2f18c54e769015378667fb/mysqlclient-2.2.4-cp312-cp312-win_amd64.whl.metadata
+  Using cached mysqlclient-2.2.4-cp312-cp312-win_amd64.whl.metadata (4.6 kB)
+Using cached mysqlclient-2.2.4-cp312-cp312-win_amd64.whl (203 kB)
+Installing collected packages: mysqlclient
+Successfully installed mysqlclient-2.2.4
+
+[notice] A new release of pip is available: 23.2.1 -> 24.1.2
+[notice] To update, run: python.exe -m pip install --upgrade pip
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> pip install Werkzeug       
+Requirement already satisfied: Werkzeug in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (3.0.3)
+Requirement already satisfied: MarkupSafe>=2.1.1 in d:\gitrepository\sunglee0517\vuejs\study08\backend\flask\venv\lib\site-packages (from Werkzeug) (2.1.5)
+
+[notice] A new release of pip is available: 23.2.1 -> 24.1.2
+[notice] To update, run: python.exe -m pip install --upgrade pip
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> pip list
+Package           Version
+----------------- -------
+alembic           1.13.2
+blinker           1.8.2
+click             8.1.7
+colorama          0.4.6
+Flask             3.0.3
+Flask-Migrate     4.0.7
+Flask-SQLAlchemy  3.1.1
+greenlet          3.0.3
+itsdangerous      2.2.0
+Jinja2            3.1.4
+Mako              1.3.5
+MarkupSafe        2.1.5
+mysqlclient       2.2.4
+pip               23.2.1
+SQLAlchemy        2.0.31
+typing_extensions 4.12.2
+Werkzeug          3.0.3
+
+[notice] A new release of pip is available: 23.2.1 -> 24.1.2
+[notice] To update, run: python.exe -m pip install --upgrade pip
+
+
+pip install flask flask_sqlalchemy pymysql
+
+
+(venv) PS D:\gitRepository\sunglee0517\vuejs\study08\backend\flask> flask run
+ * Serving Flask app 'app.py'
+ * Debug mode: off

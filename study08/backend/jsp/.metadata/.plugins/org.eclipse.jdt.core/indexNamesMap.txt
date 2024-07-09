@@ -1,3 +1,0 @@
-INDEX VERSION 1.134
-file:/D:/gitRepository/sunglee0517/vuejs/study08/backend/jsp/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index
-meta_index

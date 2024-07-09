@@ -1,5 +1,0 @@
-INDEX VERSION 1.134
-D:\gitRepository\sunglee0517\vuejs\study08\backend\jsp\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2179492430.index
-\jspServlet\src\main\java
-D:\gitRepository\sunglee0517\vuejs\study08\backend\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2179492430.index
-\jspServlet\src\main\java
